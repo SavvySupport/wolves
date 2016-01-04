@@ -7,5 +7,6 @@ Environment requirement:
   - Install python3.4
   - Install MongoDB (latest version)
   - Install PyMongo (pip install pymongo)
-
+  - Install Jinja2
+  - Install Flask-Login
 
