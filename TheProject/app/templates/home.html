@@ -6,62 +6,110 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <link rel="stylesheet" href= {{ url_for('static', filename='CSS/semantic.css') }}>
         <link rel="stylesheet" href= {{ url_for('static', filename='CSS/semantic.min.css') }}>
-        <link rel="stylesheet" href= {{ url_for('static', filename='CSS/bitter.css') }}>
+        <link rel="stylesheet" href= {{ url_for('static', filename='CSS/savvy.css') }}>
         <script src= {{ url_for('static', filename='CSS/semantic.js') }}></script>
         <script src= {{ url_for('static', filename='CSS/semantic.min.js') }}></script>
-        <script src= {{ url_for('static', filename='CSS/bitter.js') }}></script>
+        <script src= {{ url_for('static', filename='CSS/savvy.js') }}></script>
     </head>
     <body>
-        <!-- Lets make a cool single element ribbon -->
-        <div id="ribbon">
-            <h1>Build Up Your Team With #TheProject</h1>
-            <br>
-            <div class="ui buttons">
-                <a href= {{ url_for('register') }}><button class="ui button">Register</button></a>
-                <div class="or"></div>
-                <a href= {{ url_for('login') }}><button class="ui positive button">Sign In</button></a>
-            </div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <div class="ui buttons">
-                <div class="ui statistics">
-                    <div class="statistic">
-                        <div class="value">
-                            <i class="send outline icon"></i>
-                            <br>
-                            0
-                        </div>
-                        <div class="label">
-                            Jobs
-                        </div>
-                    </div>
-                    <div class="statistic">
-                        <div class="value">
-                            <i class="comments outline icon"></i>
-                            <br>
-                            0
-                        </div>
-                        <div class="label">
-                            Employers
-                        </div>
-                    </div>
-                    <div class="statistic">
-                        <div class="value">
-                            <i class="smile icon"></i>
-                            <br>
-                            0
-                        </div>
-                        <div class="label">
-                            Candidates
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Side Bar -->
+        <div class="ui left vertical inverted sidebar labeled icon menu">
+            <a class="item" href="./welcome.py.cgi">
+                <i class="home icon"></i>
+                Home
+            </a>
+            <a id="loginbtn" class="item" href="./login.py.cgi">
+                <i class="smile icon"></i>
+                Log In
+            </a>
+            <a id="regobtn" class="item" href="./rego.py.cgi">
+                <i class="plus icon"></i>
+                Sign Up
+            </a>
         </div>
+        <div class="pusher">
+            <!-- Nag Bar -->
+            <div class="ui inline cookie nag">
+                <span class="title">
+                    We use cookies to ensure you get the best experience with #TheProject
+                </span>
+                <i class="close icon"></i>
+            </div>
 
-        <!-- PrefixFree to deal with vendor prefixes -->
-        <script src="http://thecodeplayer.com/uploads/js/prefixfree-1.0.7.js" type="text/javascript"></script>
+            <!-- Navigation Bar -->
+            <div class="ui attached stackable menu">
+                <!-- <a id="sidebar" class="item">
+                    <i class="sidebar icon"></i>
+                </a> -->
+                <div class="header item active">
+                    Home
+                </div>
+                <a class="item">
+                    About Us
+                </a>
+                <a class="item">
+                    Jobs
+                </a>
+                <a class="item">
+                    Locations
+                </a>
+                <a class="item">
+                    Anything Else
+                </a>
+            </div>
+
+            <!-- Main Body -->
+            <div id="ribbon">
+                <h1 style="margin-top: 10%">Build Up Your Team With #TheProject</h1>
+                <br>
+                <div class="ui buttons">
+                    <a href= {{ url_for('register') }}><button class="ui button">Register</button></a>
+                    <div class="or"></div>
+                    <a href= {{ url_for('login') }}><button class="ui positive button">Sign In</button></a>
+                </div>
+                <!--
+                <br>
+                <br>
+                <br>
+                <br>
+                <div class="ui buttons">
+                    <div class="ui statistics">
+                        <div class="statistic">
+                            <div class="value">
+                                <i class="send outline icon"></i>
+                                <br>
+                                0
+                            </div>
+                            <div class="label">
+                                Jobs
+                            </div>
+                        </div>
+                        <div class="statistic">
+                            <div class="value">
+                                <i class="comments outline icon"></i>
+                                <br>
+                                0
+                            </div>
+                            <div class="label">
+                                Employers
+                            </div>
+                        </div>
+                        <div class="statistic">
+                            <div class="value">
+                                <i class="smile icon"></i>
+                                <br>
+                                0
+                            </div>
+                            <div class="label">
+                                Candidates
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+
+            <!-- PrefixFree to deal with vendor prefixes -->
+            <script src="http://thecodeplayer.com/uploads/js/prefixfree-1.0.7.js" type="text/javascript"></script>
+        </div>
     </body>
 </html>
