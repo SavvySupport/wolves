@@ -10,7 +10,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<head>
 		<title>0hh Website Template | Home :: W3layouts</title>
 		<meta name="keywords"/>
-		<link href="../static/style.css" rel="stylesheet" type="text/css"  media="all" />
+		<!--{{ url_for('static', filename='style.css') }}  -->
+		<link href={{ url_for('static', filename='style.css') }} rel="stylesheet" type="text/css"  media="all" />
 	</head>
 	<body>
 		<!--start-wrap--->
@@ -24,7 +25,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<!---End-header---->
 			<!--start-content------>
 			<div class="content">
-				<img src="../static/images/error-img.png" title="error" />
+				<img src= {{ url_for('static', filename='images/error-img.png') }} title="error" />
 				<p><span><label>O</label>hh.....</span> You Requested the page that is no longer There.</p>
 				<a href="#">Back To Home</a>
 				<div class="copy-right">

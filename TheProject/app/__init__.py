@@ -6,9 +6,7 @@ from flask import Flask, request, session, g, redirect, url_for, \
             abort, render_template, flash
 
 sys.path.append('/Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages')
-import pymongo
 from pymongo import MongoClient
-
 
 ###############################################################################
 # Configuration
