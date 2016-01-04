@@ -8,6 +8,8 @@ from flask import Flask, request, session, g, redirect, url_for, \
 sys.path.append('/Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages')
 import pymongo
 from pymongo import MongoClient
+
+
 ###############################################################################
 # Configuration
 ###############################################################################
@@ -28,20 +30,6 @@ client = MongoClient('mongodb://thangdo:Fr0th1ng@ds037415.mongolab.com:37415/tha
 db = client['thangdodb']
 collection = db['test_collection']
 
-###############################################################################
-# Supporting function
-###############################################################################
-@app.errorhandler(404)
-def not_found(error):
-    return render_template('404.html'), 404
-
-###############################################################################
-# VIEWS/PAGES
-###############################################################################
-@app.route('/')
-def home():
-    return "Home Page"
-
-@app.route('/index')
-def index():
-    return "hello world!!"
+# This import here has to be at the bottom of this file
+# To avoid circular references
+from app import views
