@@ -14,12 +14,12 @@
     <body>
         <!-- Lets make a cool single element ribbon -->
         <div id="ribbon">
-            <h1>Strengthen Your Team With #TheProject</h1>
+            <h1>Build Up Your Team With #TheProject</h1>
             <br>
             <div class="ui buttons">
-                <a href="#"><button class="ui button">Register</button></a>
+                <a href= {{ url_for('register') }}><button class="ui button">Register</button></a>
                 <div class="or"></div>
-                <a href="#"><button class="ui positive button">Sign In</button></a>
+                <a href= {{ url_for('login') }}><button class="ui positive button">Sign In</button></a>
             </div>
             <br>
             <br>

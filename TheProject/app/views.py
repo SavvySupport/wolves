@@ -25,3 +25,7 @@ def index():
 @app.route('/test/<x>')
 def test(x):
     return x
+
+@app.route('/resgister')
+def register():
+    return render_template('register.html')
