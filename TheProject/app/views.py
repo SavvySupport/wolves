@@ -1,8 +1,16 @@
 #!/usr/bin/env python
 import sys
+import os
 from app import app
+from jinja2 import Environment, FileSystemLoader
 from flask import Flask, request, session, g, redirect, url_for, \
                     abort, render_template, flash
+
+# Define the template directory
+tpldir = os.path.dirname(os.path.abspath(__file__))+'/templates/'
+
+# Setup the template enviroment
+env = Environment(loader=FileSystemLoader(tpldir), trim_blocks=True)
 
 ###############################################################################
 # Supporting function

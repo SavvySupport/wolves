@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% from 'HTMLHelper.html' import foo %}
 <html lang="en">
     <head>
         <title>SavvyWolves The Project</title>
@@ -12,6 +13,8 @@
         <script src= {{ url_for('static', filename='CSS/savvy.js') }}></script>
     </head>
     <body>
+
+        <!-- {{ foo(123) }} -->
         <!-- Side Bar -->
         <div class="ui left vertical inverted sidebar labeled icon menu">
             <a class="item" href="./welcome.py.cgi">
