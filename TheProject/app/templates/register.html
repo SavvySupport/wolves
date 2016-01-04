@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-    {% from 'HTMLHelper.html' import header %}
-    {{ header() }}
+    {% import 'HTMLHelper.html' as html %}
+    {{ html.header() }}
     <body>
-        {% from 'HTMLHelper.html' import sideBar %}
-        {{ sideBar() }}
+        {{ html.sideBar() }}
 
         <!-- THIS DIV IS TOO F**KING IMPORTANT -->
         <!-- DON'T YOU DARE TO CHANGE IT -->
         <div class="pusher">
-            {% from 'HTMLHelper.html' import nag %}
-            {{ nag() }}
+            {{ html.nag() }}
 
-            {% from 'HTMLHelper.html' import navBar %}
-            {{ navBar() }}
+            {{ html.navBar() }}
 
             <!-- Main Body -->
 
