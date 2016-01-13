@@ -59,15 +59,6 @@ $(function () {
         on: 'hover'
     });
 
-    // Scroll to top button effect
-    // $(window).scroll(function() {
-    //     if ($(this).scrollTop()) {
-    //         $('#toTop').fadeIn();
-    //     } else {
-    //         $('#toTop').fadeOut();
-    //     }
-    // });
-
     // Automatically shows on init if cookie isnt set
     $('.cookie.nag')
         .nag({
@@ -103,83 +94,68 @@ $(function () {
 
     // Form validation
     var validationObj = {
-        username: {
-            identifier  :   'username',
-            rules: [
-                {
-                    type    : 'empty',
-                    prompt  : 'Dude! empty username? Seriously?'
-                },
-                {
-                    type    : 'length[5]',
-                    prompt  : '5 characters at least! Lazy bum!'
-                }
-            ]
-        },
-        password: {
-            identifier  : 'password',
-            rules: [
-                {
-                    type    : 'empty',
-                    prompt  : 'Dude! empty password? Security much?'
-                },
-                {
-                    type    : 'length[5]',
-                    prompt  : 'Surely you can think of a 5 character password'
-                }
-            ]
-        },
-        email: {
-            identifier  : 'email',
-            rules: [
-                {
-                    type    : 'empty',
-                    prompt  : 'Dude! empty email?'
-                },
-                {
-                    type    : 'email',
-                    prompt  : 'Do you even know what an email looks like?'
-                }
-            ]
-        },
-        passwordconfirm: {
-            identifier  : 'passwordconfirm',
-            rules: [
-                {
-                    type    : 'match[password]',
-                    prompt  : 'Are you drunk? your passwords don\'t match.'
-                }
-            ]
-        },
-        bleat: {
-            identifier  : 'bleat',
-            rules: [
-                {
-                    type    : 'maxLength[142]',
-                    prompt  : 'Too long, buddy! 142 character max'
-                },
-                {
-                    types   : 'empty',
-                    prompt  : 'You call this \'banter\'?'
-                }
-            ]
-        },
-        interest: {
-            identifier  : 'interest',
-            rules: [
-                {
-                    type    : 'maxLength[142]',
-                    prompt  : 'Keep it 142 characters short, buddy! Nobody cares THAT much about you ... yet'
-                }
-            ]
+        fields: {
+            username: {
+                identifier  :   'username',
+                rules: [
+                    {
+                        type    : 'empty',
+                        prompt  : 'username cannot be empty'
+                    },
+                    {
+                        type    : 'length[5]',
+                        prompt  : 'minimum 5 characters required'
+                    }
+                ]
+            },
+            password: {
+                identifier  : 'password',
+                rules: [
+                    {
+                        type    : 'empty',
+                        prompt  : 'password cannot be empty'
+                    },
+                    {
+                        type    : 'length[5]',
+                        prompt  : 'minimum 5 characters required'
+                    }
+                ]
+            },
+            email: {
+                identifier  : 'email',
+                rules: [
+                    {
+                        type    : 'empty',
+                        prompt  : 'email cannot be empty'
+                    },
+                    {
+                        type    : 'email',
+                        prompt  : 'invalid email format?'
+                    }
+                ]
+            },
+            passwordconfirm: {
+                identifier  : 'passwordconfirm',
+                rules: [
+                    {
+                        type    : 'match[password]',
+                        prompt  : 'your passwords don\'t match.'
+                    }
+                ]
+            },
+            interest: {
+                identifier  : 'interest',
+                rules: [
+                    {
+                        type    : 'maxLength[142]',
+                        prompt  : 'Keep it 142 characters'
+                    }
+                ]
+            }
         }
     };
 
     $('#loginForm').form(validationObj, {
-        inline: true
-    });
-
-    $('#bleatForm').form(validationObj, {
         inline: true
     });
 

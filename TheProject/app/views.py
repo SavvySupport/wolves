@@ -26,10 +26,6 @@ def not_found(error):
 def home():
     return render_template('home.html')
 
-@app.route('/index')
-def index():
-    return render_template('home.html')
-
 @app.route('/test/<x>')
 def test(x):
     return x
@@ -38,6 +34,10 @@ def test(x):
 def login():
     return render_template('login.html')
 
-@app.route('/resgister')
+@app.route('/register')
 def register():
     return render_template('register.html')
+
+@app.route('/recover')
+def recover():
+    return render_template('recover.html')

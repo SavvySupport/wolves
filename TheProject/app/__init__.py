@@ -7,6 +7,7 @@ from flask import Flask, request, session, g, redirect, url_for, \
 
 sys.path.append('/Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages')
 from pymongo import MongoClient
+from flask.ext.login import LoginManager
 
 ###############################################################################
 # Configuration
@@ -27,6 +28,15 @@ client = MongoClient()
 client = MongoClient('mongodb://thangdo:Fr0th1ng@ds037415.mongolab.com:37415/thangdodb')
 db = client['thangdodb']
 collection = db['test_collection']
+
+# Manager authentication with LoginManager
+# Handle Login with LoginManager
+manager = LoginManager()
+manager.init_app(app)
+
+@manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
 
 # This import here has to be at the bottom of this file
 # To avoid circular references
