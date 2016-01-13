@@ -7,8 +7,8 @@ class User:
     def is_active():
         return False
 
-    def is_anonymous:
+    def is_anonymous():
         return False
 
-    def get_id():
+    def get():
         return None
