@@ -96,7 +96,7 @@ $(function () {
     var validationObj = {
         fields: {
             username: {
-                identifier  :   'username',
+                identifier  : 'username',
                 rules: [
                     {
                         type    : 'empty',

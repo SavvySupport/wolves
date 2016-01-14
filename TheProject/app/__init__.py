@@ -26,9 +26,9 @@ app.config.from_envvar('SAVVY_SETTING', silent=True)
 
 # MongoDB database setting
 client = MongoClient()
-client = MongoClient('mongodb://thangdo:Fr0th1ng@ds037415.mongolab.com:37415/thangdodb')
-db = client['thangdodb']
-collection = db['test_collection']
+client = MongoClient('mongodb://thangdo:Fr0th1ng@ds037395.mongolab.com:37395/savvydb')
+db = client['savvydb']
+collection = db['savvy']
 
 # Manager authentication with LoginManager
 # Handle Login with LoginManager
