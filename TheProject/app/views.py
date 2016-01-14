@@ -1,16 +1,31 @@
 #!/usr/bin/env python
 import sys
 import os
-from app import app
+from app import app, manager, collection, db
+from .Models.user import User
 from jinja2 import Environment, FileSystemLoader
 from flask import Flask, request, session, g, redirect, url_for, \
                     abort, render_template, flash
+from flask.ext.login import login_user, logout_user, login_required, current_user
 
 # Define the template directory
 tpldir = os.path.dirname(os.path.abspath(__file__))+'/templates/'
 
 # Setup the template enviroment
 env = Environment(loader=FileSystemLoader(tpldir), trim_blocks=True)
+
+###############################################################################
+# Login Manager
+###############################################################################
+@manager.user_loader
+def load_user(username):
+    print("userloader:", username)
+    user = collection.find_one({ "username": username })
+    print("userloader user object:", user)
+    if not user:
+        return None
+    return User(user)
+
 
 ###############################################################################
 # Supporting function
@@ -27,11 +42,28 @@ def home():
     return render_template('home.html')
 
 @app.route('/test/<x>')
+@login_required
 def test(x):
+    logout_user()
     return x
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    # Case: user is already logged in
+    if current_user and current_user.is_authenticated:
+        print("current user: ", current_user)
+        return redirect(url_for('home'))
+
+    # Case: user submits form
+    if request.method == 'POST':
+        print(request.form['username'])
+        user = collection.find_one({ "username": request.form['username'] })
+
+        if user and (user['password'] == request.form['password']):
+            login_user(User(user['username']))
+            return redirect(request.args.get('next')) or url_for('home')
+
+    # Case: user needs to log in
     return render_template('login.html')
 
 @app.route('/register')

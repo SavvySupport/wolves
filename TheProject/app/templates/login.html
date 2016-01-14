@@ -3,7 +3,7 @@
 {% block content %}
     <div class="ui two column middle aligned very relax stackable grid segment">
         <div class="column">
-            <form id="loginForm" class="ui form segment" method="post" action='./login.py.cgi'>
+            <form id="loginForm" class="ui form segment" method="post" action= {{ url_for('login') }} >
                 <div class="required field">
                     <label>Username</label>
                     <input type="text" id="username" name="username" placeholder="Username">

@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 import sys
-import sqlite3
 import os
-from app.Models import User
-from flask import Flask, request, session, g, redirect, url_for, \
-            abort, render_template, flash
+from flask import Flask
 
 sys.path.append('/Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages')
 from pymongo import MongoClient
@@ -35,13 +32,6 @@ collection = db['savvy']
 manager = LoginManager()
 manager.init_app(app)
 manager.login_view = 'login'
-
-@manager.user_loader
-def load_user(uid):
-    try:
-        return User.get(uid)
-    except User.DoesNotExist:
-        return None
 
 # This import here has to be at the bottom of this file
 # To avoid circular references

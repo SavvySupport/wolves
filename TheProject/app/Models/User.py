@@ -1,16 +1,22 @@
-class User:
+class User():
+    def __init__(self, username):
+        # print("init")
+        self.username = username
+        self.email = None
+
     def is_authenticated(self):
-        return False
+        return True
 
     def is_active(self):
-        return False
+        return True
 
     def is_anonymous(self):
         return False
 
-    def get_uid(self):
-        return None
+    def get_id(self):
+        return self.username
 
     @staticmethod
     def validate_login(password_hash, password):
-        return check_password_hash(password_hash, password)
+        return password == password_hash
+        # return check_password_hash(password_hash, password)
