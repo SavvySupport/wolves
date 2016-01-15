@@ -25,18 +25,14 @@
 <!--
     Warning messages
 -->
-{% macro warning(level, header, message) %}
-    <!-- {% set level = "ui " + level + " message" %} -->
-    <div class= 'ui {{ level }} message icon attached small'>
-        <i class="inbox icon"></i>
+{% macro warning(level, message) %}
+    <div class= 'ui {{ level }} icon message attached small transition'>
+        <i class="announcement icon"></i>
         <i class="close icon"></i>
         <div class="content">
             <div class="header">
-                {{ header }}
-            </div>
-            <p>
                 {{ message }}
-            </p>
+            </div> 
         </div>
     </div>
 {% endmacro %}

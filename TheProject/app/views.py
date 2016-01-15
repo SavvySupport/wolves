@@ -65,10 +65,12 @@ def login():
             login_user(userObj)
 
             # redirect to appropriate page
-            if request.form.get('next') != None:
+            if request.form.get('next') != None and request.form.get('next') != 'None':
                 return redirect(request.form.get('next'))
             else:
                 return redirect(url_for('home'))
+        else:
+            flash(u'Incorrect login credentials', 'error')
 
     # Case: user needs to log in
     return render('login.html')
@@ -92,9 +94,10 @@ def register():
 
         try:
             collection.insert(user)
-            flash('You are successfully logged in')
+            # flash('You are successfully logged in')
         except:
-            flash('Failed to log in')
+            # flash('Failed to log in')
+            pass
 
         # return "<h2>ASDAD</h2>"
         # userObj = User(user)
