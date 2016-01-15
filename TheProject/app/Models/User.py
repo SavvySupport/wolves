@@ -1,6 +1,5 @@
 class User():
     def __init__(self, username):
-        # print("init")
         self.username = username
         self.email = None
 

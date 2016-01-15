@@ -3,7 +3,7 @@
     {% import 'HTMLHelper.html' as html %}
     {{ html.header() }}
     <body>
-        {{ html.sideBar() }}
+        {{ html.sideBar(user_logged_in) }}
 
         <!-- THIS DIV IS TOO F**KING IMPORTANT -->
         <!-- DON'T YOU DARE TO CHANGE IT -->

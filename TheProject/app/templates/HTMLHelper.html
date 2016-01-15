@@ -3,7 +3,7 @@
     Feel free to modify to perform test
 -->
 {% macro foo(x) %}
-    <h2> FOOO </h2>
+    <h2> FOOO {{ x }} </h2>
 {% endmacro %}
 
 <!--
@@ -15,7 +15,7 @@
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <link rel="stylesheet" href= {{ url_for('static', filename='CSS/semantic.css') }}>
-        <link rel="stylesheet" href= {{ url_for('static', filename='CSS/semantic.min.css') }}>        
+        <link rel="stylesheet" href= {{ url_for('static', filename='CSS/semantic.min.css') }}>
         <script src= {{ url_for('static', filename='CSS/semantic.js') }}></script>
         <script src= {{ url_for('static', filename='CSS/semantic.min.js') }}></script>
         <script src= {{ url_for('static', filename='CSS/savvy.js') }}></script>
@@ -25,20 +25,27 @@
 <!--
     Side bar
 -->
-{% macro sideBar() %}
+{% macro sideBar(logged_in) %}
     <div class="ui left vertical inverted sidebar labeled icon menu">
-        <a class="item" href="./welcome.py.cgi">
+        <a class="item" href= {{ url_for('home') }} >
             <i class="home icon"></i>
             Home
         </a>
-        <a id="loginbtn" class="item" href="./login.py.cgi">
-            <i class="smile icon"></i>
-            Log In
-        </a>
-        <a id="regobtn" class="item" href="./rego.py.cgi">
-            <i class="plus icon"></i>
-            Sign Up
-        </a>
+        {% if logged_in == false %}
+            <a id="loginbtn" class="item" href= {{ url_for('login') }} >
+                <i class="smile icon"></i>
+                Log In
+            </a>
+            <a id="regobtn" class="item" href= {{ url_for('register') }} >
+                <i class="plus icon"></i>
+                Sign Up
+            </a>
+        {% else %}
+            <a id="signoutbtn" class="item" href= {{ url_for('logout') }} >
+                <i class="sign out icon"></i>
+                Log Out
+            </a>
+        {% endif %}
     </div>
 {% endmacro %}
 

@@ -26,7 +26,6 @@ def load_user(username):
         return None
     return User(user)
 
-
 ###############################################################################
 # Supporting function
 ###############################################################################
@@ -39,7 +38,7 @@ def not_found(error):
 ###############################################################################
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('home.html', user_logged_in = (current_user.is_authenticated))
 
 @app.route('/test/<x>')
 @login_required
@@ -51,25 +50,44 @@ def test(x):
 def login():
     # Case: user is already logged in
     if current_user and current_user.is_authenticated:
-        print("current user: ", current_user)
         return redirect(url_for('home'))
 
     # Case: user submits form
     if request.method == 'POST':
-        print(request.form['username'])
+        # Query from database and perform validation
         user = collection.find_one({ "username": request.form['username'] })
 
-        if user and (user['password'] == request.form['password']):
-            login_user(User(user['username']))
-            return redirect(request.args.get('next')) or url_for('home')
+        # if user and (user['password'] == request.form['password']):
+        if user and User.validate_login(request.form['password'], user['password']):
+            userObj = User(user['username'])
+            login_user(userObj)
+
+            # redirect to appropriate page
+            if request.args.get('next') != None:
+                return redirect(request.args.get('next'))
+            else:
+                return redirect(url_for('home'))
 
     # Case: user needs to log in
     return render_template('login.html')
 
-@app.route('/register')
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
+
+@app.route('/register', methods=['GET', 'POST'])
 def register():
+    # Case: user is already logged in
+    if current_user and current_user.is_authenticated:
+        return redirect(url_for('home'))
+
     return render_template('register.html')
 
-@app.route('/recover')
+@app.route('/recover', methods=['GET', 'POST'])
 def recover():
+    # Case: user is already logged in
+    if current_user and current_user.is_authenticated:
+        return redirect(url_for('home'))
+
     return render_template('recover.html')
