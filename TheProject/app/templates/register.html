@@ -3,7 +3,7 @@
 {% block content %}
     <div class="ui two column middle aligned very relax stackable grid segment">
         <div class="column">
-            <form id="regoForm" class="ui form segment" method="post">
+            <form id="regoForm" class="ui form segment" method="post" action= {{ url_for('register') }}>
                 <!-- USERNAME -->
                 <div class="required field">
                     <label>Username</label>
@@ -23,7 +23,6 @@
                     <label>Email</label>
                     <input type="email" id="email" name="email" placeholder="Email">
                 </div>
-                <input type="hidden" id="type" value="rego">
                 <button id="regobtn" class="fluid ui blue submit button" type="submit">Register</button>
             </form>
         </div>

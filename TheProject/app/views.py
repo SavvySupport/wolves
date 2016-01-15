@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
 import os
-from app import app, manager, collection, db
+from app import app, manager, collection, db, client
 from .Models.user import User
 from jinja2 import Environment, FileSystemLoader
 from flask import Flask, request, session, g, redirect, url_for, \
@@ -61,7 +61,6 @@ def login():
 
         # if user and (user['password'] == request.form['password']):
         if user and User.validate_login(request.form['password'], user['password']):
-            print("user['username']: ", user['username'])
             userObj = User(user['username'])
             login_user(userObj)
 
@@ -85,9 +84,29 @@ def register():
     if current_user and current_user.is_authenticated:
         return redirect(url_for('home'))
 
-    return render_template('register.html',
-                            user_logged_in = current_user.is_authenticated,
-                            user = current_user.get_id())
+    if request.method == 'POST':
+        user = {
+            "username": request.form['username'],
+            "password": request.form['password'],
+            "email"   : request.form['email'] }
+
+        try:
+            collection.insert(user)
+            flash('You are successfully logged in')
+        except:
+            flash('Failed to log in')
+
+        # return "<h2>ASDAD</h2>"
+        # userObj = User(user)
+        # login_user(userObj)
+        #
+        # # redirect to appropriate page
+        # if request.form.get('next') != None:
+        #     return redirect(request.form.get('next'))
+        # else:
+        #     return redirect(url_for('home'))
+
+    return render('register.html')
 
 @app.route('/recover', methods=['GET', 'POST'])
 def recover():

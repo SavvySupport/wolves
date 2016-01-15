@@ -23,6 +23,25 @@
 {% endmacro %}
 
 <!--
+    Warning messages
+-->
+{% macro warning(level, header, message) %}
+    <!-- {% set level = "ui " + level + " message" %} -->
+    <div class= 'ui {{ level }} message icon attached small'>
+        <i class="inbox icon"></i>
+        <i class="close icon"></i>
+        <div class="content">
+            <div class="header">
+                {{ header }}
+            </div>
+            <p>
+                {{ message }}
+            </p>
+        </div>
+    </div>
+{% endmacro %}
+
+<!--
     Side bar
 -->
 {% macro sideBar(logged_in) %}
