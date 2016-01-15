@@ -19,9 +19,7 @@ env = Environment(loader=FileSystemLoader(tpldir), trim_blocks=True)
 ###############################################################################
 @manager.user_loader
 def load_user(username):
-    print("userloader:", username)
     user = collection.find_one({ "username": username })
-    print("userloader user object:", user)
     if not user:
         return None
     return User(user)
@@ -33,18 +31,21 @@ def load_user(username):
 def not_found(error):
     return render_template('404.html'), 404
 
+def render(page):
+    return render_template(page,
+                           user_logged_in = current_user.is_authenticated,
+                           user = current_user.get_id())
+
 ###############################################################################
 # VIEWS/PAGES
 ###############################################################################
 @app.route('/')
 def home():
-    return render_template('home.html', user_logged_in = (current_user.is_authenticated))
+    return render('home.html')
 
 @app.route('/test/<x>')
-@login_required
 def test(x):
-    logout_user()
-    return x
+    return render('home.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -59,6 +60,7 @@ def login():
 
         # if user and (user['password'] == request.form['password']):
         if user and User.validate_login(request.form['password'], user['password']):
+            print("user['username']: ", user['username'])
             userObj = User(user['username'])
             login_user(userObj)
 
@@ -69,7 +71,7 @@ def login():
                 return redirect(url_for('home'))
 
     # Case: user needs to log in
-    return render_template('login.html')
+    return render('login.html')
 
 @app.route('/logout')
 def logout():
@@ -82,7 +84,9 @@ def register():
     if current_user and current_user.is_authenticated:
         return redirect(url_for('home'))
 
-    return render_template('register.html')
+    return render_template('register.html',
+                            user_logged_in = current_user.is_authenticated,
+                            user = current_user.get_id())
 
 @app.route('/recover', methods=['GET', 'POST'])
 def recover():
@@ -90,4 +94,4 @@ def recover():
     if current_user and current_user.is_authenticated:
         return redirect(url_for('home'))
 
-    return render_template('recover.html')
+    return render('recover.html')

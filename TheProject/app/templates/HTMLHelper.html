@@ -52,7 +52,7 @@
 <!--
     Navigation bar
 -->
-{% macro navBar() %}
+{% macro navBar(logged_in, user) %}
     <div class="ui attached stackable menu">
         <a id="sidebar" class="item">
             <i class="sidebar icon"></i>
@@ -60,18 +60,25 @@
         <div class="header item">
             <a href= {{ url_for('home') }}>Home</a>
         </div>
-        <a class="item">
+        <a class="header item">
             About Us
         </a>
-        <a class="item">
-            Jobs
-        </a>
-        <a class="item">
-            Locations
-        </a>
-        <a class="item">
-            Anything Else
-        </a>
+
+        {% if logged_in == false %}
+            <a class="header item">
+                Jobs
+            </a>
+            <a class="header item">
+                Locations
+            </a>
+            <a class="header item">
+                Anything Else
+            </a>
+        {% else %}
+            <a href="./profile.py.cgi" class="item">
+                <i class="child icon"></i> Welcome back {{ user['username'] }}
+            </a>
+        {% endif %}
     </div>
 {% endmacro %}
 
