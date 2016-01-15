@@ -2,13 +2,20 @@
 
 {% block content %}
     <link rel="stylesheet" href= {{ url_for('static', filename='CSS/savvy.css') }}>
-    <div id="ribbon">
-        <h1 style="margin-top: 10%">Build Up Your Team With #TheProject</h1>
-        <br>
-        <div class="ui buttons">
-            <a href= {{ url_for('register') }}><button class="ui button">Register</button></a>
-            <div class="or"></div>
-            <a href= {{ url_for('login') }}><button class="ui positive button">Sign In</button></a>
-        </div>
+
+    <!-- <video autoplay poster="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/polina.jpg" id="bgvid" loop> -->
+    <video autoplay id="bgvid" loop>
+        <!-- Find another video and replace this -->
+        <source src="//demosthenes.info/assets/videos/polina.webm" type="video/webm">
+        <source src="//demosthenes.info/assets/videos/polina.mp4" type="video/mp4">
+    </video>
+    <div id="savvy">
+        <img id="logo" src= {{ url_for('static', filename='images/logo.png') }} />
+        <h2>The new way to hire is here!</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur porta dictum turpis, eu mollis justo gravida ac. Proin non eros blandit, rutrum est a, cursus quam. Nam ultricies, velit ac suscipit vehicula, turpis eros sollicitudin lacus, at
+            convallis mauris magna non justo. Etiam et suscipit elit. Morbi eu ornare nulla, sit amet ornare est. Sed vehicula ipsum a mattis dapibus. Etiam volutpat vel enim at auctor.
+        </p>
+
+        <button>Express your interest here</button>
     </div>
 {% endblock %}
