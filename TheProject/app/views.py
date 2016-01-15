@@ -44,6 +44,7 @@ def home():
     return render('home.html')
 
 @app.route('/test/<x>')
+@login_required
 def test(x):
     return render('home.html')
 
@@ -65,8 +66,8 @@ def login():
             login_user(userObj)
 
             # redirect to appropriate page
-            if request.args.get('next') != None:
-                return redirect(request.args.get('next'))
+            if request.form.get('next') != None:
+                return redirect(request.form.get('next'))
             else:
                 return redirect(url_for('home'))
 

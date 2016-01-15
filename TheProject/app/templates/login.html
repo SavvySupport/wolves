@@ -12,7 +12,7 @@
                     <label>Password</label>
                     <input type="Password" id="password" name="password" placeholder="Password">
                 </div>
-                <input type="hidden" id="type" name="action" value="performLogin">
+                <input type="hidden" name="next" value= {{ request.args.get('next') }} >
                 <button id="loginbtn" class="fluid ui blue submit button" type="submit">Sign In</button>
             </form>
         </div>
