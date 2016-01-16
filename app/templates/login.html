@@ -6,11 +6,11 @@
             <form id="loginForm" class="ui form segment" method="post" action= {{ url_for('login') }} >
                 <div class="required field">
                     <label>Username</label>
-                    <input type="text" id="username" name="username" placeholder="Username">
+                    {{ form.username(placeholder="johndoe123") }}
                 </div>
                 <div class="required field">
                     <label>Password</label>
-                    <input type="Password" id="password" name="password" placeholder="Password">
+                    {{ form.password(placeholder="password123") }}
                 </div>
                 <input type="hidden" name="next" value= {{ request.args.get('next') }} >
                 <button id="loginbtn" class="fluid ui blue submit button" type="submit">Sign In</button>

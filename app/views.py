@@ -2,7 +2,9 @@
 import sys
 import os
 from app import app, manager, savvy_collection, db, client
-from app.Models.User import User
+from app.Forms.rego import regoForm
+from app.Forms.login import loginForm
+from app.Models.user import User
 from jinja2 import Environment, FileSystemLoader
 from flask import Flask, request, session, g, redirect, url_for, \
                     abort, render_template, flash
@@ -19,8 +21,11 @@ env = Environment(loader=FileSystemLoader(tpldir), trim_blocks=True)
 ###############################################################################
 @manager.user_loader
 def load_user(username):
-    user = collection.find_one({ "username": username })
-    if not user:
+    if username != None:
+        user = savvy_collection.find_one({ "username": username })
+        if not user:
+            return None
+    else:
         return None
     return User(user)
 
@@ -31,10 +36,11 @@ def load_user(username):
 def not_found(error):
     return render_template('404.html'), 404
 
-def render(page):
+def render(page, form=None):
     return render_template(page,
                            user_logged_in = current_user.is_authenticated,
-                           user = current_user.get_id())
+                           user = current_user.get_id(),
+                           form = form)
 
 ###############################################################################
 # VIEWS/PAGES
@@ -52,15 +58,18 @@ def test(x):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # Case: user is already logged in
+    print(current_user)
+    print(current_user.is_authenticated)
     if current_user and current_user.is_authenticated:
         return redirect(url_for('home'))
+
+    form = loginForm()
 
     # Case: user submits form
     if request.method == 'POST':
         # Query from database and perform validation
         user = savvy_collection.find_one({ "username": request.form['username'] })
 
-        # if user and (user['password'] == request.form['password']):
         if user and User.validate_login(request.form['password'], user['password']):
             userObj = User(user['username'])
             login_user(userObj)
@@ -74,7 +83,7 @@ def login():
             flash('Incorrect login credentials', 'error')
 
     # Case: user needs to log in
-    return render('login.html')
+    return render('login.html', form)
 
 @app.route('/logout')
 def logout():
@@ -87,7 +96,10 @@ def register():
     if current_user and current_user.is_authenticated:
         return redirect(url_for('home'))
 
-    if request.method == 'POST':
+    form = regoForm(request.form)
+    print(form.validate())
+    if request.method == 'POST' and form.validate():
+        print("form validate")
         user = {
             "username": request.form['username'],
             "password": request.form['password'],
@@ -107,7 +119,7 @@ def register():
         except:
             flash('Failed to register! Email or username already existed.', 'warnning')
 
-    return render('register.html')
+    return render('register.html', form)
 
 @app.route('/recover', methods=['GET', 'POST'])
 def recover():
