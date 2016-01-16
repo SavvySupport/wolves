@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import sys
 import os
+import hashlib
 from app import app, manager, savvy_collection, db, client
 from app.Forms.rego import regoForm
 from app.Forms.login import loginForm
@@ -58,29 +59,20 @@ def test(x):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # Case: user is already logged in
-    print(current_user)
-    print(current_user.is_authenticated)
     if current_user and current_user.is_authenticated:
         return redirect(url_for('home'))
 
-    form = loginForm()
-
     # Case: user submits form
-    if request.method == 'POST':
-        # Query from database and perform validation
-        user = savvy_collection.find_one({ "username": request.form['username'] })
+    form = loginForm(request.form)
+    if request.method == 'POST' and form.validate():
+        userObj = User(user['username'])
+        login_user(userObj)
 
-        if user and User.validate_login(request.form['password'], user['password']):
-            userObj = User(user['username'])
-            login_user(userObj)
-
-            # redirect to appropriate page
-            if request.form.get('next') != None and request.form.get('next') != 'None':
-                return redirect(request.form.get('next'))
-            else:
-                return redirect(url_for('home'))
+        # redirect to appropriate page
+        if request.form.get('next') != None and request.form.get('next') != 'None':
+            return redirect(request.form.get('next'))
         else:
-            flash('Incorrect login credentials', 'error')
+            return redirect(url_for('home'))
 
     # Case: user needs to log in
     return render('login.html', form)
@@ -97,27 +89,21 @@ def register():
         return redirect(url_for('home'))
 
     form = regoForm(request.form)
-    print(form.validate())
     if request.method == 'POST' and form.validate():
-        print("form validate")
         user = {
             "username": request.form['username'],
             "password": request.form['password'],
             "email"   : request.form['email'] }
 
-        try:
-            # insert into database
-            savvy_collection.insert(user)
+        # insert into database
+        savvy_collection.insert(user)
 
-            # log in
-            userObj = User(user['username'])
-            login_user(userObj)
+        # log in
+        userObj = User(user['username'])
+        login_user(userObj)
 
-            # redirect to appropriate page
-            flash('You are successfully logged in', 'success')
-            return redirect(url_for('home'))
-        except:
-            flash('Failed to register! Email or username already existed.', 'warnning')
+        # redirect to appropriate page
+        return redirect(url_for('home'))
 
     return render('register.html', form)
 

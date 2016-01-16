@@ -1,3 +1,5 @@
+import hashlib
+
 class User():
     def __init__(self, userObj):
         self.user = userObj
