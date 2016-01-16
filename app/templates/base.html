@@ -10,7 +10,16 @@
         <div class="pusher">
             <!-- {{ html.nag() }} -->
 
-            {{ html.warning('error', 'test header', 'test body' )}}
+            <!-- warning message -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        {{ html.warning(category, category, message )}}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <!-- Navigation bar -->
             {{ html.navBar(user_logged_in, user) }}
 
             <!-- Main Body -->

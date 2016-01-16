@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
 import os
-from app import app, manager, collection, db, client
+from app import app, manager, savvy_collection, db, client
 from app.Models.User import User
 from jinja2 import Environment, FileSystemLoader
 from flask import Flask, request, session, g, redirect, url_for, \
@@ -41,6 +41,7 @@ def render(page):
 ###############################################################################
 @app.route('/')
 def home():
+    print(current_user.get_id())
     return render('home.html')
 
 @app.route('/test/<x>')
@@ -57,7 +58,7 @@ def login():
     # Case: user submits form
     if request.method == 'POST':
         # Query from database and perform validation
-        user = collection.find_one({ "username": request.form['username'] })
+        user = savvy_collection.find_one({ "username": request.form['username'] })
 
         # if user and (user['password'] == request.form['password']):
         if user and User.validate_login(request.form['password'], user['password']):
@@ -69,6 +70,8 @@ def login():
                 return redirect(request.form.get('next'))
             else:
                 return redirect(url_for('home'))
+        else:
+            flash('Incorrect login credentials', 'error')
 
     # Case: user needs to log in
     return render('login.html')
@@ -91,20 +94,18 @@ def register():
             "email"   : request.form['email'] }
 
         try:
-            collection.insert(user)
-            flash('You are successfully logged in')
-        except:
-            flash('Failed to log in')
+            # insert into database
+            savvy_collection.insert(user)
 
-        # return "<h2>ASDAD</h2>"
-        # userObj = User(user)
-        # login_user(userObj)
-        #
-        # # redirect to appropriate page
-        # if request.form.get('next') != None:
-        #     return redirect(request.form.get('next'))
-        # else:
-        #     return redirect(url_for('home'))
+            # log in
+            userObj = User(user['username'])
+            login_user(userObj)
+
+            # redirect to appropriate page
+            flash('You are successfully logged in', 'success')
+            return redirect(url_for('home'))
+        except:
+            flash('Failed to register! Email or username already existed.', 'warnning')
 
     return render('register.html')
 
