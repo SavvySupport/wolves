@@ -65,9 +65,6 @@ def login():
     # Case: user submits form
     form = loginForm(request.form)
     if request.method == 'POST' and form.validate():
-        userObj = User(user['username'])
-        login_user(userObj)
-
         # redirect to appropriate page
         if request.form.get('next') != None and request.form.get('next') != 'None':
             return redirect(request.form.get('next'))
