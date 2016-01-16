@@ -2,7 +2,7 @@
 import sys
 import os
 from app import app, manager, collection, db, client
-from .Models.user import User
+from app.Models.User import User
 from jinja2 import Environment, FileSystemLoader
 from flask import Flask, request, session, g, redirect, url_for, \
                     abort, render_template, flash
@@ -65,7 +65,7 @@ def login():
             login_user(userObj)
 
             # redirect to appropriate page
-            if request.form.get('next') != None:
+            if request.form.get('next') != None and request.form.get('next') != 'None':
                 return redirect(request.form.get('next'))
             else:
                 return redirect(url_for('home'))
