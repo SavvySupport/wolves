@@ -4,6 +4,7 @@ import os
 from app import app, manager, savvy_collection, db, client
 from app.Forms.rego import regoForm
 from app.Forms.login import loginForm
+from app.Forms.recover import recoverForm
 from app.Models.user import User
 from jinja2 import Environment, FileSystemLoader
 from flask import Flask, request, session, g, redirect, url_for, \
@@ -93,7 +94,7 @@ def register():
 
 @app.route('/profile/<account>')
 @login_required
-def profile(account): 
+def profile(account):
     return account
 
 @app.route('/recover', methods=['GET', 'POST'])
@@ -102,4 +103,7 @@ def recover():
     if current_user and current_user.is_authenticated:
         return redirect(url_for('home'))
 
-    return render('recover.html')
+    form = recoverForm(request.form)
+    if request.method == 'POST' and form.validate():
+        return redirect(url_for('login'))
+    return render('recover.html', form=form)

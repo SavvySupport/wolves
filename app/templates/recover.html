@@ -7,9 +7,8 @@
                 <!-- EMAIL -->
                 <div class="required field">
                     <label>Recovery Email</label>
-                    <input type="email" id="email" name="email" placeholder="Email">
+                    {{ form.email(placeholder="JohnDoe123@abc.com") }}
                 </div>
-                <input type="hidden" name="action" value="recover">
                 <button id="reconverbtn" class="fluid ui blue submit button" type="submit">Recover Password</button>
             </form>
         </div>
