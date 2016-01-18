@@ -15,8 +15,8 @@ class recoverForm(Form):
             flash('Form invalid', 'error')
             return False
 
-        user = savvy_collection.find_one({ 'email' : self.email.data })
-        if user: 
+        user = savvy_collection.find_one({ 'email' : self.email.data.rstrip() })
+        if user:
             # send email with new password to this address
             return True
         else:

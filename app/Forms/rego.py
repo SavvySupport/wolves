@@ -22,8 +22,8 @@ class regoForm(Form):
             flash('Form invalid', 'error')
             return False
 
-        user = savvy_collection.find_one({ "$or" : [ {"username": self.username.data},
-                                                     {"email": self.email.data} ] })
+        user = savvy_collection.find_one({ "$or" : [ {"username": self.username.data.rstrip()},
+                                                     {"email": self.email.data.rstrip()} ] })
 
 
         if user:
@@ -31,9 +31,9 @@ class regoForm(Form):
             return False
         else:
             user = {
-                "username": self.username.data,
-                "password": self.password.data,
-                "email"   : self.email.data }
+                "username": self.username.data.rstrip(),
+                "password": self.password.data.rstrip(),
+                "email"   : self.email.data.rstrip() }
 
             # insert into database
             savvy_collection.insert(user)

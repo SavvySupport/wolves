@@ -35,20 +35,24 @@ def load_user(username):
 ###############################################################################
 @app.errorhandler(404)
 def not_found(error):
-    return render_template('404.html'), 404
+    return render('404.html', 404)
 
-def render(page, form=None):
-    return render_template(page,
-                           user_logged_in = current_user.is_authenticated,
-                           user = current_user.get_id(),
-                           form = form)
+def render(page, form=None, error=None):
+    if error:
+        return render_template(page,
+                               user_logged_in = current_user.is_authenticated,
+                               user = current_user.get_id()), error
+    else:
+        return render_template(page,
+                               user_logged_in = current_user.is_authenticated,
+                               user = current_user.get_id(),
+                               form = form)
 
 ###############################################################################
 # VIEWS/PAGES
 ###############################################################################
 @app.route('/')
 def home():
-    print(current_user.get_id())
     return render('home.html')
 
 @app.route('/test/<x>')

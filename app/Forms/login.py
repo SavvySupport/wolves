@@ -17,8 +17,8 @@ class loginForm(Form):
             flash('Form invalid', 'error')
             return False
 
-        user = savvy_collection.find_one({ "username": self.username.data })
-        if user and User.validate_login(user['password'], self.password.data):
+        user = savvy_collection.find_one({ "username": self.username.data.rstrip() })
+        if user and User.validate_login(user['password'], self.password.data.rstrip()):
             userObj = User(user['username'])
             login_user(userObj)
             return True

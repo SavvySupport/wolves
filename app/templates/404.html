@@ -1,39 +1,6 @@
+{% extends 'base.html' %}
 
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<title>0hh Website Template | Home :: W3layouts</title>
-		<meta name="keywords"/>
-		<!--{{ url_for('static', filename='style.css') }}  -->
-		<link href={{ url_for('static', filename='CSS/404style.css') }} rel="stylesheet" type="text/css"  media="all" />
-	</head>
-	<body>
-		<!--start-wrap--->
-		<div class="wrap">
-			<!---start-header---->
-				<div class="header">
-					<div class="logo">
-						<h1><a href="#">Ohh Snap</a></h1>
-					</div>
-				</div>
-			<!---End-header---->
-			<!--start-content------>
-			<div class="content">
-				<img src= {{ url_for('static', filename='images/error-img.png') }} title="error" />
-				<p><span><label>O</label>hh.....</span> You Requested the page that is no longer There.</p>
-				<a href= {{ url_for('home') }}>Back To Home</a>
-				<div class="copy-right">
-					<p>&copy; 2016 SavvySMEs. All Rights Reserved | Design by <a href="http://w3layouts.com/">W3Layouts</a></p>
-				</div>
-    	    </div>
-			<!--End-Cotent------>
-		</div>
-		<!--End-wrap--->
-	</body>
-</html>
+{% block content %}
+	<link rel="stylesheet" href= {{ url_for('static', filename='CSS/savvy.css') }}>
+	<div class="hit-the-floor">404</div>
+{% endblock %}
