@@ -59,7 +59,7 @@
                 <i class="plus icon"></i>
                 Sign Up
             </a>
-        {% else %}
+        {% else %} 
             <a id="signoutbtn" class="item" href= {{ url_for('logout') }} >
                 <i class="sign out icon"></i>
                 Log Out
@@ -94,7 +94,7 @@
                 Anything Else
             </a>
         {% else %}
-            <a href="./profile.py.cgi" class="item">
+            <a href= {{ url_for('profile', account=user['username']) }} class="item">
                 <i class="child icon"></i> Welcome back {{ user['username'] }}
             </a>
         {% endif %}

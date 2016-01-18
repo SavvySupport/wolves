@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import sys
 import os
-import hashlib
 from app import app, manager, savvy_collection, db, client
 from app.Forms.rego import regoForm
 from app.Forms.login import loginForm
@@ -87,22 +86,15 @@ def register():
 
     form = regoForm(request.form)
     if request.method == 'POST' and form.validate():
-        user = {
-            "username": request.form['username'],
-            "password": request.form['password'],
-            "email"   : request.form['email'] }
-
-        # insert into database
-        savvy_collection.insert(user)
-
-        # log in
-        userObj = User(user['username'])
-        login_user(userObj)
-
         # redirect to appropriate page
         return redirect(url_for('home'))
 
     return render('register.html', form)
+
+@app.route('/profile/<account>')
+@login_required
+def profile(account): 
+    return account
 
 @app.route('/recover', methods=['GET', 'POST'])
 def recover():

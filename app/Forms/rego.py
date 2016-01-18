@@ -23,8 +23,22 @@ class regoForm(Form):
 
         user = savvy_collection.find_one({ "$or" : [ {"username": self.username.data},
                                                      {"email": self.email.data} ] })
+
+
         if user:
             flash('Email or Username has been taken', 'warning')
             return False
         else:
+            user = {
+                "username": self.username.data,
+                "password": self.password.data,
+                "email"   : self.email.data }
+
+            # insert into database
+            savvy_collection.insert(user)
+
+            # log in
+            userObj = User(user['username'])
+            login_user(userObj)
+
             return True
