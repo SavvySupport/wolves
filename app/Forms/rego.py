@@ -1,6 +1,7 @@
 from wtforms import Form, BooleanField, TextField, TextAreaField, PasswordField, validators, ValidationError
 from app.Models.user import User
 from app import savvy_collection
+from flask.ext.login import login_user
 from flask import flash
 
 class regoForm(Form):
