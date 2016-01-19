@@ -92,14 +92,14 @@ def register():
     form = regoForm(request.form)
     if request.method == 'POST' and form.validate():
         # redirect to appropriate page
-        return redirect(url_for('home'))
+        return redirect(url_for('profile', account=form.username.data))
 
     return render('register.html', form)
 
 @app.route('/profile/<account>')
 @login_required
 def profile(account):
-    return account
+    return render('profile.html')
 
 @app.route('/recover', methods=['GET', 'POST'])
 def recover():
