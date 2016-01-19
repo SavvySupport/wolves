@@ -52,7 +52,7 @@ $(function () {
             bottomOffset : 20
         })
     ;
-    
+
     $('.ui.sticky')
         .sticky('refresh')
     ;
