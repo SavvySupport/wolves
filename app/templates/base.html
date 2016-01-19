@@ -10,16 +10,15 @@
         <div class="pusher">
             <!-- {{ html.nag() }} -->
 
-            <!-- warning message -->
+            <!-- Warning message. Activated by flash() in views.py -->
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
-                        {{ html.warning(category, category, message )}}
-                    {% endfor %}
+                        {{ html.warning(category, message )}}
+                    {% endfor%}
                 {% endif %}
             {% endwith %}
 
-            <!-- Navigation bar -->
             {{ html.navBar(user_logged_in, user) }}
 
             <!-- Main Body -->
