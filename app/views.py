@@ -2,11 +2,11 @@
 import sys
 import os
 from app import app, manager, savvy_collection, db, client
-from app.Forms.rego import regoForm,regoAuthenticate
+from app.Forms.rego import regoForm
 from app.Forms.login import loginForm
 from app.Forms.recover import recoverForm
 from app.Forms.profile import profileFormEmployer, profileFormEmployee
-from app.Models.user import User
+from app.Models.User import User
 from jinja2 import Environment, FileSystemLoader
 from flask import Flask, request, session, g, redirect, url_for, \
                     abort, render_template, flash
@@ -84,15 +84,14 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-#testing link http://127.0.0.1:5000/confirmEmail/weizteoh/b740538122a3bbcbece1467773034373
-@app.route('/confirmEmail/<username>/<token>')
+#testing link http://127.0.0.1:5000/activate/weizteoh/b740538122a3bbcbece1467773034373
+@app.route('/activate/<username>/<token>')
 #When validating account by clicking on confirmation link
-def confirmationEmail(username, token):
+def activate(username, token):
     #if user confirmation link is wrong
     authenticate = regoAuthenticate(username,token)
     authenticate.validate()
     return redirect(url_for('home'))
-
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

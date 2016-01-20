@@ -1,5 +1,5 @@
 from wtforms import Form, BooleanField, TextField, TextAreaField, PasswordField, validators, ValidationError
-from app.Models.user import User
+from app.Models.User import User
 from app import savvy_collection
 from flask.ext.login import login_user
 from flask import flash
@@ -16,19 +16,17 @@ class regoAuthenticate():
     def validate(self):
         user = savvy_collection.find_one({ "username": self.username})
         if user['token'] == self.token and user['status'] == 'unverified':
-            update = savvy_collection.update_one(
-            {"username":self.username},
-            {"$set": {"status":"verified"}})
-            flash('Your account has been verified!','Awesome!')
+            update = savvy_collection.update_one( {"username": self.username},
+                                                  {"$set": {"status": "verified"}})
+
+            flash('Your account has been verified!', 'success')
             return True
         elif user['token'] == self.token and user['status'] == 'verified':
-            flash('Account has already been verified', 'Try logging in')
+            flash('Account has already been verified', 'warning')
             return False
         else:
-            flash('Unknown confirmation link')
+            flash('Unknown confirmation link', 'error')
             return False
-
-
 
 class regoForm(Form):
     username = TextField('username', [validators.length(min=5),
@@ -43,9 +41,6 @@ class regoForm(Form):
         Form.__init__(self, *args, **kwargs)
 
     def validate(self):
-        token = md5(self.email.data.rstrip().encode('utf-8')).hexdigest()
-
-
         rv = Form.validate(self)
         if not rv:
             flash('Form invalid', 'error')
@@ -53,11 +48,12 @@ class regoForm(Form):
 
         user = savvy_collection.find_one({ "$or" : [ {"username": self.username.data.rstrip()},
                                                      {"email": self.email.data.rstrip()} ] })
-
         if user:
             flash('Email or Username has been taken', 'warning')
             return False
         else:
+            token = md5(self.email.data.rstrip().encode('utf-8')).hexdigest()
+
             user = {
                 "username": self.username.data.rstrip(),
                 "password": md5(self.password.data.rstrip().encode('utf-8')).hexdigest(),
@@ -82,7 +78,6 @@ class regoForm(Form):
 
             # insert into database
             savvy_collection.insert(user)
-
 
 #=======================Send confirmation email==================
             #url = os.getenv('SCRIPT_URI') <----------------get this to work when server is up
