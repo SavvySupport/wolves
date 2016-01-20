@@ -1,4 +1,4 @@
-import hashlib
+from hashlib import md5
 
 class User():
     def __init__(self, userObj):
@@ -18,5 +18,6 @@ class User():
 
     @staticmethod
     def validate_login(password_hash, password):
+        password = md5(password.encode('utf-8')).hexdigest()
         return password == password_hash
         # return check_password_hash(password_hash, password)

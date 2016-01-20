@@ -3,6 +3,32 @@ from app.Models.user import User
 from app import savvy_collection
 from flask.ext.login import login_user
 from flask import flash
+from hashlib import md5
+import os, subprocess
+# Import smtplib for the actual sending function
+
+class regoAuthenticate():
+    #to authenticate confirmation link
+    def __init__(self, username, token):
+        self.username = username
+        self.token = token
+
+    def validate(self):
+        user = savvy_collection.find_one({ "username": self.username})
+        if user['token'] == self.token and user['status'] == 'unverified':
+            update = savvy_collection.update_one(
+            {"username":self.username},
+            {"$set": {"status":"verified"}})
+            flash('Your account has been verified!','Awesome!')
+            return True
+        elif user['token'] == self.token and user['status'] == 'verified':
+            flash('Account has already been verified', 'Try logging in')
+            return False
+        else:
+            flash('Unknown confirmation link')
+            return False
+
+
 
 class regoForm(Form):
     username = TextField('username', [validators.length(min=5),
@@ -17,6 +43,9 @@ class regoForm(Form):
         Form.__init__(self, *args, **kwargs)
 
     def validate(self):
+        token = md5(self.email.data.rstrip().encode('utf-8')).hexdigest()
+
+
         rv = Form.validate(self)
         if not rv:
             flash('Form invalid', 'error')
@@ -25,18 +54,38 @@ class regoForm(Form):
         user = savvy_collection.find_one({ "$or" : [ {"username": self.username.data.rstrip()},
                                                      {"email": self.email.data.rstrip()} ] })
 
-
         if user:
             flash('Email or Username has been taken', 'warning')
             return False
         else:
             user = {
                 "username": self.username.data.rstrip(),
-                "password": self.password.data.rstrip(),
-                "email"   : self.email.data.rstrip() }
+                "password": md5(self.password.data.rstrip().encode('utf-8')).hexdigest(),
+                "email"   : self.email.data.rstrip(),
+                "status"  : "unverified",
+                "token"   : token }
 
             # insert into database
             savvy_collection.insert(user)
+
+
+#=======================Send confirmation email==================
+            #url = os.getenv('SCRIPT_URI') <----------------get this to work when server is up
+            url = '127.0.0.1:5000'
+            message = """
+            Hi {},
+
+                You need to confirm your account by clicking this link:
+                {}/confirmEmail/{}/{}
+
+            Best,
+            Team SavvyHire
+            """.format(self.username.data.rstrip(),url, self.username.data.rstrip(), token)
+
+            cmd="""echo '{}' | mail -s 'Confirm account' {}""".format(message, self.email.data.rstrip())
+            p=subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+            p.communicate()
+#====================End of confirmation email===============
 
             # log in
             userObj = User(user['username'])
