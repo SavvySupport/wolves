@@ -3,28 +3,38 @@
 {% block content %}
     <div class="ui internal celled grid">
         <div class="five wide column">
-            <div class="ui sticky vertical fluid steps">
-                <a onclick="changeClass('1')" id="1" class="active link step step1">
-                    <i class="info icon"></i>
-                    <div class="content">
-                        <div class="title">Basic information</div>
-                        <div class="description">Tell us about yourself</div>
-                    </div>
-                </a>
-                <a onclick="changeClass('2')" id="2" class="link step step2">
-                    <i class="star icon"></i>
-                    <div class="content">
-                        <div class="title">Skills and preferences</div>
-                        <div class="description">Your skills matter</div>
-                    </div>
-                </a>
-                <a onclick="changeClass('3')" id="3" class="link step step3">
-                    <i class="file text outline icon"></i>
-                    <div class="content">
-                        <div class="title">Confirm Order</div>
-                        <div class="description">Verify order details</div>
-                    </div>
-                </a>
+            <!-- Keep this section sticky to viewport -->
+            <div class="ui sticky">
+                <div class="ui vertical fluid steps">
+                    <a onclick="changeClass('1')" id="1" class="active link step step1">
+                        <i class="info icon"></i>
+                        <div class="content">
+                            <div class="title">Basic information</div>
+                            <div class="description">Tell us about yourself</div>
+                        </div>
+                    </a>
+                    <a onclick="changeClass('2')" id="2" class="link step step2">
+                        <i class="star icon"></i>
+                        <div class="content">
+                            <div class="title">Skills and preferences</div>
+                            <div class="description">Your skills matter</div>
+                        </div>
+                    </a>
+                    <a onclick="changeClass('3')" id="3" class="link step step3">
+                        <i class="file text outline icon"></i>
+                        <div class="content">
+                            <div class="title">Confirm Order</div>
+                            <div class="description">Verify order details</div>
+                        </div>
+                    </a>
+                </div>
+
+                <button form="profileForm"
+                        id="updatebtn"
+                        class="ui green fluid submit button"
+                        type="submit">
+                    Update
+                </button>
             </div>
         </div>
         <div id="stuck" class="eleven wide column">

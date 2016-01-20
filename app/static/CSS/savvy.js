@@ -48,6 +48,7 @@ $(function () {
     $('.ui.sticky')
         .sticky({
             context: '#stuck',
+            pushing: true,
             offset       : 20,
             bottomOffset : 20
         })
@@ -142,6 +143,11 @@ $(function () {
     $('#profileForm').form(validationObj, {
         inline: true
     });
+
+    $('#recoverForm').form(validationObj, {
+        inline: true
+    });
+
 
     // Dismiss message
     $('.message .close')
