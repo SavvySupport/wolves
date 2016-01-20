@@ -5,7 +5,7 @@ from flask.ext.login import login_user
 from flask import flash
 from hashlib import md5
 import os, subprocess
-# Import smtplib for the actual sending function
+
 
 class regoAuthenticate():
     #to authenticate confirmation link
@@ -63,7 +63,22 @@ class regoForm(Form):
                 "password": md5(self.password.data.rstrip().encode('utf-8')).hexdigest(),
                 "email"   : self.email.data.rstrip(),
                 "status"  : "unverified",
-                "token"   : token }
+                "token"   : token,
+                "businessName": "",
+                "contactName": "",
+                "phoneNumber"   : "",
+                "website"  : "",
+                "streetAddress"   : "",
+                "hiring"    : "",
+                "firstName": "",
+                "lastName": "",
+                "gender"  : "",
+                "birthday"   : "",
+                "residency"    : "",
+                "introduction"  : "",
+                "education" : "",
+                "availability"  : "",
+                "skills"    : "" }
 
             # insert into database
             savvy_collection.insert(user)

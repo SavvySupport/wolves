@@ -5,6 +5,7 @@ from app import app, manager, savvy_collection, db, client
 from app.Forms.rego import regoForm,regoAuthenticate
 from app.Forms.login import loginForm
 from app.Forms.recover import recoverForm
+from app.Forms.profile import profileFormEmployer, profileFormEmployee
 from app.Models.user import User
 from jinja2 import Environment, FileSystemLoader
 from flask import Flask, request, session, g, redirect, url_for, \
@@ -89,8 +90,7 @@ def logout():
 def confirmationEmail(username, token):
     #if user confirmation link is wrong
     authenticate = regoAuthenticate(username,token)
-    if authenticate.validate():
-        return redirect(url_for('home'))
+    authenticate.validate()
     return redirect(url_for('home'))
 
 
@@ -107,10 +107,59 @@ def register():
 
     return render('register.html', form)
 
-@app.route('/profile/<account>')
+
+@app.route('/profile/<account>', methods=['GET', 'POST'])
 @login_required
+#To edit/add more info about User
 def profile(account):
-    return render('profile.html')
+
+    user = savvy_collection.find_one({ "username": account })
+    #query into db to see if user is employer or employee
+    if user['category'] == 'employer':
+        #if user is employer, load employer form
+        form = profileFormEmployer(account, request.form)
+
+            #to prepopulate fields
+        if request.method == 'GET':
+            form.businessName.data = user['businessName']
+            form.contactName.data = user['contactName']
+            form.phoneNumber.data = user['phoneNumber']
+            form.website.data = user['website']
+            form.streetAddress.data = user['streetAddress']
+            form.hiring.data = user['hiring']
+
+        if request.method == 'POST' and form.validate():
+            # redirect to appropriate page
+            return redirect(url_for('profile', account=form.username))
+
+        return render('profile.html', form)
+
+    elif user['category'] == 'employee':
+        #else load employee's form
+        form = profileFormEmployee(account, request.form)#
+
+        #prepopulate field
+        if request.method == 'GET':
+            form.firstName.data = user['firstName']
+            form.lastName.data = user['lastName']
+            form.phoneNumber.data = user['phoneNumber']
+            form.gender.data = user['gender']
+            form.birthday.data = user['birthday']
+            form.residency.data = user['residency']
+            form.introduction.data = user['introduction']
+            form.education.data = user['education']
+            form.availability.data = user['availability']#
+            form.skills.data = user['skills']
+
+        if request.method == 'POST' and form.validate():
+            # redirect to appropriate page
+            return redirect(url_for('profile', account=form.username))#
+
+        return render('profile.html', form)
+
+    else:
+        return redirect(url_for('home'))
+
 
 @app.route('/recover', methods=['GET', 'POST'])
 def recover():
