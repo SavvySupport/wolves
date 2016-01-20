@@ -41,22 +41,22 @@
     Side bar
 -->
 {% macro sideBar(logged_in) %}
-    <div class="ui wide left vertical inverted sidebar labeled icon menu">
+    <div class="ui left wide vertical inverted sidebar labeled icon menu">
         <a class="item" href= {{ url_for('home') }} >
             <i class="home icon"></i>
             Home
         </a>
         {% if logged_in == false %}
-            <a id="loginbtn" class="item" href= {{ url_for('login') }} >
+            <a class="item" href= {{ url_for('login') }} >
                 <i class="smile icon"></i>
                 Log In
             </a>
-            <a id="regobtn" class="item" href= {{ url_for('register') }} >
+            <a class="item" href= {{ url_for('register') }} >
                 <i class="plus icon"></i>
                 Sign Up
             </a>
         {% else %}
-            <a id="signoutbtn" class="item" href= {{ url_for('logout') }} >
+            <a class="item" href= {{ url_for('logout') }} >
                 <i class="sign out icon"></i>
                 Log Out
             </a>

@@ -1,5 +1,5 @@
 from wtforms import Form, TextField, PasswordField, validators
-from app.Models.user import User
+from app.Models.User import User
 from app import savvy_collection
 from flask import flash
 from flask.ext.login import login_user
