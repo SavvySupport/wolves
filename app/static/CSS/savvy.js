@@ -20,36 +20,8 @@ $(function () {
     // Open sidebar
     $('#sidebar').click(function() {
         $('.ui.labeled.icon.sidebar')
+            .sidebar('setting', 'transition', 'slide along')
             .sidebar('toggle')
-        ;
-    });
-
-    // Open deactivate account modal
-    $('#deactivatebtn').click(function() {
-        $('.ui.basic.modal.deactivate')
-            .modal('show')
-        ;
-    })
-
-    // Open activate account modal
-    $('#activatebtn').click(function() {
-        $('.ui.basic.modal.activate')
-            .modal('show')
-        ;
-    })
-
-    // Open delete account modal
-    $('#quitbtn').click(function() {
-        $('.ui.basic.modal.destroy')
-            .modal('show')
-        ;
-    })
-
-    // Not sure what this is for anymore. probably nothing
-    // Check later
-    $('#notibtn').click(function() {
-        $('.ui.modal')
-            .modal('show')
         ;
     });
 
@@ -75,10 +47,14 @@ $(function () {
     // Sticky effect
     $('.ui.sticky')
         .sticky({
-            context: '#sticky',
+            context: '#stuck',
             offset       : 20,
             bottomOffset : 20
         })
+    ;
+
+    $('.ui.sticky')
+        .sticky('refresh')
     ;
 
     // Accordion effect
@@ -164,10 +140,6 @@ $(function () {
     });
 
     $('#profileForm').form(validationObj, {
-        inline: true
-    });
-
-    $('#replyForm').form(validationObj, {
         inline: true
     });
 
