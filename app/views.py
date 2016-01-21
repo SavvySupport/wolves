@@ -125,7 +125,7 @@ def profile(account):
             return render('profile.html', form)
 
         elif user.get('category', '').lower() == 'candidate':
-            form = profileFormEmployee(account, request.form)#
+            form = profileFormEmployee(account, request.form)
 
             if request.method == 'GET':
                 form.firstName.data = user.get('firstName', '')
