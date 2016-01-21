@@ -23,6 +23,16 @@
 /*******************************
              Custom
 *******************************/
+.dp {
+    border: 3px solid #73AD21;
+    padding: 10px;
+}
+
+.center-content {
+    width: 60%;
+    padding-left: 20%;
+}
+
 .container {
     min-height:100%;
     height:100%;

@@ -186,6 +186,18 @@ $(function () {
     // })
     // End video feature
 
+    // Trigger file selector by clicking on the profile
+    $('#upload').click(function(){
+        $('#attachmentName').click();
+    });
+
+    // To start uploading profile immediately after selecting file
+    // Need a bit of work here with ajax
+    // $('input[type=file]').change(function() {
+    //     // select the form and submit
+    //     $('form').submit();
+    // });
+
     // Restyle and handle file uploads
     var fileExtentionRange = '.png .jpg .jpeg';
     var MAX_SIZE = 3; // MB
