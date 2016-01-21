@@ -9,7 +9,6 @@ class loginForm(Form):
     username = TextField('username', [validators.required()])
     password = PasswordField('password', [validators.required()])
 
-
     def __init__(self, *args, **kwargs):
         Form.__init__(self, *args, **kwargs)
 
@@ -19,18 +18,23 @@ class loginForm(Form):
             flash('Form invalid', 'error')
             return False
 
-        #to querry into database, access user data by user['data']
+        # Query data from database
         user = savvy_collection.find_one({ "username": self.username.data.rstrip()})
 
-        if user and User.validate_login(user['password'],                                                      self.password.data.rstrip()) and user['status'] == 'verified':
-            userObj = User(user['username'])
-            login_user(userObj)
-            return True
-        elif user and User.validate_login(user['password'],                                                      self.password.data.rstrip()) and user['status'] == 'unverified':
-            #if username and password is correct but have not validated Email
-            flash('Please verify your email address', 'error')
-            return False
+        if user:
+            username = user.get('username', None)
+            hash_password = user.get('password', None)
+            user_password = self.password.data.rstrip()
+            account_token = user.get('token', '')
 
+            if User.validate_login(hash_password, user_password):
+                if account_token == '':
+                    userObj = User(username)
+                    login_user(userObj)
+                    return True
+                else:
+                    #if username and password is correct but have not validated Email
+                    flash('Please verify your email address', 'error')
         else:
             flash('Incorrect login credentials', 'error')
-            return False
+        return False

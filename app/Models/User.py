@@ -24,16 +24,17 @@ class User():
 
     @staticmethod
     def validate_rego_token(username, token):
-        user = savvy_collection.find_one({ "username": username})
-        if user['token'] == token and user['status'] == 'unverified':
-            update = savvy_collection.update_one( {"username": username},
-                                                  {"$set": {"status": "verified"}})
+        user = savvy_collection.find_one({ 'username': username})
+        if user:
+            token_db = user.get('token', None)
+            if token_db != None:
+                if token_db == token:
+                    update = savvy_collection.update_one( {'username': username}, {'$set': {'token': ''}} )
+                    flash('Your account has been verified!', 'success')
+                    return True
+                elif token_db == '':
+                    flash('Account has already been verified', 'warning')
+                    return False
 
-            flash('Your account has been verified!', 'success')
-            return True
-        elif user['token'] == token and user['status'] == 'verified':
-            flash('Account has already been verified', 'warning')
-            return False
-        else:
-            flash('Unknown confirmation link', 'error')
-            return False
+        flash('Unknown confirmation link', 'error')
+        return False

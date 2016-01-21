@@ -20,5 +20,5 @@ class recoverForm(Form):
             # send email with new password to this address
             return True
         else:
-            flash("{} doesn't exisit in our database".format(self.email.data))
+            flash("{} doesn't exisit in our database".format(self.email.data), 'error')
             return False

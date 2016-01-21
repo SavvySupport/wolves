@@ -1,32 +1,11 @@
-from wtforms import Form, BooleanField, TextField, TextAreaField, PasswordField, validators, ValidationError
+from wtforms import Form, BooleanField, TextField, TextAreaField, PasswordField,\
+                    validators, ValidationError, SelectField
 from app.Models.User import User
 from app import savvy_collection
 from flask.ext.login import login_user
 from flask import flash
 from hashlib import md5
 import os, subprocess
-# Import smtplib for the actual sending function
-
-class regoAuthenticate():
-    #to authenticate confirmation link
-    def __init__(self, username, token):
-        self.username = username
-        self.token = token
-
-    def validate(self):
-        user = savvy_collection.find_one({ "username": self.username})
-        if user['token'] == self.token and user['status'] == 'unverified':
-            update = savvy_collection.update_one( {"username": self.username},
-                                                  {"$set": {"status": "verified"}})
-
-            flash('Your account has been verified!', 'success')
-            return True
-        elif user['token'] == self.token and user['status'] == 'verified':
-            flash('Account has already been verified', 'warning')
-            return False
-        else:
-            flash('Unknown confirmation link', 'error')
-            return False
 
 class regoForm(Form):
     username = TextField('username', [validators.length(min=5),
@@ -36,6 +15,7 @@ class regoForm(Form):
                                           validators.required()])
     confirm = PasswordField('passwordconfirm', [validators.equal_to('password')])
     email = TextField('email', [validators.required()])
+    type = SelectField('type', choices=[('Employer', 'Employer'), ('Candidate', 'Candidate')], default='Candidate')
 
     def __init__(self, *args, **kwargs):
         Form.__init__(self, *args, **kwargs)
@@ -52,14 +32,15 @@ class regoForm(Form):
             flash('Email or Username has been taken', 'warning')
             return False
         else:
-            token = md5(self.email.data.rstrip().encode('utf-8')).hexdigest()
-
+            raw_token = self.email.data + self.username.data + 'verification code'
+            token = md5(raw_token.encode('utf-8')).hexdigest()
             user = {
                 "username": self.username.data.rstrip(),
                 "password": md5(self.password.data.rstrip().encode('utf-8')).hexdigest(),
                 "email"   : self.email.data.rstrip(),
-                "status"  : "unverified",
-                "token"   : token }
+                "category"    : self.type.data,
+                "token"   : token
+            }
 
             # insert into database
             savvy_collection.insert(user)

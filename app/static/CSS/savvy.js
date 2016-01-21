@@ -44,6 +44,11 @@ $(function () {
         .checkbox()
     ;
 
+    // Dropdown list
+    $('.ui.dropdown')
+        .dropdown()
+    ;
+
     // Sticky effect
     $('.ui.sticky')
         .sticky({
