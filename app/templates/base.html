@@ -81,7 +81,7 @@
                     </a>
                 {% else %}
                     <a href= {{ url_for('profile', account=user['username']) }} class="item">
-                        <i class="child icon"></i> Welcome back {{ user['username'] }}
+                        <i class="child icon"></i> Welcome back {{ user.get('username', None) }}
                     </a>
                 {% endif %}
             </div>
