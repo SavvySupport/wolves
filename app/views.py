@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 import sys
 import os
+from werkzeug import secure_filename #for uploading Images
 from app import app, manager, savvy_collection, db, client
 from app.Forms.rego import regoForm
 from app.Forms.login import loginForm
 from app.Forms.recover import recoverForm
 from app.Forms.profile import profileFormEmployer, profileFormEmployee
+from app.Forms.viewProfile import profileView
 from app.Models.User import User
 from jinja2 import Environment, FileSystemLoader
 from flask import Flask, request, session, g, redirect, url_for, \
@@ -112,52 +114,49 @@ def register():
 #To edit/add more info about User
 def profile(account):
 
+    #print(current_user.get_id()['username']) #prints log in user
+
     user = savvy_collection.find_one({ "username": account })
-    #query into db to see if user is employer or employee
-    if user['category'] == 'employer':
-        #if user is employer, load employer form
-        form = profileFormEmployer(account, request.form)
 
-            #to prepopulate fields
-        if request.method == 'GET':
-            form.businessName.data = user['businessName']
-            form.contactName.data = user['contactName']
-            form.phoneNumber.data = user['phoneNumber']
-            form.website.data = user['website']
-            form.streetAddress.data = user['streetAddress']
-            form.hiring.data = user['hiring']
+    if current_user.get_id()['username'] == account:
+    #if user browsing own profile.
+        #query into db to see if user is employer or employee
+        if user['category'] == 'employer':
+            #if user is employer, load employer form
+            form = profileFormEmployer(account, request.form)
 
-        if request.method == 'POST' and form.validate():
-            # redirect to appropriate page
-            return redirect(url_for('profile', account=form.username))
+                #to prepopulate fields
+            if request.method == 'GET':
+                form.prepopulate()
 
-        return render('profile.html', form)
+            if request.method == 'POST' and form.validate():
+                # redirect to appropriate page
+                return redirect(url_for('profile', account=form.username))
 
-    elif user['category'] == 'employee':
-        #else load employee's form
-        form = profileFormEmployee(account, request.form)#
+            return render('profile.html',form)
 
-        #prepopulate field
-        if request.method == 'GET':
-            form.firstName.data = user['firstName']
-            form.lastName.data = user['lastName']
-            form.phoneNumber.data = user['phoneNumber']
-            form.gender.data = user['gender']
-            form.birthday.data = user['birthday']
-            form.residency.data = user['residency']
-            form.introduction.data = user['introduction']
-            form.education.data = user['education']
-            form.availability.data = user['availability']#
-            form.skills.data = user['skills']
+        elif user['category'] == 'employee':
+            #else load employee's form
+            form = profileFormEmployee(account, request.form)#
 
-        if request.method == 'POST' and form.validate():
-            # redirect to appropriate page
-            return redirect(url_for('profile', account=form.username))#
+            #prepopulate field
+            if request.method == 'GET':
+                form.prepopulate()
+
+            if request.method == 'POST' and form.validate():
+                # redirect to appropriate page
+                return redirect(url_for('profile', account=form.username))#
+
+            return render('profile.html', form)
+
+        else:
+            return redirect(url_for('home'))
+    else: #user browsing other people profile
+
+        form = profileView(account)
 
         return render('profile.html', form)
 
-    else:
-        return redirect(url_for('home'))
 
 
 @app.route('/recover', methods=['GET', 'POST'])

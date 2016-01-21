@@ -74,7 +74,8 @@ class regoForm(Form):
                 "introduction"  : "",
                 "education" : "",
                 "availability"  : "",
-                "skills"    : "" }
+                "skills"    : "",
+                "jobStatus" :   "" }
 
             # insert into database
             savvy_collection.insert(user)
