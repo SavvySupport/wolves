@@ -6,7 +6,7 @@ from hashlib import md5
 import os, subprocess
 
 
-class profileView():
+class viewProfile():
     #display all users
 
 

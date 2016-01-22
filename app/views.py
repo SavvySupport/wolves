@@ -6,6 +6,7 @@ from app.Forms.rego import regoForm
 from app.Forms.login import loginForm
 from app.Forms.recover import recoverForm
 from app.Forms.profile import profileFormEmployer, profileFormEmployee
+from app.Forms.viewProfile import viewProfile
 from app.Models.User import User
 from jinja2 import Environment, FileSystemLoader
 from flask import Flask, request, session, g, redirect, url_for, \
@@ -119,7 +120,7 @@ def profile(account):
 
                 return render('profile.html',form)
 
-            elif user.get('category', '').lower() == 'candidate':
+            elif user.get('category', '').lower() == 'employee':
                 form = profileFormEmployee(account, request.form)
 
                 if request.method == 'GET':
@@ -132,6 +133,9 @@ def profile(account):
 
             else:
                 return redirect(url_for('home'))
+        else:
+            form = viewProfile(account)
+            return render('profile.html',form)
     else:
         flash('Invalid access to profile', 'error')
         return redirect(url_for('home'))
