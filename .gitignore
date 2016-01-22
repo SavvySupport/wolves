@@ -2,3 +2,13 @@ __pycache__/
 *.pyc
 .DS_Store
 
+
+app/templates/profileTest.html
+
+app/templates/originalProfile.html
+
+app/templates/profileView.html
+
+NotesOnProject
+
+NotesOnProject
