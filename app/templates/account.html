@@ -1,34 +1,45 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="ui internal celled grid">
+    <div class="ui internal celled grid segment">
+        <!-- Navigation column -->
         <div class="five wide column">
             <!-- Keep this section sticky to viewport -->
             <div class="ui sticky">
                 <div class="ui vertical fluid steps">
-                    <a onclick="changeClass('1')" id="1" class="active link step step1">
+                    <a onclick="changeClass('0')" id="0" class="active link step step0">
+                        <i class="user icon"></i>
+                        <div class="content">
+                            <div class="title">Profile Picture</div>
+                            <div class="description">A photo to represent yourself</div>
+                        </div>
+                    </a>
+                    <a onclick="changeClass('1')" id="1" class="link step step1">
                         <i class="info icon"></i>
                         <div class="content">
                             <div class="title">Basic information</div>
                             <div class="description">Tell us about yourself</div>
                         </div>
                     </a>
-                    <a onclick="changeClass('2')" id="2" class="link step step2">
-                        <i class="star icon"></i>
-                        <div class="content">
-                            <div class="title">Skills and preferences</div>
-                            <div class="description">Your skills matter</div>
-                        </div>
-                    </a>
+                    {% if form.type == 'candidate' %}
+                        <a onclick="changeClass('2')" id="2" class="link step step2">
+                            <i class="star icon"></i>
+                            <div class="content">
+                                <div class="title">Skills and preferences</div>
+                                <div class="description">Your skills matter</div>
+                            </div>
+                        </a>
+                    {% endif %}
                     <a onclick="changeClass('3')" id="3" class="link step step3">
-                        <i class="file text outline icon"></i>
+                        <i class="setting outline icon"></i>
                         <div class="content">
-                            <div class="title">Confirm Order</div>
-                            <div class="description">Verify order details</div>
+                            <div class="title">Setting</div>
+                            <div class="description">Configure your account</div>
                         </div>
                     </a>
                 </div>
 
+                <!-- Submit button for account form -->
                 <button form="profileForm"
                         id="updatebtn"
                         class="ui green fluid submit button"
@@ -37,10 +48,16 @@
                 </button>
             </div>
         </div>
+
+        <!-- Account detail forms -->
         <div id="stuck" class="eleven wide column">
-            <div class="row">
-                <div id="step1" class="ui raised segment">
-                    <h2 class="ui block header">Basic Information</h2>
+            <!-- Photo Form -->
+            <div id="step0" class="ui raised segment">
+                <h2 class="ui block header">Profile picture</h2>
+                <form id="photoForm"
+                      action= {{ url_for('account') }}
+                      method="post"
+                      role="form">
                     <!-- Profile picture -->
                     <div class="ui special cards">
                         <div class="card">
@@ -66,40 +83,178 @@
                         <input type="text" id="_attachmentName">
                         <label for="attachmentName" class="ui icon green button btn-file">
                             <i class="folder open outline icon"></i>
-                            <input form="profileForm" type="file" id="attachmentName" name="attachmentName" style="display: none">
+                            <input type="file" id="attachmentName" name="attachmentName" style="display: none">
                         </label>
                     </div>
+                </form>
+            </div>
 
-                    <!-- Form -->
-                    <form id="profileForm"
-                          action= {{ url_for('account') }}
-                          method="post"
-                          role="form">
-                    </form>
+            <!-- Profile Form -->
+            <form id="profileForm"
+                  class="ui form"
+                  action= {{ url_for('account') }}
+                  method="post"
+                  role="form">
+
+                <div id="step1" class="ui raised segment">
+                    <h2 class="ui block header">Basic Information</h2>
+                    <div class="ui very relax stackable grid">
+                        <div class="ten wide column">
+                            <!-- Detail Form -->
+                            {% if form.type == 'employer' %}
+                                    <div class="field">
+                                        <label>Business Name</label>
+                                        {{ form.businessName }}
+                                    </div>
+                                    <div class="field">
+                                        <label>Contact Name</label>
+                                        {{ form.contactName }}
+                                    </div>
+                                    <div class="field">
+                                        <label>Contact Number</label>
+                                        {{ form.contactName }}
+                                    </div>
+                                    <div class="field">
+                                        <label>Website</label>
+                                        {{ form.website }}
+                                    </div>
+                                    <div class="field">
+                                        <label>Address</label>
+                                        {{ form.streetAddress }}
+                                    </div>
+                                    <div class="field">
+                                        <label>About</label>
+                                        {{ form.about }}
+                                    </div>
+                            {% else %}
+                                <form id="profileForm"
+                                      class="ui form"
+                                      action= {{ url_for('account') }}
+                                      method="post"
+                                      role="form">
+                                    <div class="field">
+                                        <label>First Name</label>
+                                        {{ form.firstName }}
+                                    </div>
+                                    <div class="field">
+                                        <label>Last Name</label>
+                                        {{ form.lastName }}
+                                    </div>
+                                    <div class="field">
+                                        <label>Contact Number</label>
+                                        {{ form.phoneNumber }}
+                                    </div>
+                                    <div class="field">
+                                        <label>Suburb</label>
+                                        {{ form.location }}
+                                    </div>
+                                    <!-- ACCOUNT TYPE -->
+                                    <div class="field">
+                                        <label>Gender</label>
+                                        <div class="ui fluid selection dropdown field ">
+                                            {{ form.gender }}
+                                            <i class="dropdown icon"></i>
+                                            <div class="default text">Select Gender</div>
+                                            <div class="menu">
+                                                <div class="item" data-value="0">
+                                                    <img class="ui mini avatar image" src= {{ url_for('static', filename='images/user.png') }} >
+                                                    Male
+                                                </div>
+                                                <div class="item" data-value="1">
+                                                    <img class="ui mini avatar image" src= {{ url_for('static', filename='images/user.png') }} >
+                                                    Female
+                                                </div>
+                                                <div class="item" data-value="2">
+                                                    <img class="ui mini avatar image" src= {{ url_for('static', filename='images/user.png') }} >
+                                                    Others
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <label>D.O.B</label>
+                                        {{ form.birthday(id='datetimepicker') }}
+                                    </div>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
 
-                <div id="step2" class="ui raised segment">
-                    <h2 class="ui block header">Step 2</h2>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </div>
+                {% if form.type == 'candiate' %}
+                    <div id="step2" class="ui raised segment">
+                        <h2 class="ui block header">Skills and Preferences</h2>
+                        <div class="ui very relax stackable grid">
+                            <div class="ten wide column">
+                                <!-- Detail Form -->
+                                <form id="profileForm"
+                                      class="ui form"
+                                      action= {{ url_for('account') }}
+                                      method="post"
+                                      role="form">
+                                    <div class="field">
+                                        <label>First Name</label>
+                                        {{ form.firstName() }}
+                                    </div>
+                                    <div class="field">
+                                        <label>Last Name</label>
+                                        {{ form.lastName() }}
+                                    </div>
+                                    <div class="field">
+                                        <label>Contact Number</label>
+                                        {{ form.phoneNumber() }}
+                                    </div>
+                                    <div class="field">
+                                        <label>Suburb</label>
+                                        {{ form.location() }}
+                                    </div>
+                                    <!-- ACCOUNT TYPE -->
+                                    <div class="field">
+                                        <label>Gender</label>
+                                        <div class="ui fluid selection dropdown field ">
+                                            {{ form.gender }}
+                                            <i class="dropdown icon"></i>
+                                            <div class="default text">Select Gender</div>
+                                            <div class="menu">
+                                                <div class="item" data-value="0">
+                                                    <img class="ui mini avatar image" src= {{ url_for('static', filename='images/user.png') }} >
+                                                    Male
+                                                </div>
+                                                <div class="item" data-value="1">
+                                                    <img class="ui mini avatar image" src= {{ url_for('static', filename='images/user.png') }} >
+                                                    Female
+                                                </div>
+                                                <div class="item" data-value="2">
+                                                    <img class="ui mini avatar image" src= {{ url_for('static', filename='images/user.png') }} >
+                                                    Others
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <label>D.O.B</label>
+                                        {{ form.birthday() }}
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
 
                 <div id="step3" class="ui raised segment">
-                    <h2 class="ui block header">Step 3</h2>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    <h2 class="ui block header">Account Setting</h2>
+                    <h3>Coming Soon</h3>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 
-    <!-- This is what I call hackathon coding style. Awful looking code. clean up later. it works though -->
+    <!--
+    This is what I call hackathon coding style.
+    Awful looking code.
+    Clean up later.
+    it works though
+    -->
     <script>
         function changeClass(step) {
             if (step != undefined) {
@@ -109,15 +264,26 @@
                     var reg = pattrn.test(document.getElementById(step).className)
                     if (!reg) {
                         document.getElementById(step).className += " active";
-                        for (i = 1; i <= 3; i++) {
+
+                        for (i = 0; i <= 3; i++) {
                             if (i == stepInt) { continue; }
-                            console.log(document.getElementById(String(i)).className);
-                            document.getElementById(String(i)).className = document.getElementById(String(i)).className.replace(/(?:^|\s)active(?!\S)/g , '');
+                            if (document.getElementById(String(i))) {
+                                document.getElementById(String(i)).className = document.getElementById(String(i)).className.replace(/(?:^|\s)active(?!\S)/g , '');
+                            }
                         }
                     }
                 }
             }
         }
+
+        // Elevator 0
+        var start = document.querySelector('.step0');
+        var target = document.querySelector('#step0');
+        var elevator = new Elevator({
+            element: start,
+            targetElement: target,
+            duration: 1500
+        });
 
         // Elevator 1
         var start1 = document.querySelector('.step1');

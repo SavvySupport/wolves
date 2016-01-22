@@ -1,10 +1,9 @@
 from wtforms import Form, BooleanField, TextField, TextAreaField, PasswordField,\
                     validators, ValidationError, RadioField, \
-                    DateTimeField, SelectMultipleField
+                    DateTimeField, SelectMultipleField, SelectField
+from wtforms.widgets import TextArea
 from app import savvy_collection
 from flask import flash
-from hashlib import md5
-import os, subprocess
 
 class employerForm(Form):
     businessName    = TextField('businessName')
@@ -12,10 +11,10 @@ class employerForm(Form):
     phoneNumber     = TextField('phoneNumber')
     website         = TextField('website')
     streetAddress   = TextField('streetAddress')
-    hiring          = RadioField('hiring', choices = [('0', 'Yes'), ('1', 'No')])
+    about           = TextField('about', widget=TextArea())
 
     def __init__(self, *args, **kwargs):
-        self.username = args[0]
+        self.type = 'employer'
         Form.__init__(self, args[1], **kwargs)
 
     def prepopulate(self, user):
@@ -24,34 +23,41 @@ class employerForm(Form):
         self.phoneNumber.data   = user.get('phoneNumber', '')
         self.website.data       = user.get('website', '')
         self.streetAddress.data = user.get('streetAddress', '')
-        self.hiring.data        = user.get('hiring', '')
 
-    def validate(self):
-        # insert into database
+    def validate(self, user):
+        rv = Form.validate(self)
+        if not rv:
+            flash('Form invalid', 'error')
+            return False
+
+        return True
+
+    def update(self):
         user = {
             "businessName"      : self.businessName.data,
             "contactName"       : self.contactName.data,
             "phoneNumber"       : self.phoneNumber.data,
             "website"           : self.website.data.rstrip(),
-            "streetAddress"     : self.streetAddress.data,
-            "hiring"            : self.hiring.data
+            "streetAddress"     : self.streetAddress.data
         }
 
-        savvy_collection.update({"username": self.username},
+        savvy_collection.update({"username": current_user.get_id()['username']},
                                 {"$set": user})
-        return True
 
 class candidateForm(Form):
-    firstName   = TextField('firstName')
-    lastName    = TextField('lastName')
-    phoneNumber = TextField('phoneNumber')
-    skills      = TextField('skills')
-    birthday    = DateTimeField('birthday', format='%d/%m/%y')
-    introduction = TextField('introduction')
+    firstName       = TextField('firstName')
+    lastName        = TextField('lastName')
+    phoneNumber     = TextField('phoneNumber')
+    skills          = TextField('skills')
+    birthday        = DateTimeField('birthday', format='%d/%m/%y')
+    introduction    = TextField('introduction')
+    location        = TextField('location')
 
-    gender = RadioField('gender',
-                        choices = [(0,'Male'),
-                                   (1,'Female')])
+    gender = SelectField('gender',
+                         choices = [(0,'Male'),
+                                    (1,'Female'),
+                                    (2,'Other')],
+                         default = 0)
 
     residency = RadioField('residency',
                            [validators.Optional()],
@@ -85,24 +91,32 @@ class candidateForm(Form):
                            choices = [('0','Yes'), ('1','No')])
 
     def __init__(self, *args, **kwargs):
-        self.username = args[0]
+        self.type = 'candidate'
         Form.__init__(self, args[1], **kwargs)
 
     def validate(self):
+        rv = Form.validate(self)
+        if not rv:
+            flash('Form invalid', 'error')
+            return False
+
+        user = {
+            "firstName"     : self.firstName.data.rstrip(),
+            "lastName"      : self.lastName.data.rstrip(),
+            "phoneNumber"   : self.phoneNumber.data.rstrip(),
+            "gender"        : self.gender.data,
+            "birthday"      : self.birthday.data,
+            "residency"     : self.residency.data,
+            "introduction"  : self.introduction.data,
+            "education"     : self.education.data,
+            "availability"  : self.availability.data,
+            "skills"        : self.skills.data,
+            "location"      : self.location.data
+        }
+
         savvy_collection.update(
-            { "username": self.username },
-            { "$set": {
-                "firstName"     : self.firstName.data.rstrip(),
-                "lastName"      : self.lastName.data.rstrip(),
-                "phoneNumber"   : self.phoneNumber.data.rstrip(),
-                "gender"        : self.gender.data,
-                "birthday"      : self.birthday.data,
-                "residency"     : self.residency.data,
-                "introduction"  : self.introduction.data,
-                "education"     : self.education.data,
-                "availability"  : self.availability.data,
-                "skills"        : self.skills.data }
-            })
+            { "username": current_user.get_id()['username'] },
+            { "$set": user })
 
         return True
 
@@ -118,3 +132,4 @@ class candidateForm(Form):
         self.availability.data  = user.get('availability', '')
         self.skills.data        = user.get('skills', '')
         self.jobStatus.data     = user.get('jobStatus', '')
+        self.location.data      = user.get('location', '')

@@ -15,7 +15,9 @@ class regoForm(Form):
                                           validators.required()])
     confirm = PasswordField('passwordconfirm', [validators.equal_to('password')])
     email = TextField('email', [validators.required()])
-    type = SelectField('type', choices=[('Employer', 'Employer'), ('Candidate', 'Candidate')], default='Candidate')
+    type = SelectField('type', choices = [('Employer', 'Employer'),
+                                          ('Candidate', 'Candidate')],
+                               default = 'Candidate')
 
     def __init__(self, *args, **kwargs):
         Form.__init__(self, *args, **kwargs)

@@ -98,7 +98,7 @@ def register():
 
     form = regoForm(request.form)
     if request.method == 'POST' and form.validate():
-        return redirect(url_for('account', account=form.username.data))
+        return redirect(url_for('account'))
 
     return render('register.html', form)
 
@@ -108,35 +108,25 @@ def account():
     username = current_user.get_id()['username']
     user = savvy_collection.find_one({ "username": username })
     if user:
+        form = None
         if user.get('category', '').lower() == 'employer':
             form = employerForm(username, request.form)
-
-            if request.method == 'GET':
-                form.prepopulate(user)
-
-            if request.method == 'POST' and form.validate():
-                return redirect(url_for('account'))
-
-            return render('account.html',form)
-
         elif user.get('category', '').lower() == 'candidate':
             form = candidateForm(username, request.form)
 
-            if request.method == 'GET':
-                form.prepopulate(user)
+        if request.method == 'GET':
+            form.prepopulate(user)
 
-            if request.method == 'POST' and form.validate():
-                return redirect(url_for('account'))
+        if request.method == 'POST':
+            if form.validate(user):
+                flash('Successfully updated your profile', 'success')
+            else:
+                flash('Failed to update your profile', 'error')
 
-            return render('account.html', form)
-
-        else:
-            return redirect(url_for('home'))
+        return render('account.html', form)
     else:
         flash('Invalid access to account', 'error')
         return redirect(url_for('home'))
-
-    return render('account.html', form)
 
 @app.route('/recover', methods=['GET', 'POST'])
 def recover():

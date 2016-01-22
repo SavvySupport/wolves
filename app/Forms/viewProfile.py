@@ -1,15 +1,8 @@
 from app.Models.User import User
 from app import savvy_collection
-from flask.ext.login import login_user
 from flask import flash
-from hashlib import md5
-import os, subprocess
-
 
 class profileView():
-    #display all users
-
-
     def __init__(self, *args, **kwargs):
         self.username = args[0]
         print (self.username)

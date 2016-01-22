@@ -133,6 +133,15 @@ $(function () {
                         prompt  : 'Keep it 142 characters'
                     }
                 ]
+            },
+            website: {
+                identifier  : 'website',
+                rules: [
+                    {
+                        type    : 'website',
+                        prompt  : 'Keep it 142 characters'
+                    }
+                ]
             }
         }
     };
@@ -200,7 +209,7 @@ $(function () {
     // Need a bit of work here with ajax
     $('#attachmentName').change(function() {
         // select the form and submit
-        $('#profileForm').submit();
+        $('#photoForm').submit();
     });
 
     // Restyle and handle file uploads
