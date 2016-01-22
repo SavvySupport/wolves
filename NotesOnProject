@@ -29,3 +29,11 @@ Note:
     introduction = TextField('introduction')
     education = RadioField('education',choices=[(0,'Finishing High School'),(1,'Completed High School'),(2,'Finishing Tafe/Apprenticeship'),(3,'Completed Tafe/Apprenticeship'),(4,'Finishing University'),(5,'Completed University')])
     availability = RadioField('availability', choices=[('0','Monday'),('1','Tuesday'),('2','Wednesday'),('3','Thursday'),('4','Friday'),('5','Saturday'),('6','Sunday')])
+
+
+
+
+            <!-- Profile picture -->
+            <!-- <div class="ui medium circular image dp">
+                <img id="upload" src= {{ url_for('static', filename="images/user.png") }} />
+            </div> -->

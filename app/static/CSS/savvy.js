@@ -198,10 +198,10 @@ $(function () {
 
     // To start uploading profile immediately after selecting file
     // Need a bit of work here with ajax
-    // $('input[type=file]').change(function() {
-    //     // select the form and submit
-    //     $('form').submit();
-    // });
+    $('#attachmentName').change(function() {
+        // select the form and submit
+        $('#profileForm').submit();
+    });
 
     // Restyle and handle file uploads
     var fileExtentionRange = '.png .jpg .jpeg';

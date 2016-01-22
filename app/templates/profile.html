@@ -39,48 +39,44 @@
         </div>
         <div id="stuck" class="eleven wide column">
             <div class="row">
-                <!-- HTML here -->
                 <div id="step1" class="ui raised segment">
-                    <h2 class="ui block header">Step 1</h2>
-                    <div class="ui internal grid">
-                        <div class="three wide column"></div>
-                        <div class="eleven wide column">
-                                <!-- Profile picture -->
-                                <!-- <div class="ui medium circular image dp">
-                                    <img id="upload" src= {{ url_for('static', filename="images/user.png") }} />
-                                </div> -->
-
-                                <div class="ui special cards">
-                                    <div class="card">
-                                        <div class="blurring dimmable image">
-                                            <div class="ui dimmer">
-                                                <div class="content">
-                                                    <div class="center">
-                                                        <div class="ui inverted button">
-                                                            <a id="upload">
-                                                                Change
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                    <h2 class="ui block header">Basic Information</h2>
+                    <!-- Profile picture -->
+                    <div class="ui special cards">
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <div class="ui inverted button">
+                                                <a id="upload">
+                                                    Change
+                                                </a>
                                             </div>
-                                            <img src= {{ url_for('static', filename="images/user.png") }} alt="looking good">
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Hidden upload button. triggered with js -->
-                                <div class="ui action input" style="visibility: hidden">
-                                    <input type="text" id="_attachmentName">
-                                    <label for="attachmentName" class="ui icon green button btn-file">
-                                        <i class="folder open outline icon"></i>
-                                        <input form="profileForm" type="file" id="attachmentName" name="attachmentName" style="display: none">
-                                    </label>
-                                </div>
-                            <!-- Form -->
+                                <img src= {{ url_for('static', filename="images/user.png") }} alt="looking good">
+                            </div>
                         </div>
-                        <div class="three wide column"></div>
                     </div>
+
+                    <!-- Hidden upload button. triggered with js -->
+                    <div class="ui action input" style="visibility: hidden">
+                        <input type="text" id="_attachmentName">
+                        <label for="attachmentName" class="ui icon green button btn-file">
+                            <i class="folder open outline icon"></i>
+                            <input form="profileForm" type="file" id="attachmentName" name="attachmentName" style="display: none">
+                        </label>
+                    </div>
+
+                    <!-- Form -->
+                    <form id="profileForm"
+                          action= {{ url_for('profile',
+                                     account = current_user.get_id().get('username')) }}
+                          method="post"
+                          role="form">
+                    </form>
                 </div>
 
                 <div id="step2" class="ui raised segment">

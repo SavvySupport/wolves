@@ -87,7 +87,8 @@ def logout():
 @app.route('/activate/<username>/<token>')
 def activate(username, token):
     if User.validate_rego_token(username, token):
-        return redirect(url_for('profile', account=username))
+        login_user(User(username))
+        return redirect(url_for('profile', account = username))
     return redirect(url_for('home'))
 
 @app.route('/register', methods=['GET', 'POST'])
