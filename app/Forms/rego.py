@@ -39,8 +39,23 @@ class regoForm(Form):
                 "password": md5(self.password.data.rstrip().encode('utf-8')).hexdigest(),
                 "email"   : self.email.data.rstrip(),
                 "category"    : self.type.data,
-                "token"   : token
-            }
+                "token"   : token,
+                "businessName": "",
+                "contactName": "",
+                "phoneNumber"   : "",
+                "website"  : "",
+                "streetAddress"   : "",
+                "hiring"    : "",
+                "firstName": "",
+                "lastName": "",
+                "gender"  : "",
+                "birthday"   : "",
+                "residency"    : "",
+                "introduction"  : "",
+                "education" : "",
+                "availability"  : "",
+                "skills"    : "",
+                "jobStatus" :   "" }
 
             # insert into database
             savvy_collection.insert(user)

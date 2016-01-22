@@ -86,12 +86,12 @@ def logout():
 #testing link http://127.0.0.1:5000/activate/weizteoh/b740538122a3bbcbece1467773034373
 @app.route('/activate/<username>/<token>')
 def activate(username, token):
-    User.validate_rego_token(username, token)
+    if User.validate_rego_token(username, token):
+        return redirect(url_for('profile', account=username))
     return redirect(url_for('home'))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    # Case: user is already logged in
     if current_user and current_user.is_authenticated:
         return redirect(url_for('home'))
 
@@ -104,36 +104,37 @@ def register():
 @app.route('/profile/<account>', methods=['GET', 'POST'])
 @login_required
 def profile(account):
-    #query into db to see if user is employer or employee
     user = savvy_collection.find_one({ "username": account })
-    if user.get('category', None) == 'Employer':
-        form = profileFormEmployer(account, request.form)
+    if user:
+        if current_user.get_id()['username'] == account:
+            if user.get('category', '').lower() == 'employer':
+                form = profileFormEmployer(account, request.form)
 
-        if request.method == 'GET':
-            form.businessName.data = user.get('businessName', '')
-            form.contactName.data = user.get('contactName', '')
-            form.phoneNumber.data = user.get('phoneNumber', '')
-            form.website.data = user.get('website', '')
-            form.streetAddress.data = user.get('streetAddress', '')
-            form.hiring.data = user.get('hiring', '')
+                if request.method == 'GET':
+                    form.prepopulate(user)
 
-    elif user.get('category', None) == 'Candidate':
-        form = profileFormEmployee(account, request.form)#
+                if request.method == 'POST' and form.validate():
+                    return redirect(url_for('profile', account=form.username))
 
-        if request.method == 'GET':
-            form.firstName.data = user.get('firstName', '')
-            form.lastName.data = user.get('lastName', '')
-            form.phoneNumber.data = user.get('phoneNumber', '')
-            form.gender.data = user.get('gender', '')
-            form.birthday.data = user.get('birthday', '')
-            form.residency.data = user.get('residency', '')
-            form.introduction.data = user.get('introduction', '')
-            form.education.data = user.get('education', '')
-            form.availability.data = user.get('availability', '')
-            form.skills.data = user.get('skills', '')
+                return render('profile.html',form)
 
-    if request.method == 'POST' and form.validate():
-        return redirect(url_for('profile', account=form.username))
+            elif user.get('category', '').lower() == 'candidate':
+                form = profileFormEmployee(account, request.form)
+
+                if request.method == 'GET':
+                    form.prepopulate(user)
+
+                if request.method == 'POST' and form.validate():
+                    return redirect(url_for('profile', account=form.username))
+
+                return render('profile.html', form)
+
+            else:
+                return redirect(url_for('home'))
+    else:
+        flash('Invalid access to profile', 'error')
+        return redirect(url_for('home'))
+
     return render('profile.html', form)
 
 @app.route('/recover', methods=['GET', 'POST'])

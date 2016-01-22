@@ -3,20 +3,28 @@ from wtforms import Form, BooleanField, TextField, TextAreaField, PasswordField,
                     DateTimeField, SelectMultipleField
 from app import savvy_collection
 from flask import flash
+from hashlib import md5
+import os, subprocess
 
 class profileFormEmployer(Form):
-    businessName = TextField('businessName')
-    contactName = TextField('contactName')
-    phoneNumber = TextField('phoneNumber')
-    website = TextField('website')
-    streetAddress = TextField('streetAddress')
-    hiring = RadioField('hiring', choices = [('0', 'Yes'), ('1', 'No')])
+    businessName    = TextField('businessName')
+    contactName     = TextField('contactName')
+    phoneNumber     = TextField('phoneNumber')
+    website         = TextField('website')
+    streetAddress   = TextField('streetAddress')
+    hiring          = RadioField('hiring', choices = [('0', 'Yes'), ('1', 'No')])
 
     def __init__(self, *args, **kwargs):
         self.username = args[0]
         Form.__init__(self, args[1], **kwargs)
-        user = savvy_collection.find_one({"username": self.username})
-        self.category = user['category'] #why?
+
+    def prepopulate(self, user):
+        self.businessName.data  = user.get('businessName', '')
+        self.contactName.data   = user.get('contactName', '')
+        self.phoneNumber.data   = user.get('phoneNumber', '')
+        self.website.data       = user.get('website', '')
+        self.streetAddress.data = user.get('streetAddress', '')
+        self.hiring.data        = user.get('hiring', '')
 
     def validate(self):
         # insert into database
@@ -34,15 +42,16 @@ class profileFormEmployer(Form):
         return True
 
 class profileFormEmployee(Form):
-    firstName       = TextField('firstName')
-    lastName        = TextField('lastName')
-    phoneNumber     = TextField('phoneNumber')
-    introduction    = TextField('introduction')
-    birthday        = DateTimeField('birthday', format='%d/%m/%y')
-    skills          = TextField('skills')
+    firstName   = TextField('firstName')
+    lastName    = TextField('lastName')
+    phoneNumber = TextField('phoneNumber')
+    skills      = TextField('skills')
+    birthday    = DateTimeField('birthday', format='%d/%m/%y')
+    introduction = TextField('introduction')
 
     gender = RadioField('gender',
-                        choices = [(0,'Male'), (1,'Female')])
+                        choices = [(0,'Male'),
+                                   (1,'Female')])
 
     residency = RadioField('residency',
                            [validators.Optional()],
@@ -71,11 +80,16 @@ class profileFormEmployee(Form):
                                                   ('5','Saturday'),
                                                   ('6','Sunday')])
 
+    jobStatus = RadioField('jobStatus',
+                           [validators.Optional()],
+                           choices = [('0','Yes'), ('1','No')])
+
     def __init__(self, *args, **kwargs):
         self.username = args[0]
         Form.__init__(self, args[1], **kwargs)
         self.user = savvy_collection.find_one({"username":self.username})
-        self.category = self.user['category'] #why?
+        self.category = self.user['category']
+        self.ownProfile = "yes" #as condition in profile.html
 
     def validate(self):
         savvy_collection.update(
@@ -94,3 +108,16 @@ class profileFormEmployee(Form):
             })
 
         return True
+
+    def prepopulate(self, user):
+        self.firstName.data = user.get('firstName', '')
+        self.lastName.data = user.get('lastName', '')
+        self.phoneNumber.data = user.get('phoneNumber', '')
+        self.gender.data = user.get('gender', '')
+        self.birthday.data = user.get('birthday', '')
+        self.residency.data = user.get('residency', '')
+        self.introduction.data = user.get('introduction', '')
+        self.education.data = user.get('education', '')
+        self.availability.data = user.get('availability', '')
+        self.skills.data = user.get('skills', '')
+        self.jobStatus.data = user.get('jobStatus', '')
