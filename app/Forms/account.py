@@ -6,7 +6,7 @@ from flask import flash
 from hashlib import md5
 import os, subprocess
 
-class profileFormEmployer(Form):
+class employerForm(Form):
     businessName    = TextField('businessName')
     contactName     = TextField('contactName')
     phoneNumber     = TextField('phoneNumber')
@@ -41,7 +41,7 @@ class profileFormEmployer(Form):
                                 {"$set": user})
         return True
 
-class profileFormEmployee(Form):
+class candidateForm(Form):
     firstName   = TextField('firstName')
     lastName    = TextField('lastName')
     phoneNumber = TextField('phoneNumber')
@@ -87,9 +87,6 @@ class profileFormEmployee(Form):
     def __init__(self, *args, **kwargs):
         self.username = args[0]
         Form.__init__(self, args[1], **kwargs)
-        self.user = savvy_collection.find_one({"username":self.username})
-        self.category = self.user['category']
-        self.ownProfile = "yes" #as condition in profile.html
 
     def validate(self):
         savvy_collection.update(
@@ -110,14 +107,14 @@ class profileFormEmployee(Form):
         return True
 
     def prepopulate(self, user):
-        self.firstName.data = user.get('firstName', '')
-        self.lastName.data = user.get('lastName', '')
-        self.phoneNumber.data = user.get('phoneNumber', '')
-        self.gender.data = user.get('gender', '')
-        self.birthday.data = user.get('birthday', '')
-        self.residency.data = user.get('residency', '')
-        self.introduction.data = user.get('introduction', '')
-        self.education.data = user.get('education', '')
-        self.availability.data = user.get('availability', '')
-        self.skills.data = user.get('skills', '')
-        self.jobStatus.data = user.get('jobStatus', '')
+        self.firstName.data     = user.get('firstName', '')
+        self.lastName.data      = user.get('lastName', '')
+        self.phoneNumber.data   = user.get('phoneNumber', '')
+        self.gender.data        = user.get('gender', '')
+        self.birthday.data      = user.get('birthday', '')
+        self.residency.data     = user.get('residency', '')
+        self.introduction.data  = user.get('introduction', '')
+        self.education.data     = user.get('education', '')
+        self.availability.data  = user.get('availability', '')
+        self.skills.data        = user.get('skills', '')
+        self.jobStatus.data     = user.get('jobStatus', '')

@@ -5,7 +5,7 @@ from app import app, manager, savvy_collection, db, client
 from app.Forms.rego import regoForm
 from app.Forms.login import loginForm
 from app.Forms.recover import recoverForm
-from app.Forms.profile import profileFormEmployer, profileFormEmployee
+from app.Forms.account import employerForm, candidateForm
 from app.Models.User import User
 from jinja2 import Environment, FileSystemLoader
 from flask import Flask, request, session, g, redirect, url_for, \
@@ -88,7 +88,7 @@ def logout():
 def activate(username, token):
     if User.validate_rego_token(username, token):
         login_user(User(username))
-        return redirect(url_for('profile', account = username))
+        return redirect(url_for('account', account = username))
     return redirect(url_for('home'))
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -98,45 +98,45 @@ def register():
 
     form = regoForm(request.form)
     if request.method == 'POST' and form.validate():
-        return redirect(url_for('profile', account=form.username.data))
+        return redirect(url_for('account', account=form.username.data))
 
     return render('register.html', form)
 
-@app.route('/profile/<account>', methods=['GET', 'POST'])
+@app.route('/account', methods=['GET', 'POST'])
 @login_required
-def profile(account):
-    user = savvy_collection.find_one({ "username": account })
+def account():
+    username = current_user.get_id()['username']
+    user = savvy_collection.find_one({ "username": username })
     if user:
-        if current_user.get_id()['username'] == account:
-            if user.get('category', '').lower() == 'employer':
-                form = profileFormEmployer(account, request.form)
+        if user.get('category', '').lower() == 'employer':
+            form = employerForm(username, request.form)
 
-                if request.method == 'GET':
-                    form.prepopulate(user)
+            if request.method == 'GET':
+                form.prepopulate(user)
 
-                if request.method == 'POST' and form.validate():
-                    return redirect(url_for('profile', account=form.username))
+            if request.method == 'POST' and form.validate():
+                return redirect(url_for('account'))
 
-                return render('profile.html',form)
+            return render('account.html',form)
 
-            elif user.get('category', '').lower() == 'candidate':
-                form = profileFormEmployee(account, request.form)
+        elif user.get('category', '').lower() == 'candidate':
+            form = candidateForm(username, request.form)
 
-                if request.method == 'GET':
-                    form.prepopulate(user)
+            if request.method == 'GET':
+                form.prepopulate(user)
 
-                if request.method == 'POST' and form.validate():
-                    return redirect(url_for('profile', account=form.username))
+            if request.method == 'POST' and form.validate():
+                return redirect(url_for('account'))
 
-                return render('profile.html', form)
+            return render('account.html', form)
 
-            else:
-                return redirect(url_for('home'))
+        else:
+            return redirect(url_for('home'))
     else:
-        flash('Invalid access to profile', 'error')
+        flash('Invalid access to account', 'error')
         return redirect(url_for('home'))
 
-    return render('profile.html', form)
+    return render('account.html', form)
 
 @app.route('/recover', methods=['GET', 'POST'])
 def recover():

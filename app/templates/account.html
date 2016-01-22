@@ -72,8 +72,7 @@
 
                     <!-- Form -->
                     <form id="profileForm"
-                          action= {{ url_for('profile',
-                                     account = current_user.get_id().get('username')) }}
+                          action= {{ url_for('account') }}
                           method="post"
                           role="form">
                     </form>

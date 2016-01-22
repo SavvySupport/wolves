@@ -80,7 +80,7 @@
                         Anything Else
                     </a>
                 {% else %}
-                    <a href= {{ url_for('profile', account=user['username']) }} class="item">
+                    <a href= {{ url_for('account') }} class="item">
                         <i class="child icon"></i> Welcome back {{ user.get('username', None) }}
                     </a>
                 {% endif %}
