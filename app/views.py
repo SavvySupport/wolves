@@ -6,6 +6,7 @@ from app.Forms.rego import regoForm
 from app.Forms.login import loginForm
 from app.Forms.recover import recoverForm
 from app.Forms.account import employerForm, candidateForm
+from app.Forms.viewProfile import viewProfile
 from app.Models.User import User
 from jinja2 import Environment, FileSystemLoader
 from flask import Flask, request, session, g, redirect, url_for, \

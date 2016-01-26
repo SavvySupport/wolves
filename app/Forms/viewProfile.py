@@ -2,7 +2,7 @@ from app.Models.User import User
 from app import savvy_collection
 from flask import flash
 
-class profileView():
+class viewProfile(): 
     def __init__(self, *args, **kwargs):
         self.username = args[0]
         print (self.username)
