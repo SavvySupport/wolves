@@ -6,6 +6,7 @@ from wtforms.widgets import TextArea
 from app import savvy_collection
 from flask import flash
 from app.Helpers.Constant import *
+from datetime import datetime, date
 
 class employerForm(Form):
     businessName    = TextField('businessName')
@@ -57,17 +58,19 @@ class candidateForm(Form):
                                                 validators.Optional(),
                                                 validators.regexp('^[0-9]+$')])
     skills          = TextField('skills')
-    birthday        = DateField('birthday', format='%d/%m/%y')
+    birthday        = DateField('birthday')
     about           = TextField('about', widget=TextArea())
     location        = TextField('location')
 
     gender = SelectField('gender',
+                         coerce=int,
                          choices = [(MALE, 'Male'),
                                     (FEMALE, 'Female'),
                                     (OTHER, 'Other')],
                          default = MALE)
 
     residency = SelectField('residency',
+                            coerce=int,
                             choices = [(CITIZEN,'Citizen'),
                                        (PR,'Permanent Resident'),
                                        (TR,'Temporary Resident Visa'),
@@ -76,6 +79,7 @@ class candidateForm(Form):
                             default = CITIZEN)
 
     education = SelectField('education',
+                            coerce=int,
                             choices = [(HS, 'Finishing High School'),
                                        (HS_COMPLETED, 'Completed High School'),
                                        (TAFE, 'Finishing Tafe/Apprenticeship'),
@@ -95,6 +99,7 @@ class candidateForm(Form):
     #                                               (SUN, 'Sunday')])
 
     availability = SelectField('availability',
+                                coerce=int,
                                 choices = [(1, '1 day per week'),
                                            (2, '2 days per week'),
                                            (3, '3 days per week'),
@@ -104,8 +109,8 @@ class candidateForm(Form):
                                            (7, '7 days per week')],
                                 default = 1)
 
-    jobStatus = RadioField('jobStatus',
-                            choices = [(YES, 'Yes'), (NO, 'No')])
+    # jobStatus = RadioField('jobStatus',
+    #                         choices = [(YES, 'Yes'), (NO, 'No')])
 
     def __init__(self, *args, **kwargs):
         self.type = 'candidate'
@@ -116,19 +121,20 @@ class candidateForm(Form):
         if not rv:
             for fieldName, errorMessages in self.errors.items():
                 for err in errorMessages:
-                    print(err)
+                    print(self.birthday.data)
+                    print(fieldName, err)
             return False
         return True
 
-    def update(self, user):
+    def update(self, username):
         user = {
             "firstName"     : self.firstName.data.rstrip(),
             "lastName"      : self.lastName.data.rstrip(),
             "phoneNumber"   : self.phoneNumber.data.rstrip(),
             "gender"        : self.gender.data,
-            "birthday"      : self.birthday.data,
+            "birthday"      : str(self.birthday.data),
             "residency"     : self.residency.data,
-            "about"  : self.about.data,
+            "about"         : self.about.data,
             "education"     : self.education.data,
             "availability"  : self.availability.data,
             "skills"        : self.skills.data,
@@ -146,11 +152,10 @@ class candidateForm(Form):
         self.lastName.data      = user.get('lastName', '')
         self.phoneNumber.data   = user.get('phoneNumber', '')
         self.gender.data        = user.get('gender', '')
-        self.birthday.data      = user.get('birthday', '')
+        self.birthday.data      = datetime.strptime(str(user.get('birthday', '')),'%Y-%m-%d')
         self.residency.data     = user.get('residency', '')
         self.about.data         = user.get('about', '')
         self.education.data     = user.get('education', '')
         self.availability.data  = user.get('availability', '')
         self.skills.data        = user.get('skills', '')
-        self.jobStatus.data     = user.get('jobStatus', '')
         self.location.data      = user.get('location', '')
