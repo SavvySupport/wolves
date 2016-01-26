@@ -1,14 +1,18 @@
 from wtforms import Form, BooleanField, TextField, TextAreaField, PasswordField,\
                     validators, ValidationError, RadioField, \
                     DateTimeField, SelectMultipleField, SelectField
+from wtforms.fields.html5 import DateField
 from wtforms.widgets import TextArea
 from app import savvy_collection
 from flask import flash
+from app.Helpers.Constant import *
 
 class employerForm(Form):
     businessName    = TextField('businessName')
     contactName     = TextField('contactName')
-    phoneNumber     = TextField('phoneNumber')
+    phoneNumber     = TextField('phoneNumber', [validators.length(min=10),
+                                                validators.Optional(),
+                                                validators.regexp('^[0-9]+$')])
     website         = TextField('website')
     streetAddress   = TextField('streetAddress')
     about           = TextField('about', widget=TextArea())
@@ -24,15 +28,16 @@ class employerForm(Form):
         self.website.data       = user.get('website', '')
         self.streetAddress.data = user.get('streetAddress', '')
 
-    def validate(self, user):
+    def validate(self):
         rv = Form.validate(self)
         if not rv:
-            flash('Form invalid', 'error')
+            for fieldName, errorMessages in self.errors.items():
+                for err in errorMessages:
+                    print(err)
             return False
-
         return True
 
-    def update(self):
+    def update(self, username):
         user = {
             "businessName"      : self.businessName.data,
             "contactName"       : self.contactName.data,
@@ -41,54 +46,66 @@ class employerForm(Form):
             "streetAddress"     : self.streetAddress.data
         }
 
-        savvy_collection.update({"username": current_user.get_id()['username']},
+        print(username)
+        savvy_collection.update({"username": username},
                                 {"$set": user})
 
 class candidateForm(Form):
     firstName       = TextField('firstName')
     lastName        = TextField('lastName')
-    phoneNumber     = TextField('phoneNumber')
+    phoneNumber     = TextField('phoneNumber', [validators.length(min=10),
+                                                validators.Optional(),
+                                                validators.regexp('^[0-9]+$')])
     skills          = TextField('skills')
-    birthday        = DateTimeField('birthday', format='%d/%m/%y')
-    introduction    = TextField('introduction')
+    birthday        = DateField('birthday', format='%d/%m/%y')
+    about           = TextField('about', widget=TextArea())
     location        = TextField('location')
 
     gender = SelectField('gender',
-                         choices = [(0,'Male'),
-                                    (1,'Female'),
-                                    (2,'Other')],
-                         default = 0)
+                         choices = [(MALE, 'Male'),
+                                    (FEMALE, 'Female'),
+                                    (OTHER, 'Other')],
+                         default = MALE)
 
-    residency = RadioField('residency',
-                           [validators.Optional()],
-                           choices = [(0,'Citizen'),
-                                      (1,'Permanent Resident'),
-                                      (2,'Temporary Resident Visa'),
-                                      (3,'Student Visa'),
-                                      (4,'Other')])
+    residency = SelectField('residency',
+                            choices = [(CITIZEN,'Citizen'),
+                                       (PR,'Permanent Resident'),
+                                       (TR,'Temporary Resident Visa'),
+                                       (STUDENT,'Student Visa'),
+                                       (OTHER,'Other')],
+                            default = CITIZEN)
 
-    education = RadioField('education',
-                           [validators.Optional()],
-                           choices = [(0,'Finishing High School'),
-                                      (1,'Completed High School'),
-                                      (2,'Finishing Tafe/Apprenticeship'),
-                                      (3,'Completed Tafe/Apprenticeship'),
-                                      (4,'Finishing University'),
-                                      (5,'Completed University')])
+    education = SelectField('education',
+                            choices = [(HS, 'Finishing High School'),
+                                       (HS_COMPLETED, 'Completed High School'),
+                                       (TAFE, 'Finishing Tafe/Apprenticeship'),
+                                       (TAFE_COMPLETED, 'Completed Tafe/Apprenticeship'),
+                                       (UNI, 'Finishing University'),
+                                       (UNI_COMPLETED, 'Completed University'),
+                                       (NA, 'Not available')],
+                            default = UNI)
 
-    availability = SelectMultipleField('availability',
-                                       [validators.Optional()],
-                                       choices = [('0','Monday'),
-                                                  ('1','Tuesday'),
-                                                  ('2','Wednesday'),
-                                                  ('3','Thursday'),
-                                                  ('4','Friday'),
-                                                  ('5','Saturday'),
-                                                  ('6','Sunday')])
+    # availability = SelectMultipleField('availability',
+    #                                    choices = [(MON,'Monday'),
+    #                                               (TUE, 'Tuesday'),
+    #                                               (WED, 'Wednesday'),
+    #                                               (THU, 'Thursday'),
+    #                                               (FRI, 'Friday'),
+    #                                               (SAT, 'Saturday'),
+    #                                               (SUN, 'Sunday')])
+
+    availability = SelectField('availability',
+                                choices = [(1, '1 day per week'),
+                                           (2, '2 days per week'),
+                                           (3, '3 days per week'),
+                                           (4, '4 days per week'),
+                                           (5, '5 days per week'),
+                                           (6, '6 days per week'),
+                                           (7, '7 days per week')],
+                                default = 1)
 
     jobStatus = RadioField('jobStatus',
-                           [validators.Optional()],
-                           choices = [('0','Yes'), ('1','No')])
+                            choices = [(YES, 'Yes'), (NO, 'No')])
 
     def __init__(self, *args, **kwargs):
         self.type = 'candidate'
@@ -97,9 +114,13 @@ class candidateForm(Form):
     def validate(self):
         rv = Form.validate(self)
         if not rv:
-            flash('Form invalid', 'error')
+            for fieldName, errorMessages in self.errors.items():
+                for err in errorMessages:
+                    print(err)
             return False
+        return True
 
+    def update(self, user):
         user = {
             "firstName"     : self.firstName.data.rstrip(),
             "lastName"      : self.lastName.data.rstrip(),
@@ -107,7 +128,7 @@ class candidateForm(Form):
             "gender"        : self.gender.data,
             "birthday"      : self.birthday.data,
             "residency"     : self.residency.data,
-            "introduction"  : self.introduction.data,
+            "about"  : self.about.data,
             "education"     : self.education.data,
             "availability"  : self.availability.data,
             "skills"        : self.skills.data,
@@ -115,7 +136,7 @@ class candidateForm(Form):
         }
 
         savvy_collection.update(
-            { "username": current_user.get_id()['username'] },
+            { "username": username },
             { "$set": user })
 
         return True
@@ -127,7 +148,7 @@ class candidateForm(Form):
         self.gender.data        = user.get('gender', '')
         self.birthday.data      = user.get('birthday', '')
         self.residency.data     = user.get('residency', '')
-        self.introduction.data  = user.get('introduction', '')
+        self.about.data         = user.get('about', '')
         self.education.data     = user.get('education', '')
         self.availability.data  = user.get('availability', '')
         self.skills.data        = user.get('skills', '')

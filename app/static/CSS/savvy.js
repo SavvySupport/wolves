@@ -87,6 +87,10 @@ $(function () {
                     {
                         type    : 'length[5]',
                         prompt  : 'minimum 5 characters required'
+                    },
+                    {
+                        type    : 'regExp',
+                        prompt  : 'minimum 5 characters required'
                     }
                 ]
             },
@@ -134,12 +138,12 @@ $(function () {
                     }
                 ]
             },
-            website: {
-                identifier  : 'website',
+            phone: {
+                identifier  : 'phoneNumber',
                 rules: [
                     {
-                        type    : 'website',
-                        prompt  : 'Keep it 142 characters'
+                        type    : 'regExp[/^[0-9]{10,14}$/]',
+                        prompt  : 'Must be all number'
                     }
                 ]
             }

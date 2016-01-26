@@ -118,8 +118,9 @@ def account():
             form.prepopulate(user)
 
         if request.method == 'POST':
-            if form.validate(user):
+            if form.validate():
                 flash('Successfully updated your profile', 'success')
+                form.update(username)
             else:
                 flash('Failed to update your profile', 'error')
 

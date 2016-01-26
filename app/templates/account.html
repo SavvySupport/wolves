@@ -49,11 +49,11 @@
             </div>
         </div>
 
-        <!-- Account detail forms -->
         <div id="stuck" class="eleven wide column">
-            <!-- Photo Form -->
             <div id="step0" class="ui raised segment">
                 <h2 class="ui block header">Profile picture</h2>
+
+                <!-- Photo Form -->
                 <form id="photoForm"
                       action= {{ url_for('account') }}
                       method="post"
@@ -102,140 +102,134 @@
                         <div class="ten wide column">
                             <!-- Detail Form -->
                             {% if form.type == 'employer' %}
-                                    <div class="field">
-                                        <label>Business Name</label>
-                                        {{ form.businessName }}
-                                    </div>
-                                    <div class="field">
-                                        <label>Contact Name</label>
-                                        {{ form.contactName }}
-                                    </div>
-                                    <div class="field">
-                                        <label>Contact Number</label>
-                                        {{ form.contactName }}
-                                    </div>
-                                    <div class="field">
-                                        <label>Website</label>
-                                        {{ form.website }}
-                                    </div>
-                                    <div class="field">
-                                        <label>Address</label>
-                                        {{ form.streetAddress }}
-                                    </div>
-                                    <div class="field">
-                                        <label>About</label>
-                                        {{ form.about }}
-                                    </div>
+                                <div class="field">
+                                    <label>Business Name</label>
+                                    {{ form.businessName }}
+                                </div>
+                                <div class="field">
+                                    <label>Contact Name</label>
+                                    {{ form.contactName }}
+                                </div>
+                                <div class="field">
+                                    <label>Contact Number</label>
+                                    {{ form.phoneNumber }}
+                                </div>
+                                <div class="field">
+                                    <label>Website</label>
+                                    {{ form.website }}
+                                </div>
+                                <div class="field">
+                                    <label>Address</label>
+                                    {{ form.streetAddress }}
+                                </div>
+                                <div class="field">
+                                    <label>About</label>
+                                    {{ form.about }}
+                                </div>
                             {% else %}
-                                <form id="profileForm"
-                                      class="ui form"
-                                      action= {{ url_for('account') }}
-                                      method="post"
-                                      role="form">
-                                    <div class="field">
-                                        <label>First Name</label>
-                                        {{ form.firstName }}
-                                    </div>
-                                    <div class="field">
-                                        <label>Last Name</label>
-                                        {{ form.lastName }}
-                                    </div>
-                                    <div class="field">
-                                        <label>Contact Number</label>
-                                        {{ form.phoneNumber }}
-                                    </div>
-                                    <div class="field">
-                                        <label>Suburb</label>
-                                        {{ form.location }}
-                                    </div>
-                                    <!-- ACCOUNT TYPE -->
-                                    <div class="field">
-                                        <label>Gender</label>
-                                        <div class="ui fluid selection dropdown field ">
-                                            {{ form.gender }}
-                                            <i class="dropdown icon"></i>
-                                            <div class="default text">Select Gender</div>
-                                            <div class="menu">
-                                                <div class="item" data-value="0">
-                                                    <img class="ui mini avatar image" src= {{ url_for('static', filename='images/user.png') }} >
-                                                    Male
+                                <div class="field">
+                                    <label>First Name</label>
+                                    {{ form.firstName }}
+                                </div>
+                                <div class="field">
+                                    <label>Last Name</label>
+                                    {{ form.lastName }}
+                                </div>
+                                <div class="field">
+                                    <label>Contact Number</label>
+                                    {{ form.phoneNumber }}
+                                </div>
+                                <div class="field">
+                                    <label>Suburb</label>
+                                    {{ form.location }}
+                                </div>
+                                <!-- ACCOUNT TYPE -->
+                                <div class="field">
+                                    <label>Gender</label>
+                                    <div class="ui fluid selection dropdown field ">
+                                        {{ form.gender }}
+                                        <i class="dropdown icon"></i>
+                                        <div class="default text">Select Gender</div>
+                                        <div class="menu">
+                                            {% for field in form.gender.choices %}
+                                                <div class="item" data-value= {{ field[0] }}>
+                                                    {{ field[1] }}
                                                 </div>
-                                                <div class="item" data-value="1">
-                                                    <img class="ui mini avatar image" src= {{ url_for('static', filename='images/user.png') }} >
-                                                    Female
-                                                </div>
-                                                <div class="item" data-value="2">
-                                                    <img class="ui mini avatar image" src= {{ url_for('static', filename='images/user.png') }} >
-                                                    Others
-                                                </div>
-                                            </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
-                                    <div class="field">
-                                        <label>D.O.B</label>
-                                        {{ form.birthday(id='datetimepicker') }}
-                                    </div>
-                                </form>
+                                </div>
+                                <div class="field">
+                                    <label>D.O.B</label>
+                                    {{ form.birthday(id='datetimepicker') }}
+                                </div>
+                                <div class="field">
+                                    <label>About you</label>
+                                    {{ form.about(placeholder='Let us know a little more about you') }}
+                                </div>
                             {% endif %}
                         </div>
                     </div>
                 </div>
 
-                {% if form.type == 'candiate' %}
+                {% if form.type == 'candidate' %}
                     <div id="step2" class="ui raised segment">
                         <h2 class="ui block header">Skills and Preferences</h2>
                         <div class="ui very relax stackable grid">
                             <div class="ten wide column">
-                                <!-- Detail Form -->
-                                <form id="profileForm"
-                                      class="ui form"
-                                      action= {{ url_for('account') }}
-                                      method="post"
-                                      role="form">
-                                    <div class="field">
-                                        <label>First Name</label>
-                                        {{ form.firstName() }}
-                                    </div>
-                                    <div class="field">
-                                        <label>Last Name</label>
-                                        {{ form.lastName() }}
-                                    </div>
-                                    <div class="field">
-                                        <label>Contact Number</label>
-                                        {{ form.phoneNumber() }}
-                                    </div>
-                                    <div class="field">
-                                        <label>Suburb</label>
-                                        {{ form.location() }}
-                                    </div>
-                                    <!-- ACCOUNT TYPE -->
-                                    <div class="field">
-                                        <label>Gender</label>
-                                        <div class="ui fluid selection dropdown field ">
-                                            {{ form.gender }}
-                                            <i class="dropdown icon"></i>
-                                            <div class="default text">Select Gender</div>
-                                            <div class="menu">
-                                                <div class="item" data-value="0">
-                                                    <img class="ui mini avatar image" src= {{ url_for('static', filename='images/user.png') }} >
-                                                    Male
+                                <div class="field">
+                                    <label>Current location</label>
+                                    {{ form.location }}
+                                </div>
+                                <div class="field">
+                                    <label>Skills</label>
+                                    {{ form.skills(placeholder='separate with comma') }}
+                                </div>
+                                <div class="field">
+                                    <label>Residency status</label>
+                                    <div class="ui fluid selection dropdown field ">
+                                        {{ form.residency }}
+                                        <i class="dropdown icon"></i>
+                                        <div class="default text">Select Status</div>
+                                        <div class="menu">
+                                            {% for field in form.residency.choices %}
+                                                <div class="item" data-value= {{ field[0] }}>
+                                                    {{ field[1] }}
                                                 </div>
-                                                <div class="item" data-value="1">
-                                                    <img class="ui mini avatar image" src= {{ url_for('static', filename='images/user.png') }} >
-                                                    Female
-                                                </div>
-                                                <div class="item" data-value="2">
-                                                    <img class="ui mini avatar image" src= {{ url_for('static', filename='images/user.png') }} >
-                                                    Others
-                                                </div>
-                                            </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
-                                    <div class="field">
-                                        <label>D.O.B</label>
-                                        {{ form.birthday() }}
+                                </div>
+                                <div class="field">
+                                    <label>Education</label>
+                                    <div class="ui fluid selection dropdown field ">
+                                        {{ form.education }}
+                                        <i class="dropdown icon"></i>
+                                        <div class="default text">Select education</div>
+                                        <div class="menu">
+                                            {% for field in form.education.choices %}
+                                                <div class="item" data-value= {{ field[0] }}>
+                                                    {{ field[1] }}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
                                     </div>
-                                </form>
+                                </div>
+                                <div class="field">
+                                    <label>Availability</label>
+                                    <div class="ui fluid selection dropdown field ">
+                                        {{ form.availability }}
+                                        <i class="dropdown icon"></i>
+                                        <div class="default text">Select availability</div>
+                                        <div class="menu">
+                                            {% for field in form.availability.choices %}
+                                                <div class="item" data-value= {{ field[0] }}>
+                                                    {{ field[1] }}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
