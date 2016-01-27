@@ -20,6 +20,7 @@ app.config.update(dict(
     PASSWORD = 'SavvyWolves'
 ))
 app.config.from_envvar('SAVVY_SETTING', silent=True)
+app.config['basedir'] = os.path.abspath(os.path.dirname(__file__))
 
 # MongoDB database setting
 client = MongoClient()
@@ -35,4 +36,4 @@ manager.login_view = 'login'
 
 # This import here has to be at the bottom of this file
 # To avoid circular references
-from app import views
+from app.Views import views
