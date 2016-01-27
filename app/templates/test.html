@@ -1,59 +1,55 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <!-- <input type="text" size="5" name="a"> +
-    <input type="text" size="5" name="b"> =
-    <span id="result">?</span>
+    <form id="photoForm" method="post" enctype="multipart/form-data">
+        <div class="ui action input">
+            <input type="text" id="_attachmentName">
+            <label for="attachmentName" class="ui icon green button btn-file">
+                <i class="folder open outline icon"></i>
+                <input type="file" id="attachmentName" name="attachmentName" style="display: none">
+            </label>
+        </div>
 
-    <button id="updatebtn" class="ui green submit button">
-        Update
-    </button> -->
-
-    <form id="uploadform" method="post" enctype="multipart/form-data">
-        <label for="file">Select a file</label>
-        <input name="file" type="file">
         <button id="submit" type="button">Upload</button>
+        <a id="upload"> change </a>
     </form>
+
     <p>Result Filename:&nbsp;<span id="resultFilename"> here</span></p>
     <p>Result Filesize:&nbsp;<span id="resultFilesize">here</span></p>
-
-    <img  id='imagehere' src = {{ url_for('static', filename='images/user.png') }} />
+    <img id='photoajax' src = {{ url_for('static', filename='images/user.png') }} />
 
     <script type=text/javascript>
         $(function() {
-            // $('button#updatebtn').bind('click', function() {
-            //     $.getJSON('/testajax', {
-            //         a: $('input[name="a"]').val(),
-            //         b: $('input[name="b"]').val()
-            //     }, function(data) {
-            //         $("#result").text(data.result);
-            //     });
-            //     return false;
-            // });
+            $('#upload').click(function(){
+                $('#attachmentName').click();
+            });
+
+            $('#attachmentName').change(function() {
+                $('#submit').click();
+            });
 
             $('#submit').click(function() {
                 event.preventDefault();
-                var form_data = new FormData($('#uploadform')[0]);
+                var form_data = new FormData($('#photoForm')[0]);
                 $.ajax({
                     type: 'POST',
-                    url: '/uploadajax',
+                    url: '/dpupload',
                     data: form_data,
                     contentType: false,
                     processData: false,
                     dataType: 'json'
-                }).done(function(data, textStatus, jqXHR){
-                    $("#resultFilename").text(data['name']);
-                    $("#resultFilesize").text(data['size']);
-                    $("#imagehere").attr('src', data['path']);
+                }).done(function(data, textStatus, jqXHR){ 
+                    $("#photoajax").attr('src', data['path']);
+
+                    console.log(data);
+                    console.log(jqXHR);
+                    console.log('Success!');
                 }).fail(function(data) {
-                    alert('error!');
+                    alert('Failed!');
+                    console.log(data);
                 }).complete(function(data) {
                     // Schedule the next request when the current one has been completed
                     // setTimeout(ajaxInterval, 4000);
-                    // console.log(data);
-                    // console.log(textStatus);
-                    // console.log(jqXHR);
-                    // console.log('Success!');
                 });
             });
         });

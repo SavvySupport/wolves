@@ -55,7 +55,7 @@
 
                 <!-- Photo Form -->
                 <form id="photoForm"
-                      action= {{ url_for('account') }}
+                      enctype="multipart/form-data"
                       method="post"
                       role="form">
                     <!-- Profile picture -->
@@ -73,7 +73,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <img src= {{ url_for('static', filename="images/user.png") }} alt="looking good">
+                                <img id='photoajax' src= {{ url_for('static', filename="images/user.png") }} alt="looking good">
                             </div>
                         </div>
                     </div>

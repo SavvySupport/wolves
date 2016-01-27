@@ -65,15 +65,10 @@ def testajax():
     b = request.args.get('b', 0, type=int)
     return jsonify(result=a+b)
 
-@app.route('/uploadajax/<filename>')
-def uploaded_file(filename):
-    upload_folder = url_for('static', filename='/user/')
-    return send_from_directory(upload_folder, filename)
-
-@app.route('/uploadajax', methods=['POST'])
-def uploadajax():
+@app.route('/dpupload', methods=['POST'])
+def dpupload():
     if request.method == 'POST':
-        file = request.files['file']
+        file = request.files['attachmentName']
         if file and allowed_file(file.filename):
             # Get filename
             filename = secure_filename(file.filename)
@@ -87,8 +82,8 @@ def uploadajax():
             file.save(path)
 
             # return information to frontend
-            file_size = os.path.getsize(os.path.join(updir, filename))
-            return jsonify(name=filename, size=file_size, path=os.path.join(url_for('static', filename='images/user/'), filename))
+            relative_path = os.path.join(url_for('static', filename='images/user/'), filename)
+            return jsonify(path=relative_path)
 
 def allowed_file(filename):
     app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
