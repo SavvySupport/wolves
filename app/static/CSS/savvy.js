@@ -76,94 +76,83 @@ $(function () {
 
     // Form validation
     var validationObj = {
-        fields: {
-            username: {
-                identifier  : 'username',
-                rules: [
-                    {
-                        type    : 'empty',
-                        prompt  : 'username cannot be empty'
-                    },
-                    {
-                        type    : 'length[5]',
-                        prompt  : 'minimum 5 characters required'
-                    },
-                    {
-                        type    : 'regExp',
-                        prompt  : 'minimum 5 characters required'
-                    }
-                ]
-            },
-            password: {
-                identifier  : 'password',
-                rules: [
-                    {
-                        type    : 'empty',
-                        prompt  : 'password cannot be empty'
-                    },
-                    {
-                        type    : 'length[5]',
-                        prompt  : 'minimum 5 characters required'
-                    }
-                ]
-            },
-            email: {
-                identifier  : 'email',
-                rules: [
-                    {
-                        type    : 'empty',
-                        prompt  : 'email cannot be empty'
-                    },
-                    {
-                        type    : 'email',
-                        prompt  : 'invalid email format?'
-                    }
-                ]
-            },
-            passwordconfirm: {
-                identifier  : 'passwordconfirm',
-                rules: [
-                    {
-                        type    : 'match[password]',
-                        prompt  : 'your passwords don\'t match.'
-                    }
-                ]
-            },
-            interest: {
-                identifier  : 'interest',
-                rules: [
-                    {
-                        type    : 'maxLength[142]',
-                        prompt  : 'Keep it 142 characters'
-                    }
-                ]
-            },
-            phone: {
-                identifier  : 'phoneNumber',
-                rules: [
-                    {
-                        type    : 'regExp[/^[0-9]{10,14}$/]',
-                        prompt  : 'Must be all number'
-                    }
-                ]
-            }
+        username: {
+            identifier  : 'username',
+            rules: [
+                {
+                    type    : 'empty',
+                    prompt  : 'username cannot be empty'
+                },
+                {
+                    type    : 'length[5]',
+                    prompt  : 'minimum 5 characters required'
+                }
+            ]
+        },
+        password: {
+            identifier  : 'password',
+            rules: [
+                {
+                    type    : 'empty',
+                    prompt  : 'password cannot be empty'
+                },
+                {
+                    type    : 'length[5]',
+                    prompt  : 'minimum 5 characters required'
+                }
+            ]
+        },
+        email: {
+            identifier  : 'email',
+            rules: [
+                {
+                    type    : 'empty',
+                    prompt  : 'email cannot be empty'
+                },
+                {
+                    type    : 'email',
+                    prompt  : 'invalid email format?'
+                }
+            ]
+        },
+        passwordconfirm: {
+            identifier  : 'passwordconfirm',
+            rules: [
+                {
+                    type    : 'match[password]',
+                    prompt  : 'your passwords don\'t match.'
+                }
+            ]
+        },
+        phone: {
+            identifier  : 'phoneNumber',
+            rules: [
+                {
+                    type    : 'regExp[/^[0-9]{10,14}$/]',
+                    prompt  : 'Must be all number'
+                }
+            ]
         }
     };
 
     $('#loginForm').form(validationObj, {
-        inline: true
+        inline: true,
+        on: "blur"
     });
 
-    $('#regoForm').form(validationObj, {
-        inline: true
+    $('#registerForm').form(validationObj, {
+        inline: true,
+        on: "blur"
     });
 
     $('#profileForm').form(validationObj, {
-        inline: true
+        inline: true,
+        on: "blur"
     });
 
     $('#recoverForm').form(validationObj, {
-        inline: true
+        inline: true,
+        on: "blur"
     });
 
     // Dismiss message

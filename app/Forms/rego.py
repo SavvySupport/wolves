@@ -61,8 +61,7 @@ class regoForm(Form):
 
             # insert into database
             savvy_collection.insert(user)
-
-#=======================Send confirmation email==================
+ 
             #url = os.getenv('SCRIPT_URI') <----------------get this to work when server is up
             url = '127.0.0.1:5000'
             message = """
@@ -78,7 +77,6 @@ class regoForm(Form):
             cmd="""echo '{}' | mail -s 'Confirm account' {}""".format(message, self.email.data.rstrip())
             p=subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
             p.communicate()
-#====================End of confirmation email===============
 
             # log in
             userObj = User(user['username'])
