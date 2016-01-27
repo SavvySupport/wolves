@@ -47,7 +47,6 @@ class employerForm(Form):
             "streetAddress"     : self.streetAddress.data
         }
 
-        print(username)
         savvy_collection.update({"username": username},
                                 {"$set": user})
 

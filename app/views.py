@@ -15,6 +15,7 @@ from flask import Flask, request, session, g, redirect, url_for, \
                     abort, render_template, flash, jsonify, \
                     send_from_directory
 from flask.ext.login import login_user, logout_user, login_required, current_user
+from hashlib import md5
 
 # Define the template directory
 tpldir = os.path.dirname(os.path.abspath(__file__))+'/templates/'
@@ -70,19 +71,37 @@ def dpupload():
     if request.method == 'POST':
         file = request.files['attachmentName']
         if file and allowed_file(file.filename):
-            # Get filename
-            filename = secure_filename(file.filename)
-
             # Set up upload folder
             basedir = os.path.abspath(os.path.dirname(__file__))
             updir = os.path.join(basedir, 'static/images/user/')
 
-            # upload file to server
+            # Delete old file
+            delete_file = current_user.get_id().get('dp', None)
+            if delete_file:
+                delete_file = delete_file.split('/', -1)[-1]
+                delete_file = os.path.join(updir, delete_file)
+                print('delete old dp file')
+                if os.path.exists(delete_file):
+                    os.remove(delete_file)
+
+            # Get filename
+            filename = secure_filename(file.filename)
+            filename = md5((filename + current_user.get_id().get('username')).encode('utf-8')).hexdigest()
+
+            # Upload file to server
             path = os.path.join(updir, filename)
             file.save(path)
 
-            # return information to frontend
+            # Save path to database
             relative_path = os.path.join(url_for('static', filename='images/user/'), filename)
+            user = {
+                "dp"    : relative_path
+            }
+            savvy_collection.update({"username": current_user.get_id().get('username')},
+                                    {"$set": user})
+
+
+            # return information to frontend
             return jsonify(path=relative_path)
 
 def allowed_file(filename):

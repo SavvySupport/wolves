@@ -1,6 +1,6 @@
 from app import savvy_collection
 from hashlib import md5
-from flask import flash
+from flask import flash, url_for
 
 class User():
     def __init__(self, userObj):
@@ -24,7 +24,7 @@ class User():
 
     @staticmethod
     def validate_rego_token(username, token):
-        user = savvy_collection.find_one({ 'username': username})
+        user = savvy_collection.find_one({ 'username': username })
         if user:
             token_db = user.get('token', None)
             if token_db != None:

@@ -73,7 +73,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <img id='photoajax' src= {{ url_for('static', filename="images/user.png") }} alt="looking good">
+                                <img id='photoajax' src= {{ user.get('dp', url_for('static', filename='images/user.png')) }} alt="looking good">
                             </div>
                         </div>
                     </div>
@@ -84,6 +84,7 @@
                         <label for="attachmentName" class="ui icon green button btn-file">
                             <i class="folder open outline icon"></i>
                             <input type="file" id="attachmentName" name="attachmentName" style="display: none">
+                            <button id="submit" type="button" style="display: none">Upload</button>
                         </label>
                     </div>
                 </form>
@@ -143,7 +144,7 @@
                                     <label>Suburb</label>
                                     {{ form.location }}
                                 </div>
-                                <!-- ACCOUNT TYPE -->
+
                                 <div class="field">
                                     <label>Gender</label>
                                     <div class="ui fluid selection dropdown field ">

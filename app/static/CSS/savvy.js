@@ -204,40 +204,33 @@ $(function () {
     // End video feature
 
     // Trigger file selector by clicking on the profile
-    // $('#upload').click(function(){
-    //     $('#attachmentName').click();
-    // });
-    //
-    // // To start uploading profile immediately after selecting file
-    // // Need a bit of work here with ajax
-    // $('#attachmentName').change(function() {
-    //     // select the form and submit
-    //     // $('#photoForm').submit();
-    //     //
-    //     // $('#submit').click(function() {
-    //     event.preventDefault();
-    //     var form_data = new FormData($('#photoForm')[0]);
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: '/uploadajax',
-    //         data: form_data,
-    //         contentType: false,
-    //         processData: false,
-    //         dataType: 'json'
-    //     }).done(function(data, textStatus, jqXHR){
-    //         $("#photoajax").attr('src', data['path']);
-    //     }).fail(function(data) {
-    //         alert('error!');
-    //     }).complete(function(data) {
-    //         // Schedule the next request when the current one has been completed
-    //         // setTimeout(ajaxInterval, 4000);
-    //         // console.log(data);
-    //         // console.log(textStatus);
-    //         // console.log(jqXHR);
-    //         // console.log('Success!');
-    //     });
-    //     // });
-    // });
+    $('#upload').click(function(){
+        $('#attachmentName').click();
+    });
+
+    $('#attachmentName').change(function() {
+        $('#submit').click();
+    });
+
+    $('#submit').click(function() {
+        event.preventDefault();
+        var form_data = new FormData($('#photoForm')[0]);
+        $.ajax({
+            type: 'POST',
+            url: '/dpupload',
+            data: form_data,
+            contentType: false,
+            processData: false,
+            dataType: 'json'
+        }).done(function(data, textStatus, jqXHR){
+            $("#photoajax").attr('src', data['path']);
+            console.log('Success!');
+        }).fail(function(data) {
+            alert('Failed!');
+        }).complete(function(data) {
+            console.log('completed');
+        });
+    });
 
     // Restyle and handle file uploads
     var fileExtentionRange = '.png .jpg .jpeg';

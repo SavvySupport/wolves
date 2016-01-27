@@ -38,18 +38,13 @@
                     contentType: false,
                     processData: false,
                     dataType: 'json'
-                }).done(function(data, textStatus, jqXHR){ 
+                }).done(function(data, textStatus, jqXHR){
                     $("#photoajax").attr('src', data['path']);
-
-                    console.log(data);
-                    console.log(jqXHR);
                     console.log('Success!');
                 }).fail(function(data) {
                     alert('Failed!');
-                    console.log(data);
                 }).complete(function(data) {
-                    // Schedule the next request when the current one has been completed
-                    // setTimeout(ajaxInterval, 4000);
+                    console.log('completed');
                 });
             });
         });
