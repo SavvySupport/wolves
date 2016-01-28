@@ -10,6 +10,10 @@
         <script src= {{ url_for('static', filename='CSS/semantic.min.js') }}></script>
         <script src= {{ url_for('static', filename='CSS/savvy.js') }}></script>
         <script src= {{ url_for('static', filename='CSS/elevator.js') }}></script>
+
+        <!-- Additional Script -->
+        {% block script %}
+        {% endblock %}
     </head>
     <body>
         <div class="ui left wide vertical inverted sidebar labeled icon menu">
