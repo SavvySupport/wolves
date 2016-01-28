@@ -1,21 +1,11 @@
 #!/usr/bin/env python
-import sys
+
 import os
-from app import app, manager, savvy_collection, db, client
-from app.Forms.rego import regoForm
-from app.Forms.login import loginForm
-from app.Forms.recover import recoverForm
-from app.Forms.account import employerForm, candidateForm
-from app.Forms.viewProfile import viewProfile
-from app.Models.User import User
-from app.Helpers.FileHelper import FileHelper
+from app import app, savvy_collection, manager
 from jinja2 import Environment, FileSystemLoader
-from werkzeug import secure_filename
-from flask import Flask, request, session, g, redirect, url_for, \
-                    abort, render_template, flash, jsonify, \
-                    send_from_directory
-from flask.ext.login import login_user, logout_user, login_required, current_user
-from hashlib import md5
+from flask import render_template
+from flask.ext.login import current_user
+from app.Models.User import User
 
 ###############################################################################
 # Set up environment for Jinja
@@ -67,3 +57,4 @@ from app.Views import logout
 from app.Views import rego
 from app.Views import account
 from app.Views import recover
+from app.Views import search

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="ui internal celled grid segment">
+        <!-- Navigation column -->
+        <div class="four wide column">
+            <!-- Keep this section sticky to viewport -->
+            <div class="ui sticky">
+
+            </div>
+        </div>
+        <div id="stuck" class="twelve wide column">
+            <div class="ui special cards">
+                {% for i in range(0, 9) %}
+                    <div class="card">
+                        <div class="blurring dimmable image">
+                            <div class="ui inverted dimmer">
+                                <div class="content">
+                                    <div class="center">
+                                        <div class="ui primary button">Add Friend</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <img src= {{ url_for('static', filename='images/user1.jpg') }} >
+                        </div>
+                        <div class="content">
+                            <a class="header">Full name</a>
+                            <div class="meta">
+                                <span class="date">D.O.B</span>
+                            </div>
+                            <div class="description">
+                                Introduction
+                            </div>
+                        </div>
+                        <div class="extra content">
+                            <a>
+                                <i class="user icon"></i>
+                                22 skills
+                            </a>
+
+                            <span class="right floated">
+                                10 endorsements
+                            </span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
