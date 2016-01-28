@@ -136,7 +136,7 @@ class candidateForm(Form):
             "about"         : self.about.data,
             "education"     : self.education.data,
             "availability"  : self.availability.data,
-            "skills"        : self.skills.data,
+            "skills"        : (self.skills.data.rstrip()).split(','),
             "location"      : self.location.data
         }
 
@@ -156,5 +156,5 @@ class candidateForm(Form):
         self.about.data         = user.get('about', '')
         self.education.data     = user.get('education', '')
         self.availability.data  = user.get('availability', '')
-        self.skills.data        = user.get('skills', '')
+        self.skills.data        = ','.join(user.get('skills', None))
         self.location.data      = user.get('location', '')
