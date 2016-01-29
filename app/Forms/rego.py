@@ -57,11 +57,15 @@ class regoForm(Form):
                 "education" : "",
                 "availability"  : "",
                 "skills"    : "",
-                "jobStatus" :   "" }
+                "jobStatus" :   "",
+                "jobs"      :   "" }
 
             # insert into database
-            savvy_collection.insert(user)
- 
+            employerId = savvy_collection.insert_one(user).inserted_id
+
+            if self.type.data == 'Employer':
+                jobs_collection.insert({'employerId':employerId})
+
             #url = os.getenv('SCRIPT_URI') <----------------get this to work when server is up
             url = '127.0.0.1:5000'
             message = """

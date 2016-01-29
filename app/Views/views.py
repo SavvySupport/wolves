@@ -45,7 +45,7 @@ def load_user(username):
 def not_found(error):
     return render('404.html', error=404)
 
-def render(page, form=None, error=None):
+def render(page, form=None, error=None, extra=None):
     if error:
         return render_template(page,
                                user_logged_in = current_user.is_authenticated,
@@ -54,7 +54,8 @@ def render(page, form=None, error=None):
         return render_template(page,
                                user_logged_in = current_user.is_authenticated,
                                user = current_user.get_id(),
-                               form = form)
+                               form = form,
+                               extra = extra)
 
 ###############################################################################
 # VIEWS/PAGES
@@ -67,3 +68,4 @@ from app.Views import logout
 from app.Views import rego
 from app.Views import account
 from app.Views import recover
+from app.Views import jobs

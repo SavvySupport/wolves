@@ -20,7 +20,9 @@ class employerForm(Form):
 
     def __init__(self, *args, **kwargs):
         self.type = 'employer'
+        self.user = args[0]
         Form.__init__(self, args[1], **kwargs)
+
 
     def prepopulate(self, user):
         self.businessName.data  = user.get('businessName', '')
@@ -151,7 +153,7 @@ class candidateForm(Form):
         self.lastName.data      = user.get('lastName', '')
         self.phoneNumber.data   = user.get('phoneNumber', '')
         self.gender.data        = user.get('gender', '')
-        self.birthday.data      = datetime.strptime(str(user.get('birthday', '')),'%Y-%m-%d')
+        self.birthday.data      = datetime.strptime(str(user.get('birthday', '2016-01-01')),'%Y-%m-%d')
         self.residency.data     = user.get('residency', '')
         self.about.data         = user.get('about', '')
         self.education.data     = user.get('education', '')
