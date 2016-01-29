@@ -87,17 +87,19 @@ class candidateForm(Form):
                                        (UNI_COMPLETED, 'Completed University'),
                                        (NA, 'Not available')],
                             default = UNI)
-    
-    availability = SelectField('availability',
-                                coerce=int,
-                                choices = [(1, '1 day per week'),
-                                           (2, '2 days per week'),
-                                           (3, '3 days per week'),
-                                           (4, '4 days per week'),
-                                           (5, '5 days per week'),
-                                           (6, '6 days per week'),
-                                           (7, '7 days per week')],
-                                default = 1)
+
+    availability_choices = [('Unavailable', 'Unavailable'),
+                            ('Morning', 'Morning'),
+                            ('Afternoon', 'Afternoon'),
+                            ('All day', 'All day')]
+    monday      = SelectField('monday', choices=availability_choices, default='Unavailable')
+    tuesday     = SelectField('tuesday', choices=availability_choices, default='Unavailable')
+    wednesday   = SelectField('wednesday', choices=availability_choices, default='Unavailable')
+    thursday    = SelectField('thursday', choices=availability_choices, default='Unavailable')
+    friday      = SelectField('friday', choices=availability_choices, default='Unavailable')
+    saturday    = SelectField('saturday', choices=availability_choices, default='Unavailable')
+    sunday      = SelectField('sunday', choices=availability_choices, default='Unavailable')
+    holiday     = SelectField('holiday', choices=availability_choices, default='Unavailable')
 
     def __init__(self, *args, **kwargs):
         self.type = 'candidate'
@@ -114,6 +116,17 @@ class candidateForm(Form):
         return True
 
     def update(self, username):
+        availability = {
+            "monday"        : self.monday.data,
+            "tuesday"       : self.tuesday.data,
+            "wednesday"     : self.wednesday.data,
+            "thursday"      : self.thursday.data,
+            "friday"        : self.friday.data,
+            "saturday"      : self.saturday.data,
+            "sunday"        : self.sunday.data,
+            "holiday"       : self.holiday.data,
+        }
+
         user = {
             "firstName"     : self.firstName.data.rstrip(),
             "lastName"      : self.lastName.data.rstrip(),
@@ -123,7 +136,7 @@ class candidateForm(Form):
             "residency"     : self.residency.data,
             "about"         : self.about.data,
             "education"     : self.education.data,
-            "availability"  : self.availability.data,
+            "availability"  : availability,
             "skills"        : (self.skills.data.rstrip()).split(','),
             "location"      : self.location.data
         }
@@ -139,11 +152,26 @@ class candidateForm(Form):
         self.lastName.data      = user.get('lastName', '')
         self.phoneNumber.data   = user.get('phoneNumber', '')
         self.gender.data        = user.get('gender', '')
-        if user.get('birthday', None):
-            self.birthday.data      = datetime.strptime(str(user.get('birthday', None)), '%Y-%m-%d')
         self.residency.data     = user.get('residency', '')
         self.about.data         = user.get('about', '')
         self.education.data     = user.get('education', '')
-        self.availability.data  = user.get('availability', '')
         self.skills.data        = ','.join(user.get('skills', None))
         self.location.data      = user.get('location', '')
+        self.monday.data = 'Unavailable'
+        if user.get('birthday', None):
+            self.birthday.data  = datetime.strptime(str(user.get('birthday', None)), '%Y-%m-%d')
+
+        availability = user.get('availability', None)
+
+        if availability:
+            try:
+                self.monday.data    = availability.get('monday', '')
+                self.tuesday.data   = availability.get('tuesday', '')
+                self.wednesday.data = availability.get('wednesday', '')
+                self.thursday.data  = availability.get('thursday', '')
+                self.friday.data    = availability.get('friday', '')
+                self.saturday.data  = availability.get('saturday', '')
+                self.sunday.data    = availability.get('sunday', '')
+                self.holiday.data   = availability.get('holiday', '')
+            except:
+                pass
