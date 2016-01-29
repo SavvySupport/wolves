@@ -53,6 +53,7 @@ def render(page, form=None, error=None, jsonObject=None):
 from app.Views import home
 from app.Views import test
 from app.Views import dpupload
+from app.Views import connect
 from app.Views import login
 from app.Views import logout
 from app.Views import rego

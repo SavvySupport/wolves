@@ -87,17 +87,7 @@ class candidateForm(Form):
                                        (UNI_COMPLETED, 'Completed University'),
                                        (NA, 'Not available')],
                             default = UNI)
-    #
-    # availability = SelectMultipleField('availability',
-    #                                    choices = [(MON,'Monday'),
-    #                                               (TUE, 'Tuesday'),
-    #                                               (WED, 'Wednesday'),
-    #                                               (THU, 'Thursday'),
-    #                                               (FRI, 'Friday'),
-    #                                               (SAT, 'Saturday'),
-    #                                               (SUN, 'Sunday')],
-    #                                     default = MON)
-
+    
     availability = SelectField('availability',
                                 coerce=int,
                                 choices = [(1, '1 day per week'),
