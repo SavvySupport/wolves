@@ -21,7 +21,7 @@
                             <div class="description">Tell us about yourself</div>
                         </div>
                     </a>
-                    {% if form.type == 'candidate' %}
+                    {% if form.type == 'Candidate' %}
                         <a onclick="changeClass('2')" id="2" class="link step step2">
                             <i class="star icon"></i>
                             <div class="content">
@@ -102,7 +102,7 @@
                     <div class="ui very relax stackable grid">
                         <div class="ten wide column">
                             <!-- Detail Form -->
-                            {% if form.type == 'employer' %}
+                            {% if form.type == 'Employer' %}
                                 <div class="field">
                                     <label>Business Name</label>
                                     {{ form.businessName }}
@@ -173,7 +173,7 @@
                     </div>
                 </div>
 
-                {% if form.type == 'candidate' %}
+                {% if form.type == 'Candidate' %}
                     <div id="step2" class="ui raised segment">
                         <h2 class="ui block header">Skills and Preferences</h2>
                         <div class="ui very relax stackable grid">

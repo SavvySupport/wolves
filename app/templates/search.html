@@ -153,7 +153,13 @@
                                         <p class="ui large header">
                                             Availability
                                         </p>
-                                        <a class="ui teal tag label"> {{ user.get('availability', '') }} </a>
+										{% for day in user.get('availability', None) %}
+											{% if user.get('availability')[day] != 'Unavailable' %}
+												<a class="ui teal tag label">
+													{{ user.get('availability')[day] }} {{ day }}
+												</a>
+											{% endif %}
+										{% endfor %}
                                     </div>
 
                                     <div class="ui hidden divider"></div>
@@ -166,7 +172,7 @@
                                         <input id="username" name="username" type="hidden" value="{{ user.get('username', '') }}">
                                         <input id="modalId" name="modalId" type="hidden" value="{{ id }}">
                                     </div>
-                                </form>
+								</form>
                             </div>
                         </div>
                         <div class="actions">
