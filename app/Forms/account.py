@@ -1,6 +1,6 @@
 from wtforms import Form, BooleanField, TextField, TextAreaField, PasswordField,\
                     validators, ValidationError, RadioField, \
-                    DateTimeField, SelectMultipleField, SelectField
+                    DateTimeField, SelectMultipleField, SelectField, widgets
 from wtforms.fields.html5 import DateField
 from wtforms.widgets import TextArea
 from app import savvy_collection
@@ -87,7 +87,7 @@ class candidateForm(Form):
                                        (UNI_COMPLETED, 'Completed University'),
                                        (NA, 'Not available')],
                             default = UNI)
-
+    #
     # availability = SelectMultipleField('availability',
     #                                    choices = [(MON,'Monday'),
     #                                               (TUE, 'Tuesday'),
@@ -95,7 +95,8 @@ class candidateForm(Form):
     #                                               (THU, 'Thursday'),
     #                                               (FRI, 'Friday'),
     #                                               (SAT, 'Saturday'),
-    #                                               (SUN, 'Sunday')])
+    #                                               (SUN, 'Sunday')],
+    #                                     default = MON)
 
     availability = SelectField('availability',
                                 coerce=int,
@@ -108,9 +109,6 @@ class candidateForm(Form):
                                            (7, '7 days per week')],
                                 default = 1)
 
-    # jobStatus = RadioField('jobStatus',
-    #                         choices = [(YES, 'Yes'), (NO, 'No')])
-
     def __init__(self, *args, **kwargs):
         self.type = 'candidate'
         Form.__init__(self, args[1], **kwargs)
@@ -120,8 +118,8 @@ class candidateForm(Form):
         if not rv:
             for fieldName, errorMessages in self.errors.items():
                 for err in errorMessages:
-                    print(self.birthday.data)
                     print(fieldName, err)
+                    print(self.availability.data)
             return False
         return True
 
@@ -151,7 +149,8 @@ class candidateForm(Form):
         self.lastName.data      = user.get('lastName', '')
         self.phoneNumber.data   = user.get('phoneNumber', '')
         self.gender.data        = user.get('gender', '')
-        self.birthday.data      = datetime.strptime(str(user.get('birthday', '')),'%Y-%m-%d')
+        if user.get('birthday', None):
+            self.birthday.data      = datetime.strptime(str(user.get('birthday', None)), '%Y-%m-%d')
         self.residency.data     = user.get('residency', '')
         self.about.data         = user.get('about', '')
         self.education.data     = user.get('education', '')

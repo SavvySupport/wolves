@@ -19,7 +19,7 @@ class loginForm(Form):
             return False
 
         # Query data from database
-        user = savvy_collection.find_one({ "username": self.username.data.rstrip()})
+        user = savvy_collection.find_one({ "username": self.username.data.rstrip() })
 
         if user:
             username = user.get('username', None)

@@ -35,7 +35,7 @@ def load_user(username):
 def not_found(error):
     return render('404.html', error=404)
 
-def render(page, form=None, error=None):
+def render(page, form=None, error=None, jsonObject=None):
     if error:
         return render_template(page,
                                user_logged_in = current_user.is_authenticated,
@@ -44,7 +44,8 @@ def render(page, form=None, error=None):
         return render_template(page,
                                user_logged_in = current_user.is_authenticated,
                                user = current_user.get_id(),
-                               form = form)
+                               form = form,
+                               jsonObject = jsonObject)
 
 ###############################################################################
 # VIEWS/PAGES

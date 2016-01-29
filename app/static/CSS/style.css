@@ -274,6 +274,7 @@ xgallery
 .cd-gallery .cd-fail-message {
   display: none;
   text-align: center;
+
 }
 @media only screen and (min-width: 768px) {
   .cd-gallery {

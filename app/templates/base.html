@@ -11,7 +11,7 @@
         <script src= {{ url_for('static', filename='CSS/semantic.min.js') }}></script>
         <script src= {{ url_for('static', filename='CSS/savvy.js') }}></script>
         <script src= {{ url_for('static', filename='CSS/elevator.js') }}></script>
-        
+
         <!-- Additional Script -->
         {% block script %}
         {% endblock %}
@@ -70,9 +70,7 @@
                 <div class="header item">
                     <a href= {{ url_for('home') }} >Home</a>
                 </div>
-                <a class="header item">
-                    About Us
-                </a>
+
 
                 {% if user_logged_in == false %}
                     <a class="header item">
@@ -85,6 +83,12 @@
                         Anything Else
                     </a>
                 {% else %}
+                    {% if user.get('category', '').lower() == 'employer' %}
+                        <div class="header item">
+                            <a href= {{ url_for('search') }} >Search</a>
+                        </div>
+                    {% endif %}
+
                     <a href= {{ url_for('account') }} class="item">
                         <i class="child icon"></i>
                         Welcome back {{ user.get('username', None) }}

@@ -1,4 +1,5 @@
 import os
+# import Image
 from app import app, savvy_collection
 from app.Views.views import render
 from flask.ext.login import login_required, current_user
@@ -30,6 +31,9 @@ def dpupload():
             # Upload file to server
             path = os.path.join(updir, filename)
             file.save(path)
+
+            # Resize image
+            # install PIL with pip
 
             # Save path to database
             relative_path = os.path.join(url_for('static', filename='images/user/'), filename)
