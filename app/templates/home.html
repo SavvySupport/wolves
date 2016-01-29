@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
-{% block content %}
-    <link rel="stylesheet" href= {{ url_for('static', filename='CSS/savvy.css') }}>
+{% block script %}
+{% endblock %}
 
+{% block content %}
     <!-- <video autoplay poster="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/polina.jpg" id="bgvid" loop> -->
     <video autoplay id="bgvid" loop>
         <source class="videobg" src= {{ url_for('static', filename='videos/343647377.mp4') }} type="video/mp4">

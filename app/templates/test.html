@@ -1,52 +1,550 @@
 {% extends 'base.html' %}
 
+{% block script %}
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href= {{ url_for('static', filename="CSS/style.css") }} >
+	<script src= {{ url_for('static', filename="CSS/modernizr.js") }} ></script>
+    <script src= {{ url_for('static', filename="CSS/jquery-2.1.1.js") }} ></script>
+    <script src= {{ url_for('static', filename="CSS/jquery.mixitup.min.js") }} ></script>
+    <script src= {{ url_for('static', filename="CSS/main.js") }} ></script>
+    <script src= {{ url_for('static', filename='CSS/semantic.js') }}></script>
+{% endblock %}
+
 {% block content %}
-    <form id="photoForm" method="post" enctype="multipart/form-data">
-        <div class="ui action input">
-            <input type="text" id="_attachmentName">
-            <label for="attachmentName" class="ui icon green button btn-file">
-                <i class="folder open outline icon"></i>
-                <input type="file" id="attachmentName" name="attachmentName" style="display: none">
-            </label>
-        </div>
+    <main class="cd-main-content">
+        <section class="cd-gallery">
+            <ul>
+                <li class="mix color-2">
+                    <div class="ui special cards">
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui inverted dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <div class="ui primary button">Add Friend</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src= {{ url_for('static', filename='images/user1.jpg') }} >
+                            </div>
+                            <div class="content">
+                                <a class="header">Full name</a>
+                                <div class="meta">
+                                    <span class="date">D.O.B</span>
+                                </div>
+                                <div class="description">
+                                    Introduction
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <a>
+                                    <i class="user icon"></i>
+                                    22 skills
+                                </a>
 
-        <button id="submit" type="button">Upload</button>
-        <a id="upload"> change </a>
-    </form>
+                                <span class="right floated">
+                                    10 endorsements
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="mix color-2">
+                    <div class="ui special cards">
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui inverted dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <div class="ui primary button">Add Friend</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src= {{ url_for('static', filename='images/user1.jpg') }} >
+                            </div>
+                            <div class="content">
+                                <a class="header">Full name</a>
+                                <div class="meta">
+                                    <span class="date">D.O.B</span>
+                                </div>
+                                <div class="description">
+                                    Introduction
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <a>
+                                    <i class="user icon"></i>
+                                    22 skills
+                                </a>
 
-    <p>Result Filename:&nbsp;<span id="resultFilename"> here</span></p>
-    <p>Result Filesize:&nbsp;<span id="resultFilesize">here</span></p>
-    <img id='photoajax' src = {{ url_for('static', filename='images/user.png') }} />
+                                <span class="right floated">
+                                    10 endorsements
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="mix color-2 check2 radio2 option2">
+                    <div class="ui special cards">
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui inverted dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <div class="ui primary button">Add Friend</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src= {{ url_for('static', filename='images/user1.jpg') }} >
+                            </div>
+                            <div class="content">
+                                <a class="header">Full name</a>
+                                <div class="meta">
+                                    <span class="date">D.O.B</span>
+                                </div>
+                                <div class="description">
+                                    Introduction
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <a>
+                                    <i class="user icon"></i>
+                                    22 skills
+                                </a>
 
-    <script type=text/javascript>
-        $(function() {
-            $('#upload').click(function(){
-                $('#attachmentName').click();
-            });
+                                <span class="right floated">
+                                    10 endorsements
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="mix color-1 check3 radio3 option1">
+                    <div class="ui special cards">
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui inverted dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <div class="ui primary button">Add Friend</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src= {{ url_for('static', filename='images/user1.jpg') }} >
+                            </div>
+                            <div class="content">
+                                <a class="header">Full name</a>
+                                <div class="meta">
+                                    <span class="date">D.O.B</span>
+                                </div>
+                                <div class="description">
+                                    Introduction
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <a>
+                                    <i class="user icon"></i>
+                                    22 skills
+                                </a>
 
-            $('#attachmentName').change(function() {
-                $('#submit').click();
-            });
+                                <span class="right floated">
+                                    10 endorsements
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="mix color-1 check3 radio2 option4">
+                    <div class="ui special cards">
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui inverted dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <div class="ui primary button">Add Friend</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src= {{ url_for('static', filename='images/user1.jpg') }} >
+                            </div>
+                            <div class="content">
+                                <a class="header">Full name</a>
+                                <div class="meta">
+                                    <span class="date">D.O.B</span>
+                                </div>
+                                <div class="description">
+                                    Introduction
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <a>
+                                    <i class="user icon"></i>
+                                    22 skills
+                                </a>
 
-            $('#submit').click(function() {
-                event.preventDefault();
-                var form_data = new FormData($('#photoForm')[0]);
-                $.ajax({
-                    type: 'POST',
-                    url: '/dpupload',
-                    data: form_data,
-                    contentType: false,
-                    processData: false,
-                    dataType: 'json'
-                }).done(function(data, textStatus, jqXHR){
-                    $("#photoajax").attr('src', data['path']);
-                    console.log('Success!');
-                }).fail(function(data) {
-                    alert('Failed!');
-                }).complete(function(data) {
-                    console.log('completed');
-                });
-            });
-        });
-    </script>
+                                <span class="right floated">
+                                    10 endorsements
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="mix color-1 check1 radio3 option2">
+                    <div class="ui special cards">
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui inverted dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <div class="ui primary button">Add Friend</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src= {{ url_for('static', filename='images/user1.jpg') }} >
+                            </div>
+                            <div class="content">
+                                <a class="header">Full name</a>
+                                <div class="meta">
+                                    <span class="date">D.O.B</span>
+                                </div>
+                                <div class="description">
+                                    Introduction
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <a>
+                                    <i class="user icon"></i>
+                                    22 skills
+                                </a>
+
+                                <span class="right floated">
+                                    10 endorsements
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="mix color-2 check2 radio3 option3">
+                    <div class="ui special cards">
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui inverted dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <div class="ui primary button">Add Friend</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src= {{ url_for('static', filename='images/user1.jpg') }} >
+                            </div>
+                            <div class="content">
+                                <a class="header">Full name</a>
+                                <div class="meta">
+                                    <span class="date">D.O.B</span>
+                                </div>
+                                <div class="description">
+                                    Introduction
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <a>
+                                    <i class="user icon"></i>
+                                    22 skills
+                                </a>
+
+                                <span class="right floated">
+                                    10 endorsements
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="mix color-2 check2 radio2 option1">
+                    <div class="ui special cards">
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui inverted dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <div class="ui primary button">Add Friend</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src= {{ url_for('static', filename='images/user1.jpg') }} >
+                            </div>
+                            <div class="content">
+                                <a class="header">Full name</a>
+                                <div class="meta">
+                                    <span class="date">D.O.B</span>
+                                </div>
+                                <div class="description">
+                                    Introduction
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <a>
+                                    <i class="user icon"></i>
+                                    22 skills
+                                </a>
+
+                                <span class="right floated">
+                                    10 endorsements
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="mix color-1 check-1 radio3 option4">
+                    <div class="ui special cards">
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui inverted dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <div class="ui primary button">Add Friend</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src= {{ url_for('static', filename='images/user1.jpg') }} >
+                            </div>
+                            <div class="content">
+                                <a class="header">Full name</a>
+                                <div class="meta">
+                                    <span class="date">D.O.B</span>
+                                </div>
+                                <div class="description">
+                                    Introduction
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <a>
+                                    <i class="user icon"></i>
+                                    22 skills
+                                </a>
+
+                                <span class="right floated">
+                                    10 endorsements
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="mix color-2 check1 radio2 option3">
+                    <div class="ui special cards">
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui inverted dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <div class="ui primary button">Add Friend</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src= {{ url_for('static', filename='images/user1.jpg') }} >
+                            </div>
+                            <div class="content">
+                                <a class="header">Full name</a>
+                                <div class="meta">
+                                    <span class="date">D.O.B</span>
+                                </div>
+                                <div class="description">
+                                    Introduction
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <a>
+                                    <i class="user icon"></i>
+                                    22 skills
+                                </a>
+
+                                <span class="right floated">
+                                    10 endorsements
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="mix color-1 check3 radio2 option4">
+                    <div class="ui special cards">
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui inverted dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <div class="ui primary button">Add Friend</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src= {{ url_for('static', filename='images/user1.jpg') }} >
+                            </div>
+                            <div class="content">
+                                <a class="header">Full name</a>
+                                <div class="meta">
+                                    <span class="date">D.O.B</span>
+                                </div>
+                                <div class="description">
+                                    Introduction
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <a>
+                                    <i class="user icon"></i>
+                                    22 skills
+                                </a>
+
+                                <span class="right floated">
+                                    10 endorsements
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="mix color-1 check3 radio3 option2">
+                    <div class="ui special cards">
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui inverted dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <div class="ui primary button">Add Friend</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src= {{ url_for('static', filename='images/user1.jpg') }} >
+                            </div>
+                            <div class="content">
+                                <a class="header">Full name</a>
+                                <div class="meta">
+                                    <span class="date">D.O.B</span>
+                                </div>
+                                <div class="description">
+                                    Introduction
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <a>
+                                    <i class="user icon"></i>
+                                    22 skills
+                                </a>
+
+                                <span class="right floated">
+                                    10 endorsements
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="mix color-2 check1 radio3 option1">
+                    <div class="ui special cards">
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui inverted dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <div class="ui primary button">Add Friend</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src= {{ url_for('static', filename='images/user1.jpg') }} >
+                            </div>
+                            <div class="content">
+                                <a class="header">Full name</a>
+                                <div class="meta">
+                                    <span class="date">D.O.B</span>
+                                </div>
+                                <div class="description">
+                                    Introduction
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <a>
+                                    <i class="user icon"></i>
+                                    22 skills
+                                </a>
+
+                                <span class="right floated">
+                                    10 endorsements
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="gap"></li>
+                <li class="gap"></li>
+                <li class="gap"></li>
+            </ul>
+            <div class="cd-fail-message">No results found</div>
+        </section> <!-- cd-gallery -->
+
+        <div class="cd-filter">
+            <form class="ui form">
+                <div class="grouped fields">
+                    <!-- SEARCH BOX -->
+                    <div class="fluid field">
+                        <div class="cd-filter-content ui icon input">
+                            <input type="search" placeholder="Search by text">
+                            <i class="search icon"></i>
+                        </div>
+                    </div>
+
+                    <!-- AVAILABILITY -->
+                    <div class="cd-filter-block">
+                        <h4>Availability</h4>
+                        <div class="cd-filter-content cd-filters list">
+                            {% for day in range(1, 8) %}
+                                <div class="field">
+                                    <div class="ui toggle checkbox">
+                                        <input class="filter" data-filter=".check{{day}}" type="checkbox" id="checkbox{{day}}">
+                                        <label for="checkbox{{day}}">{{ day }} days per week</label>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Dropdown box -->
+                    <!-- <div class="cd-filter-block">
+                        <h4>Select</h4>
+                        <div class="cd-filter-content">
+                            <div class="cd-select cd-filters">
+                                <select class="filter" name="selectThis" id="selectThis">
+                                    <option value="">Choose an option</option>
+                                    <option value=".option1">Option 1</option>
+                                    <option value=".option2">Option 2</option>
+                                    <option value=".option3">Option 3</option>
+                                    <option value=".option4">Option 4</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <!-- JOB TYPE -->
+                    <div class="cd-filter-block">
+                        <h4>Types</h4>
+                        <div class="cd-filter-content cd-filters list">
+                            <li>
+                                <input class="filter" data-filter="" type="radio" name="radioButton" id="radio1" checked>
+                                <label class="radio-label" for="radio1">All</label>
+                            </li>
+
+                            {% for type in range(1, 3) %}
+                                <li>
+                                    <input class="filter" data-filter=".radio{{type}}" type="radio" name="radioButton" id="radio{{type}}">
+                                    <label class="radio-label" for="radio{{type}}">Choice {{type}}</label>
+                                </li>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <a href="#0" class="cd-close">Close</a>
+        </div> <!-- cd-filter -->
+
+        <a href="#0" class="cd-filter-trigger">Filters</a>
+    </main>
+
+
+
 {% endblock %}
