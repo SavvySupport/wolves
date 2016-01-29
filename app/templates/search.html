@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block script %}
-    <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> -->
 	<link rel="stylesheet" href= {{ url_for('static', filename="CSS/style.css") }} >
 	<script src= {{ url_for('static', filename="CSS/modernizr.js") }} ></script>
     <script src= {{ url_for('static', filename="CSS/jquery-2.1.1.js") }} ></script>
@@ -15,7 +15,7 @@
     <main class="cd-main-content">
         <section class="cd-gallery">
             <ul>
-                <!-- <div class="ui special cards"> -->
+                {% set id = 0 %}
                 {% for user in jsonObject %}
                     <li class="mix {{user.get('firstName', '')}}
                                    {{user.get('lastName', '')}}
@@ -25,18 +25,18 @@
                                    {% for skill in user.get('skills') %} {{skill}} {% endfor %}">
                         <div class="ui special cards">
                             <div class="card">
-                                <div class="blurring dimmable image">
+                                <div class="blurring dimmable medium image">
                                     <div class="ui inverted dimmer">
                                         <div class="content">
                                             <div class="center">
-                                                <div class="ui primary button">
+                                                <button onclick="showmodal({{id}})" class="ui primary button show-modal">
                                                     Contact
                                                     {% if user.get('gender', None) == 'Male' %}
                                                         Him
                                                     {% elif user.get('gender', None) == 'Female' %}
                                                         Her
                                                     {% endif %}
-                                                </div>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -68,8 +68,27 @@
                             </div>
                         </div>
                     </li>
+
+                    <div class="ui fullscreen modal {{id}}">
+                        <i class="close icon"></i>
+                        <div class="header">
+                            {{ user.get('firstName', '') }}
+                            {{ user.get('lastName', '') }}
+                        </div>
+                        <div class="image content">
+                            <div class="image">
+                            </div>
+                            <div class="description">
+                                <img class="ui large image" src= {{ user.get('dp', url_for('static', filename='images/user1.jpg')) }} >
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <div class="ui approve green button">OK</div>
+                            <div class="ui deny red button">Cancel</div>
+                        </div>
+                    </div>
+                    {% set id = id+1 %}
                 {% endfor %}
-            <!-- </div> -->
 
                 <!-- 3 gaps to even the spaces -->
                 <li class="gap"></li>
@@ -129,4 +148,15 @@
 
         <a href="#0" class="cd-filter-trigger">Filters</a>
     </main>
+
+    <script>
+        function showmodal(id) {
+            console.log(id)
+            var element='.ui.fullscreen.modal.'.concat(id);
+            console.log(element);
+            $(element)
+                .modal('show')
+            ;
+        }
+    </script
 {% endblock %}
