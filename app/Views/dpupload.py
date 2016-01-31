@@ -29,6 +29,8 @@ def dpupload():
             filename = md5((filename + current_user.get_id().get('username')).encode('utf-8')).hexdigest()
 
             # Check if user folder exists
+            print(updir)
+            print(filename)
             if os.path.exists(updir):
                 path = os.path.join(updir, filename)
 
