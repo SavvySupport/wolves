@@ -29,28 +29,25 @@ def dpupload():
             filename = md5((filename + current_user.get_id().get('username')).encode('utf-8')).hexdigest()
 
             # Check if user folder exists
-            print(updir)
-            print(filename)
-            if os.path.exists(updir):
-                path = os.path.join(updir, filename)
+            if not os.path.exists(updir):
+                os.makedirs(updir)
 
-                # Upload file to server
-                file.save(path)
+            path = os.path.join(updir, filename)
+            # Upload file to server
+            file.save(path)
 
-                # Resize image
-                # install PIL with pip
+            # Resize image
+            # install PIL with pip
 
-                # Save path to database
-                relative_path = os.path.join(url_for('static', filename='images/user/'), filename)
-                user = { "dp"    : relative_path }
-                savvy_collection.update( {"username": current_user.get_id().get('username')},
-                                         {"$set": user} )
+            # Save path to database
+            relative_path = os.path.join(url_for('static', filename='images/user/'), filename)
+            user = { "dp"    : relative_path }
+            savvy_collection.update( {"username": current_user.get_id().get('username')},
+                                     {"$set": user} )
 
 
-                # return information to frontend
-                return jsonify(path=relative_path)
-            else:
-                return None
+            # return information to frontend
+            return jsonify(path=relative_path)
 
 def allowed_file(filename):
     app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
