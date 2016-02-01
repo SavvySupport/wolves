@@ -17,12 +17,16 @@
             <ul>
                 {% set id = 0 %}
                 {% for user in jsonObject %}
-                    <li class="mix {{user.get('firstName', '')}}
-                                   {{user.get('lastName', '')}}
-                                   {{user.get('location', '')}}
-                                   {{user.get('surburb', '')}}
-                                   avai-{{user.get('availability', '')}}
-                                   {% for skill in user.get('skills') %} {{skill}} {% endfor %}">
+                    <li class="mix  {{user.get('firstName', '')}}
+                                    {{user.get('lastName', '')}}
+                                    {{user.get('location', '')}}
+                                    {{user.get('surburb', '')}}
+                                    {% for day in user.get('availability', None) %}
+										{% if user.get('availability', None)[day] != 'Unavailable' %}
+											{{day}}
+										{% endif %}
+								    {% endfor %}
+                                    {% for skill in user.get('skills') %} {{skill}} {% endfor %}">
                         <div class="ui special cards">
                             <div class="card">
                                 <div class="blurring dimmable medium image">
@@ -207,12 +211,38 @@
                     <div class="cd-filter-block">
                         <h4>Availability</h4>
                         <div class="cd-filter-content cd-filters list">
-                            {% for day in range(1, 8) %}
-                                <li>
-                                    <input class="filter" data-filter=".avai-{{day}}" type="checkbox" id="avai-{{day}}">
-                                    <label class="checkbox-label" for="avai-{{day}}">{{ day }} day a week</label>
-                                </li>
-                            {% endfor %}
+                            <li>
+                                <input class="filter" data-filter=".Monday" type="checkbox" id="Monday">
+                                <label class="checkbox-label" for="Monday">Monday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Tuesday" type="checkbox" id="Tuesday">
+                                <label class="checkbox-label" for="Tuesday">Tuesday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Wednesday" type="checkbox" id="Wednesday">
+                                <label class="checkbox-label" for="Wednesday">Wednesday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Thursday" type="checkbox" id="Thursday">
+                                <label class="checkbox-label" for="Thursday">Thursday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Friday" type="checkbox" id="Friday">
+                                <label class="checkbox-label" for="Friday">Friday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Saturday" type="checkbox" id="Saturday">
+                                <label class="checkbox-label" for="Saturday">Saturday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Sunday" type="checkbox" id="Sunday">
+                                <label class="checkbox-label" for="Sunday">Sunday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Holiday" type="checkbox" id="Holiday">
+                                <label class="checkbox-label" for="Holiday">Holiday</label>
+                            </li>
                         </div>
                     </div>
 

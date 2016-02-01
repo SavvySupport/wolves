@@ -6,8 +6,10 @@ from flask.ext.login import login_required, current_user
 from flask import jsonify, request, url_for, flash
 from werkzeug import secure_filename
 from hashlib import md5
+from app.Helpers.Constant import *
 
 @app.route('/dpupload', methods=['POST'])
+@login_required
 def dpupload():
     if request.method == 'POST':
         file = request.files['attachmentName']
@@ -17,7 +19,7 @@ def dpupload():
             updir = os.path.join(app.config['basedir'], 'static/images/user/')
 
             # Delete old file
-            delete_file = current_user.get_id().get('dp', None)
+            delete_file = current_user.get_id().get(DP, None)
             if delete_file:
                 delete_file = delete_file.split('/', -1)[-1]
                 delete_file = os.path.join(updir, delete_file)
@@ -41,8 +43,8 @@ def dpupload():
 
             # Save path to database
             relative_path = os.path.join(url_for('static', filename='images/user/'), filename)
-            user = { "dp"    : relative_path }
-            savvy_collection.update( {"username": current_user.get_id().get('username')},
+            user = { DP: relative_path }
+            savvy_collection.update( {USERNAME: current_user.get_id().get(USERNAME)},
                                      {"$set": user} )
 
 

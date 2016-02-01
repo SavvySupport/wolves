@@ -18,6 +18,8 @@ ADDRESS      = 'streetAddress'
 WEBSITE      = 'website'
 CONTACT      = 'contactName'
 BUSINESS     = 'businessName'
+DP           = 'dp'
+
 # Category
 EMPL = 'Employer'
 CAND = 'Candidate'

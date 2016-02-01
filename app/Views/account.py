@@ -4,17 +4,18 @@ from app.Forms.account import candidateForm, employerForm
 from flask.ext.login import login_user, login_required
 from flask import request, redirect, url_for, flash
 from flask.ext.login import login_user, current_user
+from app.Helpers.Constant import *
 
 @app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
-    username = current_user.get_id()['username']
-    user = savvy_collection.find_one({ "username": username })
+    username = current_user.get_id()[USERNAME]
+    user = savvy_collection.find_one({ USERNAME: username })
     if user:
         form = None
-        if user.get('category', '').lower() == 'employer':
+        if user.get(CATEGORY, '') == EMPL:
             form = employerForm(username, request.form)
-        elif user.get('category', '').lower() == 'candidate':
+        elif user.get(CATEGORY, '') == CAND:
             form = candidateForm(username, request.form)
 
         if request.method == 'GET':

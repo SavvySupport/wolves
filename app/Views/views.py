@@ -6,6 +6,7 @@ from jinja2 import Environment, FileSystemLoader
 from flask import render_template
 from flask.ext.login import current_user
 from app.Models.User import User
+from app.Helpers.Constant import *
 
 ###############################################################################
 # Set up environment for Jinja
@@ -22,7 +23,7 @@ env = Environment(loader=FileSystemLoader(tpldir), trim_blocks=True)
 @manager.user_loader
 def load_user(username):
     if username != None:
-        user = savvy_collection.find_one({ "username": username })
+        user = savvy_collection.find_one({ USERNAME: username })
         if user:
             return User(user)
 

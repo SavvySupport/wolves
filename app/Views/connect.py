@@ -5,6 +5,7 @@ from flask.ext.login import login_required, current_user
 from flask import jsonify, request, url_for, flash
 from werkzeug import secure_filename
 from hashlib import md5
+from app.Helpers.Constant import *
 
 @app.route('/connect', methods=['POST'])
 @login_required
@@ -15,7 +16,7 @@ def connect():
         modal = request.form['modalId']
 
         print(modal)
-        user = savvy_collection.find_one( {'username': user}, {'email': 1 } )
+        user = savvy_collection.find_one( {USERNAME: user}, {EMAIL: 1 } )
         if user:
             # Send an email
             pass
