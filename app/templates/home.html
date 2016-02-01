@@ -4,19 +4,19 @@
 {% endblock %}
 
 {% block content %}
-    <!-- <video autoplay poster="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/polina.jpg" id="bgvid" loop> -->
     <video autoplay id="bgvid" loop>
         <source class="videobg" src= {{ url_for('static', filename='videos/343647377.mp4') }} type="video/mp4">
     </video>
     <div id="savvy">
         <img id="logo" src= {{ url_for('static', filename='images/logo.png') }} />
         <h2>The new way to hire is here!</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur porta dictum turpis, eu mollis justo gravida ac. Proin non eros blandit, rutrum est a, cursus quam. Nam ultricies, velit ac suscipit vehicula, turpis eros sollicitudin lacus, at
-            convallis mauris magna non justo. Etiam et suscipit elit. Morbi eu ornare nulla, sit amet ornare est. Sed vehicula ipsum a mattis dapibus. Etiam volutpat vel enim at auctor.
+        <p>
+            Join for free today and get access to profiles of job seekers in Sydney. View their skills, experiences and qualifications.
+            Ratings are also used on Savvy Hire for character assessments
         </p>
 
         {% if user_logged_in == false %}
-            <a href= {{ url_for('login') }} ><button>Express your interest here</button></a>
+            <a href= {{ url_for('register') }} ><button>Create your own account here</button></a>
         {% endif %}
     </div>
 {% endblock %}
