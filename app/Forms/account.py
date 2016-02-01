@@ -7,6 +7,7 @@ from app import savvy_collection
 from flask import flash
 from app.Helpers.Constant import *
 from datetime import datetime, date
+import re
 
 class employerForm(Form):
     businessName    = TextField(BUSINESS)
@@ -119,6 +120,12 @@ class candidateForm(Form):
             HOL[TEXT]       : self.holiday.data,
         }
 
+        tmp = (self.skills.data.rstrip()).split(',')
+        skills = []
+        for skill in tmp:
+            if skill != '':
+                skills.append(skill)
+
         user = {
             FNAME         : self.firstName.data.rstrip(),
             LNAME         : self.lastName.data.rstrip(),
@@ -129,11 +136,9 @@ class candidateForm(Form):
             ABOUT         : self.about.data,
             EDUCATION     : self.education.data,
             AVAILABILITY  : availability,
-            SKILLS        : (self.skills.data.rstrip()).split(','),
+            SKILLS        : skills,
             LOCATION      : self.location.data
         }
-
-        print(self.residency.data)
 
         savvy_collection.update(
             { USERNAME: username },
