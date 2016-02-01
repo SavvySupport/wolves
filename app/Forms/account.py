@@ -84,14 +84,14 @@ class candidateForm(Form):
                             default = UNI[CODE])
 
     availability_choices = [NA, MORNING, AFTERNOON, ALL_DAY]
-    monday      = SelectField(MON[TEXT], choices=availability_choices, default='Unavailable')
-    tuesday     = SelectField(TUE[TEXT], choices=availability_choices, default='Unavailable')
-    wednesday   = SelectField(WED[TEXT], choices=availability_choices, default='Unavailable')
-    thursday    = SelectField(THU[TEXT], choices=availability_choices, default='Unavailable')
-    friday      = SelectField(FRI[TEXT], choices=availability_choices, default='Unavailable')
-    saturday    = SelectField(SAT[TEXT], choices=availability_choices, default='Unavailable')
-    sunday      = SelectField(SUN[TEXT], choices=availability_choices, default='Unavailable')
-    holiday     = SelectField(HOL[TEXT], choices=availability_choices, default='Unavailable')
+    monday      = SelectField(MON[TEXT], choices=availability_choices, default=NA[CODE])
+    tuesday     = SelectField(TUE[TEXT], choices=availability_choices, default=NA[CODE])
+    wednesday   = SelectField(WED[TEXT], choices=availability_choices, default=NA[CODE])
+    thursday    = SelectField(THU[TEXT], choices=availability_choices, default=NA[CODE])
+    friday      = SelectField(FRI[TEXT], choices=availability_choices, default=NA[CODE])
+    saturday    = SelectField(SAT[TEXT], choices=availability_choices, default=NA[CODE])
+    sunday      = SelectField(SUN[TEXT], choices=availability_choices, default=NA[CODE])
+    holiday     = SelectField(HOL[TEXT], choices=availability_choices, default=NA[CODE])
 
     def __init__(self, *args, **kwargs):
         self.type = CAND
