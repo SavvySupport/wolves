@@ -26,6 +26,7 @@ app.config['basedir'] = os.path.abspath(os.path.dirname(__file__))
 client = MongoClient()
 client = MongoClient('mongodb://thangdo:Fr0th1ng@ds037395.mongolab.com:37395/savvydb')
 db = client['savvydb']
+jobs_collection = db['jobs']
 savvy_collection = db['savvy']
 
 # Manager authentication with LoginManager

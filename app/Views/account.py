@@ -1,4 +1,4 @@
-from app import app, savvy_collection
+from app import app, savvy_collection, jobs_collection
 from app.Views.views import render
 from app.Forms.account import candidateForm, employerForm
 from flask.ext.login import login_user, login_required
@@ -11,10 +11,11 @@ from app.Helpers.Constant import *
 def account():
     username = current_user.get_id()[USERNAME]
     user = savvy_collection.find_one({ USERNAME: username })
+    userJob = jobs_collection.find_one({'employerId':user.get('_id', '')})
     if user:
         form = None
         if user.get(CATEGORY, '') == EMPL:
-            form = employerForm(username, request.form)
+            form = employerForm(user, request.form) #need to pass user here, use in account.html.
         elif user.get(CATEGORY, '') == CAND:
             form = candidateForm(username, request.form)
 
@@ -28,7 +29,7 @@ def account():
             else:
                 flash('Failed to update your profile', 'error')
 
-        return render('account.html', form=form)
+        return render('account.html', form=form, error=None, jsonObject=None,extra=userJob)
     else:
         flash('Invalid access to account', 'error')
         return redirect(url_for('home'))

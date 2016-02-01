@@ -221,6 +221,27 @@ $(function () {
         });
     });
 
+    $('#deleteJobButton').click(function() {
+        event.preventDefault();
+        //var form_data = new FormData($('#viewJobForm')[0]);
+        var jobId = $('#jobId').val();
+        $.ajax({
+            type: 'POST',
+            url: '/deleteJob',
+            data: jobId,
+            contentType: false,
+            processData: false,
+            dataType: 'json'
+        }).done(function(data, textStatus, jqXHR){
+            $("#jobajax").attr('src', data['path']);
+            console.log('Success!');
+        }).fail(function(data) {
+            alert('Failed!');
+        }).complete(function(data) {
+            console.log('completed');
+        });
+    });
+
     // Restyle and handle file uploads
     var fileExtentionRange = '.png .jpg .jpeg';
     var MAX_SIZE = 3; // MB

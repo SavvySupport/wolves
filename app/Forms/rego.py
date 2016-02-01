@@ -1,7 +1,7 @@
 from wtforms import Form, BooleanField, TextField, TextAreaField, PasswordField,\
                     validators, ValidationError, SelectField
 from app.Models.User import User
-from app import savvy_collection
+from app import savvy_collection, jobs_collection
 from flask.ext.login import login_user
 from flask import flash
 from hashlib import md5
@@ -44,7 +44,10 @@ class regoForm(Form):
                 TOKEN         : token }
 
             # insert into database
-            savvy_collection.insert(user)
+            employerId = savvy_collection.insert_one(user).inserted_id
+
+            if self.category.data == EMPL:
+                jobs_collection.insert({EMPLID: employerId})
 
             #url = os.getenv('SCRIPT_URI') <----------------get this to work when server is up
             # url = '127.0.0.1:5000'

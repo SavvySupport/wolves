@@ -20,7 +20,9 @@ class employerForm(Form):
 
     def __init__(self, *args, **kwargs):
         self.type = EMPL
+        self.user = args[0]
         Form.__init__(self, args[1], **kwargs)
+
 
     def prepopulate(self, user):
         self.businessName.data  = user.get(BUSINESS, '')

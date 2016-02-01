@@ -23,11 +23,11 @@ DP           = 'dp'
 TOKEN        = 'token'
 
 # Category
-EMPL = 'Employer'
-CAND = 'Candidate'
-
-EMPLOYER = (EMPL, EMPL)
-CANDIDATE = (CAND, 'Job Seeker')
+EMPL        = 'Employer'
+CAND        = 'Candidate'
+EMPLID      = 'employerId'
+EMPLOYER    = (EMPL, EMPL)
+CANDIDATE   = (CAND, 'Job Seeker')
 
 # Gender
 MALE    = ('Male', 'Male')
