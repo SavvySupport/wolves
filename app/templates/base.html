@@ -41,13 +41,6 @@
             {% endif %}
         </div>
         <div class="pusher">
-            <!-- <div class="ui inline cookie nag">
-                <span class="title">
-                    We use cookies to ensure you get the best experience with #TheProject
-                </span>
-                <i class="close icon"></i>
-            </div> -->
-
             <!-- Warning message. Activated by flash() in views.py -->
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
@@ -73,17 +66,10 @@
                     <a href= {{ url_for('home') }} >Home</a>
                 </div>
 
-
                 {% if user_logged_in == false %}
-                    <a class="header item">
-                        Jobs
-                    </a>
-                    <a class="header item">
-                        Locations
-                    </a>
-                    <a class="header item">
-                        Anything Else
-                    </a>
+                    <div class="header item">
+                        <a href= {{ url_for('search') }} >Search</a>
+                    </div>
                 {% else %}
                     {% if user.get('category', '').lower() == 'employer' %}
                         <div class="header item">

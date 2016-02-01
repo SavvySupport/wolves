@@ -30,18 +30,15 @@
                 <div class="field">
                     <label>Account Type</label>
                     <div class="ui fluid selection dropdown field ">
-                        {{ form.type }}
+                        {{ form.category }}
                         <i class="dropdown icon"></i>
-                        <div class="default text">Select Friend</div>
+                        <div class="default text">Select account type</div>
                         <div class="menu">
-                            <div class="item" data-value="Candidate">
-                                <img class="ui mini avatar image" src= {{ url_for('static', filename='images/user.png') }} >
-                                Candidate
-                            </div>
-                            <div class="item" data-value="Employer">
-                                <img class="ui mini avatar image" src= {{ url_for('static', filename='images/user1.jpg') }} >
-                                Employer
-                            </div>
+                            {% for field in form.category.choices %}
+                                <div class="item" data-value= {{ field[0] }} >
+                                    {{ field[1] }}
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>

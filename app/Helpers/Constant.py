@@ -1,6 +1,7 @@
 # Field names
 USERNAME     = 'username'
 PASSWORD     = 'password'
+PWDCONFIRM   = 'passwordconfirm'
 EMAIL        = 'email'
 FNAME        = 'firstName'
 LNAME        = 'lastName'
@@ -19,10 +20,14 @@ WEBSITE      = 'website'
 CONTACT      = 'contactName'
 BUSINESS     = 'businessName'
 DP           = 'dp'
+TOKEN        = 'token'
 
 # Category
 EMPL = 'Employer'
 CAND = 'Candidate'
+
+EMPLOYER = (EMPL, EMPL)
+CANDIDATE = (CAND, 'Job Seeker')
 
 # Gender
 MALE    = ('Male', 'Male')

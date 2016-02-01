@@ -7,7 +7,6 @@ from app import savvy_collection
 from flask import flash
 from app.Helpers.Constant import *
 from datetime import datetime, date
-import re
 
 class employerForm(Form):
     businessName    = TextField(BUSINESS)
