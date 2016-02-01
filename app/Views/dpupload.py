@@ -15,7 +15,6 @@ def dpupload():
         file = request.files['attachmentName']
         if file and allowed_file(file.filename):
             # Set up upload folder
-            # basedir = os.path.abspath(os.path.dirname(__file__))
             updir = os.path.join(app.config['basedir'], 'static/images/user/')
 
             # Delete old file
@@ -28,7 +27,7 @@ def dpupload():
 
             # Get filename
             filename = secure_filename(file.filename)
-            filename = md5((filename + current_user.get_id().get('username')).encode('utf-8')).hexdigest()
+            filename = md5((filename + current_user.get_id().get(USERNAME)).encode('utf-8')).hexdigest()
 
             # Check if user folder exists
             if not os.path.exists(updir):

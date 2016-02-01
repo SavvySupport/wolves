@@ -3,16 +3,17 @@ from app.Views.views import render
 from app.Forms.jobs import jobForm
 from flask import request, redirect, url_for
 from flask.ext.login import login_user, current_user
+from app.Helpers.Constant import *
 
 @app.route('/jobs', methods=['GET', 'POST'])
 def jobs():
-    username = current_user.get_id()['username']
-    user = savvy_collection.find_one({ "username": username })
+    username = current_user.get_id()[USERNAME]
+    user = savvy_collection.find_one({ USERNAME: username })
     if user:
         form = None
 
-        if user.get('category', '').lower() == 'employer':
-            form = jobForm(request.form, user['username'])
+        if user.get(CATEGORY, None) == EMPL:
+            form = jobForm(request.form, user[USERNAME])
         else:
             return redirect(url_for('home'))
 
