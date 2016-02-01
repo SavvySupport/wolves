@@ -15,7 +15,7 @@ def account():
     if user:
         form = None
         if user.get(CATEGORY, '') == EMPL:
-            form = employerForm(username, request.form)
+            form = employerForm(user, request.form) #need to pass user here, use in account.html.
         elif user.get(CATEGORY, '') == CAND:
             form = candidateForm(username, request.form)
 
@@ -29,7 +29,7 @@ def account():
             else:
                 flash('Failed to update your profile', 'error')
 
-        return render('account.html', form=form, error=None, extra=userJob)
+        return render('account.html', form=form, error=None, jsonObject=None,extra=userJob)
     else:
         flash('Invalid access to account', 'error')
         return redirect(url_for('home'))
