@@ -28,8 +28,8 @@ class regoForm(Form):
             flash('Form invalid', 'error')
             return False
 
-        user = savvy_collection.find_one({ "$or" : [ {"username": self.username.data.rstrip()},
-                                                     {"email": self.email.data.rstrip()} ] })
+        user = savvy_collection.find_one({ "$or" : [ {USERNAME: self.username.data.rstrip()},
+                                                     {EMAIL: self.email.data.rstrip()} ] })
         if user:
             flash('Email or Username has been taken', 'warning')
             return False
@@ -37,28 +37,11 @@ class regoForm(Form):
             raw_token = self.email.data + self.username.data + 'verification code'
             token = md5(raw_token.encode('utf-8')).hexdigest()
             user = {
-                "username": self.username.data.rstrip(),
-                "password": md5(self.password.data.rstrip().encode('utf-8')).hexdigest(),
-                "email"   : self.email.data.rstrip(),
-                "category"    : self.category.data,
-                "token"   : token,
-                "businessName": "",
-                "contactName": "",
-                "phoneNumber"   : "",
-                "website"  : "",
-                "streetAddress"   : "",
-                "hiring"    : "",
-                "firstName": "",
-                "lastName": "",
-                "gender"  : "",
-                "birthday"   : "",
-                "residency"    : "",
-                "introduction"  : "",
-                "education" : "",
-                "availability"  : "",
-                "skills"    : "",
-                "jobStatus" :   "",
-                "jobs"      :   [] }
+                USERNAME      : self.username.data.rstrip(),
+                PASSWORD      : md5(self.password.data.rstrip().encode('utf-8')).hexdigest(),
+                EMAIL         : self.email.data.rstrip(),
+                CATEGORY      : self.category.data,
+                TOKEN         : token }
 
             # insert into database
             employerId = savvy_collection.insert_one(user).inserted_id
@@ -67,23 +50,23 @@ class regoForm(Form):
                 jobs_collection.insert({'employerId':employerId})
 
             #url = os.getenv('SCRIPT_URI') <----------------get this to work when server is up
-            url = '127.0.0.1:5000'
-            message = """
-            Hi {},
-
-                You need to confirm your account by clicking this link:
-                {}/confirmEmail/{}/{}
-
-            Best,
-            Team SavvyHire
-            """.format(self.username.data.rstrip(),url, self.username.data.rstrip(), token)
-
-            cmd="""echo '{}' | mail -s 'Confirm account' {}""".format(message, self.email.data.rstrip())
-            p=subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-            p.communicate()
+            # url = '127.0.0.1:5000'
+            # message = """
+            # Hi {},
+            #
+            #     You need to confirm your account by clicking this link:
+            #     {}/confirmEmail/{}/{}
+            #
+            # Best,
+            # Team SavvyHire
+            # """.format(self.username.data.rstrip(),url, self.username.data.rstrip(), token)
+            #
+            # cmd="""echo '{}' | mail -s 'Confirm account' {}""".format(message, self.email.data.rstrip())
+            # p=subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+            # p.communicate()
 
             # log in
-            userObj = User(user['username'])
+            userObj = User(user[USERNAME])
             login_user(userObj)
 
             return True
