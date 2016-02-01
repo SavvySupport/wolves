@@ -6,18 +6,18 @@ from flask.ext.login import login_user
 from flask import flash
 from hashlib import md5
 import os, subprocess
+from app.Helpers.Constant import *
 
 class regoForm(Form):
-    username = TextField('username', [validators.length(min=5),
-                                      validators.required(),
-                                      validators.regexp('^[a-zA-Z0-9]+$')])
-    password = PasswordField('password', [validators.length(min=5),
-                                          validators.required()])
-    confirm = PasswordField('passwordconfirm', [validators.equal_to('password')])
-    email = TextField('email', [validators.required()])
-    type = SelectField('type', choices = [('Employer', 'Employer'),
-                                          ('Candidate', 'Candidate')],
-                               default = 'Candidate')
+    username = TextField(USERNAME, [validators.length(min=5),
+                                    validators.required(),
+                                    validators.regexp('^[a-zA-Z0-9]+$')])
+    password = PasswordField(PASSWORD, [validators.length(min=5),
+                                        validators.required()])
+    confirm = PasswordField(PWDCONFIRM, [validators.equal_to(PASSWORD)])
+    email = TextField(EMAIL, [validators.required()])
+    category = SelectField(CATEGORY, choices = [EMPLOYER, CANDIDATE],
+                                     default = CANDIDATE[TEXT])
 
     def __init__(self, *args, **kwargs):
         Form.__init__(self, *args, **kwargs)

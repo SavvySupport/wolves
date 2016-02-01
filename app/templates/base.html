@@ -2,17 +2,24 @@
 <html lang="en">
     <head>
         <title>SavvyHire</title>
+        <meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <link rel="stylesheet" href= {{ url_for('static', filename='CSS/semantic.css') }}>
-        <link rel="stylesheet" href= {{ url_for('static', filename='CSS/semantic.min.css') }}>
+        <link rel="stylesheet" href= {{ url_for('static', filename='CSS/semantic.css') }} >
+        <link rel="stylesheet" href= {{ url_for('static', filename='CSS/semantic.min.css') }} >
+        <link rel="stylesheet" href= {{ url_for('static', filename='CSS/savvy.css') }} >
         <script src= {{ url_for('static', filename='CSS/semantic.js') }}></script>
         <script src= {{ url_for('static', filename='CSS/semantic.min.js') }}></script>
         <script src= {{ url_for('static', filename='CSS/savvy.js') }}></script>
         <script src= {{ url_for('static', filename='CSS/elevator.js') }}></script>
+
+        <!-- Additional Script -->
+        {% block script %}
+        {% endblock %}
     </head>
     <body>
-        <div class="ui left wide vertical inverted sidebar labeled icon menu">
+        <div class="ui left medium vertical inverted sidebar labeled icon menu">
             <a class="item" href= {{ url_for('home') }} >
                 <i class="home icon"></i>
                 Home
@@ -34,13 +41,6 @@
             {% endif %}
         </div>
         <div class="pusher">
-            <!-- <div class="ui inline cookie nag">
-                <span class="title">
-                    We use cookies to ensure you get the best experience with #TheProject
-                </span>
-                <i class="close icon"></i>
-            </div> -->
-
             <!-- Warning message. Activated by flash() in views.py -->
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
@@ -58,30 +58,28 @@
                 {% endif %}
             {% endwith %}
 
-            <div class="ui attached stackable menu">
-                <a id="sidebar" class="item">
+            <div class="ui attached stackable inverted menu">
+                <a id="sidebar" class="header item">
                     <i class="sidebar icon"></i>
                 </a>
                 <div class="header item">
-                    <a href= {{ url_for('home') }}>Home</a>
+                    <a href= {{ url_for('home') }} >Home</a>
                 </div>
-                <a class="header item">
-                    About Us
-                </a>
 
                 {% if user_logged_in == false %}
-                    <a class="header item">
-                        Jobs
-                    </a>
-                    <a class="header item">
-                        Locations
-                    </a>
-                    <a class="header item">
-                        Anything Else
-                    </a>
+                    <div class="header item">
+                        <a href= {{ url_for('search') }} >Search</a>
+                    </div>
                 {% else %}
+                    {% if user.get('category', '').lower() == 'employer' %}
+                        <div class="header item">
+                            <a href= {{ url_for('search') }} >Search</a>
+                        </div>
+                    {% endif %}
+
                     <a href= {{ url_for('account') }} class="item">
-                        <i class="child icon"></i> Welcome back {{ user.get('username', None) }}
+                        <i class="child icon"></i>
+                        Welcome back {{ user.get('username', None) }}
                     </a>
                 {% endif %}
             </div>

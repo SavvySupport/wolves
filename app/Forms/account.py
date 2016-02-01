@@ -1,6 +1,6 @@
 from wtforms import Form, BooleanField, TextField, TextAreaField, PasswordField,\
                     validators, ValidationError, RadioField, \
-                    DateTimeField, SelectMultipleField, SelectField
+                    DateTimeField, SelectMultipleField, SelectField, widgets
 from wtforms.fields.html5 import DateField
 from wtforms.widgets import TextArea
 from app import savvy_collection
@@ -9,27 +9,27 @@ from app.Helpers.Constant import *
 from datetime import datetime, date
 
 class employerForm(Form):
-    businessName    = TextField('businessName')
-    contactName     = TextField('contactName')
-    phoneNumber     = TextField('phoneNumber', [validators.length(min=10),
-                                                validators.Optional(),
-                                                validators.regexp('^[0-9]+$')])
-    website         = TextField('website')
-    streetAddress   = TextField('streetAddress')
-    about           = TextField('about', widget=TextArea())
+    businessName    = TextField(BUSINESS)
+    contactName     = TextField(CONTACT)
+    phoneNumber     = TextField(PHONE, [validators.length(min=10),
+                                        validators.Optional(),
+                                        validators.regexp('^[0-9]+$')])
+    website         = TextField(WEBSITE)
+    streetAddress   = TextField(ADDRESS)
+    about           = TextField(ABOUT, widget=TextArea())
 
     def __init__(self, *args, **kwargs):
-        self.type = 'employer'
+        self.type = EMPL
         self.user = args[0]
         Form.__init__(self, args[1], **kwargs)
 
 
     def prepopulate(self, user):
-        self.businessName.data  = user.get('businessName', '')
-        self.contactName.data   = user.get('contactName', '')
-        self.phoneNumber.data   = user.get('phoneNumber', '')
-        self.website.data       = user.get('website', '')
-        self.streetAddress.data = user.get('streetAddress', '')
+        self.businessName.data  = user.get(BUSINESS, '')
+        self.contactName.data   = user.get(CONTACT, '')
+        self.phoneNumber.data   = user.get(PHONE, '')
+        self.website.data       = user.get(WEBSITE, '')
+        self.streetAddress.data = user.get(ADDRESS, '')
 
     def validate(self):
         rv = Form.validate(self)
@@ -42,79 +42,61 @@ class employerForm(Form):
 
     def update(self, username):
         user = {
-            "businessName"      : self.businessName.data,
-            "contactName"       : self.contactName.data,
-            "phoneNumber"       : self.phoneNumber.data,
-            "website"           : self.website.data.rstrip(),
-            "streetAddress"     : self.streetAddress.data
+            BUSINESS    : self.businessName.data,
+            CONTACT     : self.contactName.data,
+            PHONE       : self.phoneNumber.data,
+            WEBSITE     : self.website.data.rstrip(),
+            ADDRESS     : self.streetAddress.data
         }
 
-        savvy_collection.update({"username": username},
+        savvy_collection.update({USERNAME: username},
                                 {"$set": user})
 
 class candidateForm(Form):
-    firstName       = TextField('firstName')
-    lastName        = TextField('lastName')
-    phoneNumber     = TextField('phoneNumber', [validators.length(min=10),
-                                                validators.Optional(),
-                                                validators.regexp('^[0-9]+$')])
-    skills          = TextField('skills')
-    birthday        = DateField('birthday')
-    about           = TextField('about', widget=TextArea())
-    location        = TextField('location')
+    firstName       = TextField(FNAME)
+    lastName        = TextField(LNAME)
+    phoneNumber     = TextField(PHONE, [validators.length(min=10),
+                                        validators.Optional(),
+                                        validators.regexp('^[0-9]+$')])
+    skills          = TextField(SKILLS)
+    birthday        = DateField(BIRTHDAY)
+    about           = TextField(ABOUT, widget=TextArea())
+    location        = TextField(LOCATION)
 
-    gender = SelectField('gender',
-                         coerce=int,
-                         choices = [(MALE, 'Male'),
-                                    (FEMALE, 'Female'),
-                                    (OTHER, 'Other')],
-                         default = MALE)
+    gender = SelectField(GENDER,
+                         choices = [MALE, FEMALE, OTHER],
+                         default = MALE[CODE])
 
-    residency = SelectField('residency',
-                            coerce=int,
-                            choices = [(CITIZEN,'Citizen'),
-                                       (PR,'Permanent Resident'),
-                                       (TR,'Temporary Resident Visa'),
-                                       (STUDENT,'Student Visa'),
-                                       (OTHER,'Other')],
-                            default = CITIZEN)
+    residency = SelectField(RESIDENCY,
+                            choices = [CITIZEN,
+                                       PR,
+                                       TR,
+                                       STUDENT,
+                                       OTHER],
+                            default = CITIZEN[CODE])
 
-    education = SelectField('education',
-                            coerce=int,
-                            choices = [(HS, 'Finishing High School'),
-                                       (HS_COMPLETED, 'Completed High School'),
-                                       (TAFE, 'Finishing Tafe/Apprenticeship'),
-                                       (TAFE_COMPLETED, 'Completed Tafe/Apprenticeship'),
-                                       (UNI, 'Finishing University'),
-                                       (UNI_COMPLETED, 'Completed University'),
-                                       (NA, 'Not available')],
-                            default = UNI)
+    education = SelectField(EDUCATION,
+                            choices = [HS,
+                                       HS_COMPLETED,
+                                       TAFE,
+                                       TAFE_COMPLETED,
+                                       UNI,
+                                       UNI_COMPLETED,
+                                       NA],
+                            default = UNI[CODE])
 
-    # availability = SelectMultipleField('availability',
-    #                                    choices = [(MON,'Monday'),
-    #                                               (TUE, 'Tuesday'),
-    #                                               (WED, 'Wednesday'),
-    #                                               (THU, 'Thursday'),
-    #                                               (FRI, 'Friday'),
-    #                                               (SAT, 'Saturday'),
-    #                                               (SUN, 'Sunday')])
-
-    availability = SelectField('availability',
-                                coerce=int,
-                                choices = [(1, '1 day per week'),
-                                           (2, '2 days per week'),
-                                           (3, '3 days per week'),
-                                           (4, '4 days per week'),
-                                           (5, '5 days per week'),
-                                           (6, '6 days per week'),
-                                           (7, '7 days per week')],
-                                default = 1)
-
-    # jobStatus = RadioField('jobStatus',
-    #                         choices = [(YES, 'Yes'), (NO, 'No')])
+    availability_choices = [NA, MORNING, AFTERNOON, ALL_DAY]
+    monday      = SelectField(MON[TEXT], choices=availability_choices, default='Unavailable')
+    tuesday     = SelectField(TUE[TEXT], choices=availability_choices, default='Unavailable')
+    wednesday   = SelectField(WED[TEXT], choices=availability_choices, default='Unavailable')
+    thursday    = SelectField(THU[TEXT], choices=availability_choices, default='Unavailable')
+    friday      = SelectField(FRI[TEXT], choices=availability_choices, default='Unavailable')
+    saturday    = SelectField(SAT[TEXT], choices=availability_choices, default='Unavailable')
+    sunday      = SelectField(SUN[TEXT], choices=availability_choices, default='Unavailable')
+    holiday     = SelectField(HOL[TEXT], choices=availability_choices, default='Unavailable')
 
     def __init__(self, *args, **kwargs):
-        self.type = 'candidate'
+        self.type = CAND
         Form.__init__(self, args[1], **kwargs)
 
     def validate(self):
@@ -122,41 +104,73 @@ class candidateForm(Form):
         if not rv:
             for fieldName, errorMessages in self.errors.items():
                 for err in errorMessages:
-                    print(self.birthday.data)
                     print(fieldName, err)
+                    print(self.availability.data)
             return False
         return True
 
     def update(self, username):
+        availability = {
+            MON[TEXT]       : self.monday.data,
+            TUE[TEXT]       : self.tuesday.data,
+            WED[TEXT]       : self.wednesday.data,
+            THU[TEXT]       : self.thursday.data,
+            FRI[TEXT]       : self.friday.data,
+            SAT[TEXT]       : self.saturday.data,
+            SUN[TEXT]       : self.sunday.data,
+            HOL[TEXT]       : self.holiday.data,
+        }
+
+        tmp = (self.skills.data.rstrip()).split(',')
+        skills = []
+        for skill in tmp:
+            if skill != '':
+                skills.append(skill)
+
         user = {
-            "firstName"     : self.firstName.data.rstrip(),
-            "lastName"      : self.lastName.data.rstrip(),
-            "phoneNumber"   : self.phoneNumber.data.rstrip(),
-            "gender"        : self.gender.data,
-            "birthday"      : str(self.birthday.data),
-            "residency"     : self.residency.data,
-            "about"         : self.about.data,
-            "education"     : self.education.data,
-            "availability"  : self.availability.data,
-            "skills"        : self.skills.data,
-            "location"      : self.location.data
+            FNAME         : self.firstName.data.rstrip(),
+            LNAME         : self.lastName.data.rstrip(),
+            PHONE         : self.phoneNumber.data.rstrip(),
+            GENDER        : self.gender.data,
+            BIRTHDAY      : str(self.birthday.data),
+            RESIDENCY     : self.residency.data,
+            ABOUT         : self.about.data,
+            EDUCATION     : self.education.data,
+            AVAILABILITY  : availability,
+            SKILLS        : skills,
+            LOCATION      : self.location.data
         }
 
         savvy_collection.update(
-            { "username": username },
+            { USERNAME: username },
             { "$set": user })
 
         return True
 
     def prepopulate(self, user):
-        self.firstName.data     = user.get('firstName', '')
-        self.lastName.data      = user.get('lastName', '')
-        self.phoneNumber.data   = user.get('phoneNumber', '')
-        self.gender.data        = user.get('gender', '')
-        self.birthday.data      = datetime.strptime(str(user.get('birthday', '2016-01-01')),'%Y-%m-%d')
-        self.residency.data     = user.get('residency', '')
-        self.about.data         = user.get('about', '')
-        self.education.data     = user.get('education', '')
-        self.availability.data  = user.get('availability', '')
-        self.skills.data        = user.get('skills', '')
-        self.location.data      = user.get('location', '')
+        self.firstName.data     = user.get(FNAME, '')
+        self.lastName.data      = user.get(LNAME, '')
+        self.phoneNumber.data   = user.get(PHONE, '')
+        self.gender.data        = user.get(GENDER, '')
+        self.residency.data     = user.get(RESIDENCY, '')
+        self.about.data         = user.get(ABOUT, '')
+        self.education.data     = user.get(EDUCATION, '')
+        self.skills.data        = ','.join(user.get(SKILLS, None))
+        self.location.data      = user.get(LOCATION, '')
+        if user.get(BIRTHDAY, None):
+            self.birthday.data  = datetime.strptime(str(user.get(BIRTHDAY, None)), '%Y-%m-%d')
+
+        availability = user.get(AVAILABILITY, None)
+
+        if availability:
+            try:
+                self.monday.data    = availability.get(MON[TEXT], NA[CODE])
+                self.tuesday.data   = availability.get(TUE[TEXT], NA[CODE])
+                self.wednesday.data = availability.get(WED[TEXT], NA[CODE])
+                self.thursday.data  = availability.get(THU[TEXT], NA[CODE])
+                self.friday.data    = availability.get(FRI[TEXT], NA[CODE])
+                self.saturday.data  = availability.get(SAT[TEXT], NA[CODE])
+                self.sunday.data    = availability.get(SUN[TEXT], NA[CODE])
+                self.holiday.data   = availability.get(HOL[TEXT], NA[CODE])
+            except:
+                pass

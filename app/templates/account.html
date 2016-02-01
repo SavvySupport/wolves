@@ -21,7 +21,7 @@
                             <div class="description">Tell us about yourself</div>
                         </div>
                     </a>
-                    {% if form.type == 'candidate' %}
+                    {% if form.type == 'Candidate' %}
                         <a onclick="changeClass('2')" id="2" class="link step step2">
                             <i class="star icon"></i>
                             <div class="content">
@@ -109,7 +109,7 @@
                     <div class="ui very relax stackable grid">
                         <div class="ten wide column">
                             <!-- Detail Form -->
-                            {% if form.type == 'employer' %}
+                            {% if form.type == 'Employer' %}
                                 <div class="field">
                                     <label>Business Name</label>
                                     {{ form.businessName }}
@@ -180,7 +180,7 @@
                     </div>
                 </div>
 
-                {% if form.type == 'candidate' %}
+                {% if form.type == 'Candidate' %}
                     <div id="step2" class="ui raised segment">
                         <h2 class="ui block header">Skills and Preferences</h2>
                         <div class="ui very relax stackable grid">
@@ -223,18 +223,129 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="field">
-                                    <label>Availability</label>
-                                    <div class="ui fluid selection dropdown field ">
-                                        {{ form.availability }}
-                                        <i class="dropdown icon"></i>
-                                        <div class="default text">Select availability</div>
-                                        <div class="menu">
-                                            {% for field in form.availability.choices %}
-                                                <div class="item" data-value= {{ field[0] }}>
-                                                    {{ field[1] }}
-                                                </div>
-                                            {% endfor %}
+                                <div class="fields">
+                                    <div class="five wide field">
+                                        <label>Monday</label>
+                                        <div class="ui fluid selection dropdown field">
+                                            {{ form.monday }}
+                                            <i class="dropdown icon"></i>
+                                            <div class="default text">Select availability</div>
+                                            <div class="menu">
+                                                {% for field in form.monday.choices %}
+                                                    <div class="item" data-value= {{ field[0] }}>
+                                                        {{ field[1] }}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="five wide field">
+                                        <label>Tuesday</label>
+                                        <div class="ui fluid selection dropdown field">
+                                            {{ form.tuesday }}
+                                            <i class="dropdown icon"></i>
+                                            <div class="default text">Select availability</div>
+                                            <div class="menu">
+                                                {% for field in form.tuesday.choices %}
+                                                    <div class="item" data-value= {{ field[0] }}>
+                                                        {{ field[1] }}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="five wide field">
+                                        <label>Wednesday</label>
+                                        <div class="ui fluid selection dropdown field">
+                                            {{ form.wednesday }}
+                                            <i class="dropdown icon"></i>
+                                            <div class="default text">Select availability</div>
+                                            <div class="menu">
+                                                {% for field in form.wednesday.choices %}
+                                                    <div class="item" data-value= {{ field[0] }}>
+                                                        {{ field[1] }}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fields">
+                                    <div class="five wide field">
+                                        <label>Thursday</label>
+                                        <div class="ui fluid selection dropdown field">
+                                            {{ form.thursday }}
+                                            <i class="dropdown icon"></i>
+                                            <div class="default text">Select availability</div>
+                                            <div class="menu">
+                                                {% for field in form.thursday.choices %}
+                                                    <div class="item" data-value= {{ field[0] }}>
+                                                        {{ field[1] }}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="five wide field">
+                                        <label>Friday</label>
+                                        <div class="ui fluid selection dropdown field">
+                                            {{ form.friday }}
+                                            <i class="dropdown icon"></i>
+                                            <div class="default text">Select availability</div>
+                                            <div class="menu">
+                                                {% for field in form.friday.choices %}
+                                                    <div class="item" data-value= {{ field[0] }}>
+                                                        {{ field[1] }}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="five wide field">
+                                        <label>Saturday</label>
+                                        <div class="ui fluid selection dropdown field">
+                                            {{ form.saturday }}
+                                            <i class="dropdown icon"></i>
+                                            <div class="default text">Select availability</div>
+                                            <div class="menu">
+                                                {% for field in form.saturday.choices %}
+                                                    <div class="item" data-value= {{ field[0] }}>
+                                                        {{ field[1] }}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fields">
+                                    <div class="five wide field">
+                                        <label>Sunday</label>
+                                        <div class="ui fluid selection dropdown field">
+                                            {{ form.sunday }}
+                                            <i class="dropdown icon"></i>
+                                            <div class="default text">Select availability</div>
+                                            <div class="menu">
+                                                {% for field in form.sunday.choices %}
+                                                    <div class="item" data-value= {{ field[0] }}>
+                                                        {{ field[1] }}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="five wide field">
+                                        <label>Holiday</label>
+                                        <div class="ui fluid selection dropdown field">
+                                            {{ form.holiday }}
+                                            <i class="dropdown icon"></i>
+                                            <div class="default text">Select availability</div>
+                                            <div class="menu">
+                                                {% for field in form.holiday.choices %}
+                                                    <div class="item" data-value= {{ field[0] }}>
+                                                        {{ field[1] }}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

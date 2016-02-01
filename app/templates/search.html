@@ -1,0 +1,313 @@
+{% extends 'base.html' %}
+
+{% block script %}
+    <!-- <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> -->
+	<link rel="stylesheet" href= {{ url_for('static', filename="CSS/style.css") }} >
+	<script src= {{ url_for('static', filename="CSS/modernizr.js") }} ></script>
+    <script src= {{ url_for('static', filename="CSS/jquery-2.1.1.js") }} ></script>
+    <script src= {{ url_for('static', filename="CSS/jquery.mixitup.min.js") }} ></script>
+    <script src= {{ url_for('static', filename="CSS/main.js") }} ></script>
+    <script src= {{ url_for('static', filename='CSS/semantic.js') }}></script>
+{% endblock %}
+
+{% block content %}
+    <main class="cd-main-content">
+        <section class="cd-gallery">
+            <ul>
+                {% set id = 0 %}
+                {% for user in jsonObject %}
+                    <li class="mix  {{user.get('firstName', '')}}
+                                    {{user.get('lastName', '')}}
+                                    {{user.get('location', '')}}
+                                    {{user.get('surburb', '')}}
+                                    {% for day in user.get('availability', None) %}
+										{% if user.get('availability', None)[day] != 'Unavailable' %}
+											{{day}}
+										{% endif %}
+								    {% endfor %}
+                                    {% for skill in user.get('skills') %} {{skill}} {% endfor %}">
+                        <div class="ui special cards">
+                            <div class="card">
+                                <div class="blurring dimmable medium image">
+                                    <div class="ui inverted dimmer">
+                                        <div class="content">
+                                            <div class="center">
+                                                <button onclick="showmodal({{id}})" class="ui primary button show-modal">
+                                                    Contact
+                                                    {% if user.get('gender', None) == 'Male' %}
+                                                        Him
+                                                    {% elif user.get('gender', None) == 'Female' %}
+                                                        Her
+                                                    {% endif %}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <img src= {{ user.get('dp', url_for('static', filename='images/user1.jpg')) }} >
+                                </div>
+                                <div class="content">
+                                    <a class="header">{{ user.get('firstName', 'fname')}} {{ user.get('lastName', 'lname') }}</a>
+                                    <div class="meta">
+                                        <span class="date">
+                                            {% if user.get('gender', 0) == 1 %}
+                                                Female
+                                            {% elif user.get('gender', 0) == 0 %}
+                                                Male
+                                            {% else%}
+                                                Other
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                    <div class="description">
+                                        <!-- {{ user.get('about', 'Introduction') }} -->
+                                    </div>
+                                </div>
+                                <div class="extra content">
+                                    <a>
+                                        <i class="user icon"></i>
+                                        {{ user.get('skills', None)|length }} skills
+                                    </a>
+
+                                    <span class="right floated">
+                                        {{ user.get('localtion', 'Unknown location') }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Modal to show full detail -->
+                    <div class="ui fullscreen modal {{id}}">
+                        <i id="closebtn" class="close icon"></i>
+                        <div class="header">
+                            {{ user.get('firstName', '') }}
+                            {{ user.get('lastName', '') }}
+                        </div>
+                        <div class="image content">
+                            <div class="ui move up reveal">
+                                <div class="visible content">
+                                    <div class="ui large image">
+                                        <div class="ui black ribbon label">
+                                            <i class="expand icon"></i> More info
+                                        </div>
+                                        <img src= {{ user.get('dp', url_for('static', filename='images/user1.jpg')) }} >
+                                    </div>
+                                </div>
+                                <div class="hidden content">
+                                    <label class="ui large header">
+                                        About Me
+                                    </label>
+                                    <div class="ui hidden divider"></div>
+                                    <p class="ui large label">
+                                        {{ user.get('about', '') }}
+                                    </p>
+                                    <div class="ui hidden divider"></div>
+                                    <div class="ui divided selection list">
+                                        <a class="item">
+                                            <div class="ui blue horizontal label">Phone</div>
+                                            {{ user.get('phoneNumber', 'N/A') }}
+                                        </a>
+                                        <a class="item">
+                                            <div class="ui yellow horizontal label">Email</div>
+                                            {{ user.get('email', 'N/A') }}
+                                        </a>
+                                        <a class="item">
+                                            <div class="ui green horizontal label">D.O.B</div>
+                                            {{ user.get('birthday', 'N/A') }}
+                                        </a>
+                                        <a class="item">
+                                            <div class="ui teal horizontal label">Location</div>
+                                            {{ user.get('location', 'N/A') }}
+                                        </a>
+                                        <a class="item">
+                                            <div class="ui purple horizontal label">Gender</div>
+                                            {{ user.get('gender', 'N/A') }}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="description" style="padding-left: 5%">
+                                <form id="connectForm{{id}}"
+                                      method="POST"
+                                      role="form"
+                                      class="ui form">
+                                    <div class="field">
+                                        <p class="ui large header">
+                                            Residency Status
+                                        </p>
+                                        <a class="ui teal tag label"> {{ user.get('residency', '') }} </a>
+                                    </div>
+
+                                    <div class="ui hidden divider"></div>
+
+                                    <div class="field">
+                                        <p class="ui large header">
+                                            Skills
+                                        </p>
+                                        {% for skill in user.get('skills') %}
+                                            <a class="ui teal tag label"> {{ skill.upper() }} </a>
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="ui hidden divider"></div>
+
+                                    <div class="field">
+                                        <p class="ui large header">
+                                            Availability
+                                        </p>
+										{% for day in user.get('availability', None) %}
+											{% if user.get('availability')[day] != 'Unavailable' %}
+												<a class="ui teal tag label">
+													{{ user.get('availability')[day] }} {{ day }}
+												</a>
+											{% endif %}
+										{% endfor %}
+                                    </div>
+
+                                    <div class="ui hidden divider"></div>
+
+                                    <div class="field">
+                                        <p class="ui large header">
+                                            Send {{ user.get('firstName', '') }} a message
+                                        </p>
+                                        <textarea id="connectMsg" name="connectMsg" placeholder="I have an opportunity for you, {{ user.get('firstName', '') }}!" rows="6"></textarea>
+                                        <input id="username" name="username" type="hidden" value="{{ user.get('username', '') }}">
+                                        <input id="modalId" name="modalId" type="hidden" value="{{ id }}">
+                                    </div>
+								</form>
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <button onClick="connect(connectForm{{id}})" form="connectForm" value="Contact" type="button" id="connectbtn" class="ui green button">Contact</button>
+                            <div onClick="close({{id}})" id="cancelbtn" class="ui deny red button">Cancel</div>
+                        </div>
+                    </div>
+                    {% set id = id+1 %}
+                {% endfor %}
+
+                <!-- 3 gaps to even the spaces -->
+                <li class="gap"></li>
+                <li class="gap"></li>
+                <li class="gap"></li>
+            </ul>
+            <h2 class="cd-fail-message">¯\_(ツ)_/¯</h2>
+            <h3 class="cd-fail-message">No Result Found</h3>
+        </section>
+
+        <div class="cd-filter cd-filter-block">
+            <form class="ui form">
+                <div class="grouped fields">
+                    <!-- SEARCH BOX -->
+                    <div class="fluid field">
+                        <div class="cd-filter-content ui icon input">
+                            <input type="search" placeholder="Search by text">
+                            <i class="search icon"></i>
+                        </div>
+                    </div>
+
+                    <!-- AVAILABILITY -->
+                    <div class="cd-filter-block">
+                        <h4>Availability</h4>
+                        <div class="cd-filter-content cd-filters list">
+                            <li>
+                                <input class="filter" data-filter=".Monday" type="checkbox" id="Monday">
+                                <label class="checkbox-label" for="Monday">Monday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Tuesday" type="checkbox" id="Tuesday">
+                                <label class="checkbox-label" for="Tuesday">Tuesday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Wednesday" type="checkbox" id="Wednesday">
+                                <label class="checkbox-label" for="Wednesday">Wednesday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Thursday" type="checkbox" id="Thursday">
+                                <label class="checkbox-label" for="Thursday">Thursday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Friday" type="checkbox" id="Friday">
+                                <label class="checkbox-label" for="Friday">Friday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Saturday" type="checkbox" id="Saturday">
+                                <label class="checkbox-label" for="Saturday">Saturday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Sunday" type="checkbox" id="Sunday">
+                                <label class="checkbox-label" for="Sunday">Sunday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Holiday" type="checkbox" id="Holiday">
+                                <label class="checkbox-label" for="Holiday">Holiday</label>
+                            </li>
+                        </div>
+                    </div>
+
+                    <!-- JOB TYPE -->
+                    <!-- <div class="cd-filter-block">
+                        <h4>Types</h4>
+                        <div class="cd-filter-content cd-filters list">
+                            <li>
+                                <input class="filter" data-filter="" type="radio" name="radioButton" id="radio1" checked>
+                                <label class="radio-label" for="radio1">All</label>
+                            </li>
+
+                            {% for type in range(1, 3) %}
+                                <li>
+                                    <input class="filter" data-filter=".radio{{type}}" type="radio" name="radioButton" id="radio{{type}}">
+                                    <label class="radio-label" for="radio{{type}}">Choice {{type}}</label>
+                                </li>
+                            {% endfor %}
+                        </div>
+                    </div> -->
+                </div>
+            </form>
+
+            <a href="#0" class="cd-close">Close</a>
+        </div>
+
+        <a href="#0" class="cd-filter-trigger">Filters</a>
+    </main>
+
+    <script>
+        function showmodal(id) {
+            var element='.ui.fullscreen.modal.'.concat(id);
+            $(element)
+                .modal('show')
+            ;
+        }
+
+        function close(id) {
+            // console.log('closing')
+            // console.log(id)
+            var element='.ui.fullscreen.modal.'.concat(id);
+            $(element)
+                .modal('toggle')
+            ;
+        }
+
+        function connect(id) {
+            event.preventDefault();
+            var form_data = new FormData($(id)[0]);
+            $.ajax({
+                type: 'POST',
+                url: '/connect',
+                data: form_data,
+                contentType: false,
+                processData: false,
+                dataType: 'json'
+            }).done(function(data, textStatus, jqXHR){
+                // console.log(data['result'])
+                close(data['result'])
+                console.log('Success!');
+            }).fail(function(data) {
+                alert('Failed!');
+            }).complete(function(data) {
+                console.log('completed');
+            });
+        };
+    </script
+{% endblock %}

@@ -2,9 +2,10 @@ from wtforms import Form, BooleanField, TextField, TextAreaField, PasswordField,
 from app.Models.User import User
 from app import savvy_collection
 from flask import flash
+from app.Helpers.Constant import *
 
 class recoverForm(Form):
-    email = TextField('email', [validators.required()])
+    email = TextField(EMAIL, [validators.required()])
 
     def __init__(self, *args, **kwargs):
         Form.__init__(self, *args, **kwargs)
@@ -15,7 +16,7 @@ class recoverForm(Form):
             flash('Form invalid', 'error')
             return False
 
-        user = savvy_collection.find_one({ 'email' : self.email.data.rstrip() })
+        user = savvy_collection.find_one({ EMAIL : self.email.data.rstrip() })
         if user:
             # send email with new password to this address
             return True
