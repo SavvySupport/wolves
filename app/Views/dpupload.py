@@ -43,7 +43,7 @@ def dpupload():
             # Save path to database
             relative_path = os.path.join(url_for('static', filename='images/user/'), filename)
             user = { DP: relative_path }
-            savvy_collection.update( {USERNAME: current_user.get_id().get(USERNAME)},
+            savvy_collection.update( {EMAIL: current_user.get_id().get(EMAIL)},
                                      {"$set": user} )
 
 
