@@ -88,7 +88,7 @@ $(function () {
                     prompt  : 'minimum 5 characters required'
                 },
                 {
-                    type    : 'regEx[/[^\w\*]/]',
+                    type    : 'regExp[/^\\w*[^\\[\\]\\^\\$\\.\\|\\?\\*\\+\\(\\)\\\\~\\`\\!\\@\\#\\%\\&\\-\\_\\+\\=\\{\\}\\\'\\"\\"\\<\\>\\:\\;\\, ]+\\w+$/g]',
                     prompt  : 'username cannot contain special characters'
                 }
             ]
