@@ -10,5 +10,5 @@ from app.Helpers.Constant import *
 @login_required
 def search():
     # Query all available candidates
-    candidates = savvy_collection.find({ CATEGORY: CAND })
+    candidates = savvy_collection.find({ CATEGORY: CAND }) 
     return render('search.html', jsonObject=candidates)
