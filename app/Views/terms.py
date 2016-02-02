@@ -6,5 +6,4 @@ from app.Models.User import User
 
 @app.route('/terms', methods=['GET'])
 def terms():
-
     return render('terms.html')
