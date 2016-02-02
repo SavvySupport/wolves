@@ -50,9 +50,9 @@
                                     <a class="header">{{ user.get('firstName', 'fname')}} {{ user.get('lastName', 'lname') }}</a>
                                     <div class="meta">
                                         <span class="date">
-                                            {% if user.get('gender', 0) == 1 %}
+                                            {% if user.get('gender', 0) == 'Female' %}
                                                 Female
-                                            {% elif user.get('gender', 0) == 0 %}
+                                            {% elif user.get('gender', 0) == 'Male' %}
                                                 Male
                                             {% else%}
                                                 Other
@@ -60,7 +60,8 @@
                                         </span>
                                     </div>
                                     <div class="description">
-                                        <!-- {{ user.get('about', 'Introduction') }} -->
+                                    	<!--	{{ user.get('about', 'Introduction') }} -->
+																			
                                     </div>
                                 </div>
                                 <div class="extra content">
@@ -70,7 +71,7 @@
                                     </a>
 
                                     <span class="right floated">
-                                        {{ user.get('localtion', 'Unknown location') }}
+                                        {{ user.get('location', 'Unknown location') }}
                                     </span>
                                 </div>
                             </div>

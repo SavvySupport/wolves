@@ -55,7 +55,7 @@ class employerForm(Form):
 class candidateForm(Form):
     firstName       = TextField(FNAME)
     lastName        = TextField(LNAME)
-    phoneNumber     = TextField(PHONE, [validators.length(min=10),
+    phoneNumber     = TextField(PHONE, [validators.length(min=8),
                                         validators.Optional(),
                                         validators.regexp('^[0-9]+$')])
     skills          = TextField(SKILLS)
@@ -105,7 +105,7 @@ class candidateForm(Form):
             for fieldName, errorMessages in self.errors.items():
                 for err in errorMessages:
                     print(fieldName, err)
-                    print(self.availability.data)
+                    #print(self.availability.data)
             return False
         return True
 
@@ -120,6 +120,8 @@ class candidateForm(Form):
             SUN[TEXT]       : self.sunday.data,
             HOL[TEXT]       : self.holiday.data,
         }
+
+        print (self.tuesday.data, NA[CODE])
 
         tmp = (self.skills.data.rstrip()).split(',')
         skills = []
@@ -155,7 +157,7 @@ class candidateForm(Form):
         self.residency.data     = user.get(RESIDENCY, '')
         self.about.data         = user.get(ABOUT, '')
         self.education.data     = user.get(EDUCATION, '')
-        self.skills.data        = ','.join(user.get(SKILLS, None))
+        self.skills.data        = ','.join(user.get(SKILLS, ''))
         self.location.data      = user.get(LOCATION, '')
         if user.get(BIRTHDAY, None):
             self.birthday.data  = datetime.strptime(str(user.get(BIRTHDAY, None)), '%Y-%m-%d')

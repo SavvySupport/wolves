@@ -132,8 +132,17 @@ $(function () {
             identifier  : 'phoneNumber',
             rules: [
                 {
-                    type    : 'regExp[/^[0-9]{10,14}$/]',
+                    type    : 'regExp[/^[0-9]{8,14}$/]',
                     prompt  : 'Must be all number'
+                }
+            ]
+        },
+        termsConditions: {
+            identifier  : 'termsConditions',
+            rules: [
+                {
+                    type    : 'checked',
+                    prompt  : 'You must agree to the terms first'
                 }
             ]
         }
