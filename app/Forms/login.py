@@ -29,13 +29,13 @@ class loginForm(Form):
             account_token = user.get(TOKEN, '')
 
             if User.validate_login(hash_password, user_password):
-                if account_token == '':
-                    userObj = User(username)
-                    login_user(userObj)
-                    return True
-                else:
+                # if account_token == '':
+                userObj = User(username)
+                login_user(userObj)
+                return True
+                # else:
                     #if username and password is correct but have not validated Email
-                    flash('Please verify your email address', 'error')
+                    # flash('Please verify your email address', 'error')
         else:
             flash('Incorrect login credentials', 'error')
         return False

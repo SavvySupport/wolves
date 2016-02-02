@@ -5,8 +5,10 @@ from flask.ext.login import login_required, current_user
 from flask import jsonify, request, url_for
 from werkzeug import secure_filename
 from hashlib import md5
+from app.Helpers.Constant import *
 
 @app.route('/deleteJob', methods=['POST'])
+@login_required
 def deleteJob():
     if request.method == 'POST':
         jobId = request.data
