@@ -34,9 +34,11 @@ class employerForm(Form):
     def validate(self):
         rv = Form.validate(self)
         if not rv:
+            message = ''
             for fieldName, errorMessages in self.errors.items():
                 for err in errorMessages:
-                    print(err)
+                    message = message + fieldName + ': ' + err + '\n'
+            flash(message, 'error')
             return False
         return True
 

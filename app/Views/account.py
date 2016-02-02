@@ -16,7 +16,7 @@ def account():
         if user.get(CATEGORY, '') == EMPL:
             form = employerForm(user, request.form) #need to pass user here, use in account.html. thang: what?
         elif user.get(CATEGORY, '') == CAND:
-            form = candidateForm(username, request.form)
+            form = candidateForm(user, request.form)
 
         if request.method == 'GET':
             form.prepopulate(user)

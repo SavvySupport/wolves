@@ -30,7 +30,7 @@ class regoForm(Form):
             flash('Email has already been taken', 'warning')
             return False
         else:
-            raw_token = self.email.data + self.username.data + 'verification code'
+            raw_token = self.email.data + 'verification code'
             token = md5(raw_token.encode('utf-8')).hexdigest()
             user = {
                 PASSWORD      : md5(self.password.data.rstrip().encode('utf-8')).hexdigest(),
