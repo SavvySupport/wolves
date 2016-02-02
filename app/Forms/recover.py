@@ -19,7 +19,6 @@ class recoverForm(Form):
                     message = message + fieldName + ': ' + err + '\n'
             flash(message, 'error')
             return False
-        return True
 
         user = savvy_collection.find_one({ EMAIL : self.email.data.rstrip() })
         if user:
