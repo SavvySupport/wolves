@@ -21,10 +21,8 @@
 					{% set class = class + ' ' + user.get('lastName', '') %}
 					{% set class = class + ' ' + user.get('location', '') %}
 					{% set class = class + ' ' + user.get('surburb', '') %}
+					{% set class = class + ' ' + user.get('residency', '') %}
 
-					{% for skill in user.get('skills', []) %}
-						{% set class = class + ' ' + skill %}
-					{% endfor %}
                     <li class="mix {{class}} {% for day in user.get('availability', []) %}{% if user.get('availability', None)[day] != 'Unavailable' %}{{day}} {% endif %}{% endfor %}{% for skill in user.get('skills', []) %}{{skill}} {% endfor %}">
                         <div class="ui special cards">
                             <div class="card">
@@ -274,7 +272,7 @@
 								<label class="radio-label" for="Other">Other</label>
 							</li>
 						</div>
-					</div> 
+					</div>
                 </div>
             </form>
 
