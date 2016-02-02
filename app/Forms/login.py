@@ -7,7 +7,7 @@ from hashlib import md5
 from app.Helpers.Constant import *
 
 class loginForm(Form):
-    username = TextField(USERNAME, [validators.required()])
+    email = TextField(EMAIL, [validators.required()])
     password = PasswordField(PASSWORD, [validators.required()])
 
     def __init__(self, *args, **kwargs):
@@ -20,17 +20,17 @@ class loginForm(Form):
             return False
 
         # Query data from database
-        user = savvy_collection.find_one({ USERNAME: self.username.data.rstrip() })
+        user = savvy_collection.find_one({ EMAIL: self.email.data.rstrip() })
 
         if user:
-            username = user.get(USERNAME, None)
+            email = user.get(EMAIL, None)
             hash_password = user.get(PASSWORD, None)
             user_password = self.password.data.rstrip()
             account_token = user.get(TOKEN, '')
 
             if User.validate_login(hash_password, user_password):
                 # if account_token == '':
-                userObj = User(username)
+                userObj = User(email)
                 login_user(userObj)
                 return True
                 # else:
