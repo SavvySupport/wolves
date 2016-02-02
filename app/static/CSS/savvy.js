@@ -86,6 +86,10 @@ $(function () {
                 {
                     type    : 'length[5]',
                     prompt  : 'minimum 5 characters required'
+                },
+                {
+                    type    : 'regEx[/[^\w\*]/]',
+                    prompt  : 'username cannot contain special characters'
                 }
             ]
         },
