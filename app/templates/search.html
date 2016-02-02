@@ -17,16 +17,19 @@
             <ul>
                 {% set id = 0 %}
                 {% for user in jsonObject %}
-                    <li class="mix  {{user.get('firstName', '')}}
-                                    {{user.get('lastName', '')}}
-                                    {{user.get('location', '')}}
-                                    {{user.get('surburb', '')}}
-                                    {% for day in user.get('availability', None) %}
-										{% if user.get('availability', None)[day] != 'Unavailable' %}
-											{{day}}
-										{% endif %}
-								    {% endfor %}
-                                    {% for skill in user.get('skills') %} {{skill}} {% endfor %}">
+					{% set class = user.get('firstName', '') %}
+					{% set class = class + ' ' + user.get('lastName', '') %}
+					{% set class = class + ' ' + user.get('location', '') %}
+					{% set class = class + ' ' + user.get('surburb', '') %}
+					{% for day in user.get('availability', []) %}
+						{% if user.get('availability', None)[day] != 'Unavailable' %}
+							{% set class = class + ' ' + day %}
+						{% endif %}
+					{% endfor %}
+					{% for skill in user.get('skills', []) %}
+						{% set class = class + ' ' + skill %}
+					{% endfor %}
+                    <li class="mix {{ class }}">
                         <div class="ui special cards">
                             <div class="card">
                                 <div class="blurring dimmable medium image">
@@ -67,7 +70,7 @@
                                 <div class="extra content">
                                     <a>
                                         <i class="user icon"></i>
-                                        {{ user.get('skills', None)|length }} skills
+                                        {{ user.get('skills', [])|length }} skills
                                     </a>
 
                                     <span class="right floated">
@@ -147,7 +150,7 @@
                                         <p class="ui large header">
                                             Skills
                                         </p>
-                                        {% for skill in user.get('skills') %}
+                                        {% for skill in user.get('skills', []) %}
                                             <a class="ui teal tag label"> {{ skill.upper() }} </a>
                                         {% endfor %}
                                     </div>
@@ -158,7 +161,7 @@
                                         <p class="ui large header">
                                             Availability
                                         </p>
-										{% for day in user.get('availability', None) %}
+										{% for day in user.get('availability', []) %}
 											{% if user.get('availability')[day] != 'Unavailable' %}
 												<a class="ui teal tag label">
 													{{ user.get('availability')[day] }} {{ day }}
@@ -246,6 +249,33 @@
                             </li>
                         </div>
                     </div>
+
+					<!-- VISA STATUS -->
+					<div class="cd-filter-block">
+						<h4>Residency Status</h4>
+						<div class="cd-filter-content cd-filters list">
+							<li>
+								<input class="filter" data-filter=".Citizen" type="checkbox" id="Citizen">
+								<label class="checkbox-label" for="Citizen">Citizen</label>
+							</li>
+							<li>
+								<input class="filter" data-filter=".Permanent" type="checkbox" id="Permanent">
+								<label class="checkbox-label" for="Permanent">PR</label>
+							</li>
+							<li>
+								<input class="filter" data-filter=".Temporary" type="checkbox" id="Temporary">
+								<label class="checkbox-label" for="Temporary">TR</label>
+							</li>
+							<li>
+								<input class="filter" data-filter=".Student" type="checkbox" id="Student">
+								<label class="checkbox-label" for="Student">Student Visa</label>
+							</li>
+							<li>
+								<input class="filter" data-filter=".Other" type="checkbox" id="Other">
+								<label class="checkbox-label" for="Other">Other</label>
+							</li>
+						</div>
+					</div>
 
                     <!-- JOB TYPE -->
                     <!-- <div class="cd-filter-block">
