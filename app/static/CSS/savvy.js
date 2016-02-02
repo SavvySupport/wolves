@@ -86,6 +86,10 @@ $(function () {
                 {
                     type    : 'length[5]',
                     prompt  : 'minimum 5 characters required'
+                },
+                {
+                    type    : 'regExp[/^\\w*[^\\[\\]\\^\\$\\.\\|\\?\\*\\+\\(\\)\\\\~\\`\\!\\@\\#\\%\\&\\-\\_\\+\\=\\{\\}\\\'\\"\\"\\<\\>\\:\\;\\, ]+\\w+$/g]',
+                    prompt  : 'username cannot contain special characters'
                 }
             ]
         },

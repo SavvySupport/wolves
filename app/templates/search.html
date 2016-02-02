@@ -7,7 +7,7 @@
 	<script src= {{ url_for('static', filename="CSS/modernizr.js") }} ></script>
     <script src= {{ url_for('static', filename="CSS/jquery-2.1.1.js") }} ></script>
     <script src= {{ url_for('static', filename="CSS/jquery.mixitup.min.js") }} ></script>
-    <script src= {{ url_for('static', filename="CSS/main.js") }} ></script>
+    <script src= {{ url_for('static', filename="CSS/search.js") }} ></script>
     <script src= {{ url_for('static', filename='CSS/semantic.js') }}></script>
 {% endblock %}
 
@@ -17,16 +17,13 @@
             <ul>
                 {% set id = 0 %}
                 {% for user in jsonObject %}
-                    <li class="mix  {{user.get('firstName', '')}}
-                                    {{user.get('lastName', '')}}
-                                    {{user.get('location', '')}}
-                                    {{user.get('surburb', '')}}
-                                    {% for day in user.get('availability', None) %}
-										{% if user.get('availability', None)[day] != 'Unavailable' %}
-											{{day}}
-										{% endif %}
-								    {% endfor %}
-                                    {% for skill in user.get('skills') %} {{skill}} {% endfor %}">
+					{% set class = user.get('firstName', '') %}
+					{% set class = class + ' ' + user.get('lastName', '') %}
+					{% set class = class + ' ' + user.get('location', '') %}
+					{% set class = class + ' ' + user.get('surburb', '') %}
+					{% set class = class + ' ' + user.get('residency', '') %}
+
+                    <li class="mix {{class}} {% for day in user.get('availability', []) %}{% if user.get('availability', None)[day] != 'Unavailable' %}{{day}} {% endif %}{% endfor %}{% for skill in user.get('skills', []) %}{{skill}} {% endfor %}">
                         <div class="ui special cards">
                             <div class="card">
                                 <div class="blurring dimmable medium image">
@@ -61,13 +58,12 @@
                                     </div>
                                     <div class="description">
                                     	<!--	{{ user.get('about', 'Introduction') }} -->
-
                                     </div>
                                 </div>
                                 <div class="extra content">
                                     <a>
                                         <i class="user icon"></i>
-                                        {{ user.get('skills', None)|length }} skills
+                                        {{ user.get('skills', [])|length }} skills
                                     </a>
 
                                     <span class="right floated">
@@ -138,7 +134,7 @@
                                         <p class="ui large header">
                                             Residency Status
                                         </p>
-                                        <a class="ui teal tag label"> {{ user.get('residency', '') }} </a>
+                                        <a class="ui teal tag label"> {{ user.get('residency', 'N/A') }} </a>
                                     </div>
 
                                     <div class="ui hidden divider"></div>
@@ -147,7 +143,7 @@
                                         <p class="ui large header">
                                             Skills
                                         </p>
-                                        {% for skill in user.get('skills') %}
+                                        {% for skill in user.get('skills', []) %}
                                             <a class="ui teal tag label"> {{ skill.upper() }} </a>
                                         {% endfor %}
                                     </div>
@@ -158,10 +154,10 @@
                                         <p class="ui large header">
                                             Availability
                                         </p>
-										{% for day in user.get('availability', None) %}
+										{% for day in user.get('availability', []) %}
 											{% if user.get('availability')[day] != 'Unavailable' %}
 												<a class="ui teal tag label">
-													{{ user.get('availability')[day] }} {{ day }}
+													{{ day }} {{ user.get('availability')[day] }}
 												</a>
 											{% endif %}
 										{% endfor %}
@@ -174,7 +170,7 @@
                                             Send {{ user.get('firstName', '') }} a message
                                         </p>
                                         <textarea id="connectMsg" name="connectMsg" placeholder="I have an opportunity for you, {{ user.get('firstName', '') }}!" rows="6"></textarea>
-                                        <input id="username" name="username" type="hidden" value="{{ user.get('username', '') }}">
+                                        <input id="user" name="user" type="hidden" value="{{ user.get('email', '') }}">
                                         <input id="modalId" name="modalId" type="hidden" value="{{ id }}">
                                     </div>
 								</form>
@@ -247,23 +243,36 @@
                         </div>
                     </div>
 
-                    <!-- JOB TYPE -->
-                    <!-- <div class="cd-filter-block">
-                        <h4>Types</h4>
-                        <div class="cd-filter-content cd-filters list">
-                            <li>
+					<!-- VISA STATUS -->
+					<div class="cd-filter-block">
+						<h4>Residency Status</h4>
+						<div class="cd-filter-content cd-filters list">
+							<li>
                                 <input class="filter" data-filter="" type="radio" name="radioButton" id="radio1" checked>
                                 <label class="radio-label" for="radio1">All</label>
                             </li>
-
-                            {% for type in range(1, 3) %}
-                                <li>
-                                    <input class="filter" data-filter=".radio{{type}}" type="radio" name="radioButton" id="radio{{type}}">
-                                    <label class="radio-label" for="radio{{type}}">Choice {{type}}</label>
-                                </li>
-                            {% endfor %}
-                        </div>
-                    </div> -->
+							<li>
+								<input class="filter" data-filter=".Citizen" type="radio" name="radioButton" id="Citizen">
+								<label class="radio-label" for="Citizen">Citizen</label>
+							</li>
+							<li>
+								<input class="filter" data-filter=".Permanent" type="radio" name="radioButton" id="Permanent">
+								<label class="radio-label" for="Permanent">PR</label>
+							</li>
+							<li>
+								<input class="filter" data-filter=".Temporary" type="radio" name="radioButton" id="Temporary">
+								<label class="radio-label" for="Temporary">TR</label>
+							</li>
+							<li>
+								<input class="filter" data-filter=".Student" type="radio" name="radioButton" id="Student">
+								<label class="radio-label" for="Student">Student Visa</label>
+							</li>
+							<li>
+								<input class="filter" data-filter=".Other" type="radio" name="radioButton" id="Other">
+								<label class="radio-label" for="Other">Other</label>
+							</li>
+						</div>
+					</div>
                 </div>
             </form>
 
@@ -274,6 +283,7 @@
     </main>
 
     <script>
+		// Open modal
         function showmodal(id) {
             var element='.ui.fullscreen.modal.'.concat(id);
             $(element)
@@ -281,15 +291,15 @@
             ;
         }
 
+		// Close modal
         function close(id) {
-            // console.log('closing')
-            // console.log(id)
             var element='.ui.fullscreen.modal.'.concat(id);
             $(element)
                 .modal('toggle')
             ;
         }
 
+		// Ajax to send message
         function connect(id) {
             event.preventDefault();
             var form_data = new FormData($(id)[0]);

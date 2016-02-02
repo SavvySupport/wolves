@@ -12,11 +12,11 @@ from app.Helpers.Constant import *
 def connect():
     if request.method == 'POST':
         message = request.form['connectMsg']
-        user = request.form['username']
+        user = request.form['user']
         modal = request.form['modalId']
 
         print(modal)
-        user = savvy_collection.find_one( {USERNAME: user}, {EMAIL: 1 } )
+        user = savvy_collection.find_one( {EMAIL: user}, {EMAIL: 1 } )
         if user:
             # Send an email
             pass

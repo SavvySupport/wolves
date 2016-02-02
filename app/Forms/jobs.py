@@ -36,7 +36,7 @@ class jobForm(Form):
 
 
     def __init__(self, *args, **kwargs):
-        self.username = args[1]
+        self.email = args[1]
         Form.__init__(self, args[0], **kwargs)
         self.timeStamp = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
 
@@ -54,7 +54,7 @@ class jobForm(Form):
         employerId = user['_id']
         jobs_collection.update({'employerId':employerId},{"$set":{self.timeStamp:job}})
 
-        savvy_collection.update({"username": self.username},
+        savvy_collection.update({EMAIL: self.email},
                                 {"$addToSet": {"jobs":self.timeStamp}})
 
         return True

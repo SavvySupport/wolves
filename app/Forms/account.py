@@ -40,7 +40,7 @@ class employerForm(Form):
             return False
         return True
 
-    def update(self, username):
+    def update(self, email):
         user = {
             BUSINESS    : self.businessName.data,
             CONTACT     : self.contactName.data,
@@ -49,7 +49,7 @@ class employerForm(Form):
             ADDRESS     : self.streetAddress.data
         }
 
-        savvy_collection.update({USERNAME: username},
+        savvy_collection.update({EMAIL: email},
                                 {"$set": user})
 
 class candidateForm(Form):
@@ -109,7 +109,7 @@ class candidateForm(Form):
             return False
         return True
 
-    def update(self, username):
+    def update(self, email):
         availability = {
             MON[TEXT]       : self.monday.data,
             TUE[TEXT]       : self.tuesday.data,
@@ -144,7 +144,7 @@ class candidateForm(Form):
         }
 
         savvy_collection.update(
-            { USERNAME: username },
+            { EMAIL: email },
             { "$set": user })
 
         return True
