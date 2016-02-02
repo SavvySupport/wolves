@@ -4,19 +4,21 @@
 {% endblock %}
 
 {% block content %}
-    <video autoplay id="bgvid" loop>
-        <source class="videobg" src= {{ url_for('static', filename='videos/343647377.mp4') }} type="video/mp4">
-    </video>
-    <div id="savvy">
-        <img id="logo" src= {{ url_for('static', filename='images/logo.png') }} />
-        <h2>The new way to hire is here!</h2>
-        <p>
-            Join for free today and get access to profiles of job seekers in Sydney. View their skills, experiences and qualifications.
-            Ratings are also used on Savvy Hire for character assessments
-        </p>
+    <div id="bgvid">
+      <video autoplay loop>
+          <source class="videobg" src= {{ url_for('static', filename='videos/343647377.mp4') }} type="video/mp4">
+      </video>
+      <div id="savvy">
+          <img id="logo" src= {{ url_for('static', filename='images/logo.png') }} />
+          <h2>The new way to hire is here!</h2>
+          <p>
+              Join for free today and get access to profiles of job seekers in Sydney. View their skills, experiences and qualifications.
+              Ratings are also used on Savvy Hire for character assessments
+          </p>
 
-        {% if user_logged_in == false %}
-            <a href= {{ url_for('register') }} ><button>Create your own account here</button></a>
-        {% endif %}
+          {% if user_logged_in == false %}
+              <a href= {{ url_for('register') }} ><button>Create your own account here</button></a>
+          {% endif %}
+      </div>
     </div>
 {% endblock %}
