@@ -1,5 +1,5 @@
 from wtforms import Form, BooleanField, TextField, TextAreaField, PasswordField,\
-                    validators, ValidationError, SelectField
+                    validators, ValidationError, SelectField, BooleanField
 from app.Models.User import User
 from app import savvy_collection, jobs_collection
 from flask.ext.login import login_user
@@ -18,6 +18,7 @@ class regoForm(Form):
     email = TextField(EMAIL, [validators.required()])
     category = SelectField(CATEGORY, choices = [EMPLOYER, CANDIDATE],
                                      default = CANDIDATE[TEXT])
+    termsConditions = BooleanField(TERMSCOND, [validators.required()])
 
     def __init__(self, *args, **kwargs):
         Form.__init__(self, *args, **kwargs)

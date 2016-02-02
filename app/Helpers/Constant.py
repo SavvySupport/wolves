@@ -21,6 +21,7 @@ CONTACT      = 'contactName'
 BUSINESS     = 'businessName'
 DP           = 'dp'
 TOKEN        = 'token'
+TERMSCOND    = 'termsConditions'
 
 # Category
 EMPL        = 'Employer'
