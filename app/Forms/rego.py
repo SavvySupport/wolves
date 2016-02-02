@@ -9,13 +9,10 @@ import os, subprocess
 from app.Helpers.Constant import *
 
 class regoForm(Form):
-    username = TextField(USERNAME, [validators.length(min=5),
-                                    validators.required(),
-                                    validators.regexp('^[a-zA-Z0-9]+$')])
+    email = TextField(EMAIL, [validators.required()])
     password = PasswordField(PASSWORD, [validators.length(min=5),
                                         validators.required()])
     confirm = PasswordField(PWDCONFIRM, [validators.equal_to(PASSWORD)])
-    email = TextField(EMAIL, [validators.required()])
     category = SelectField(CATEGORY, choices = [EMPLOYER, CANDIDATE],
                                      default = CANDIDATE[TEXT])
 
@@ -28,20 +25,19 @@ class regoForm(Form):
             flash('Form invalid', 'error')
             return False
 
-        user = savvy_collection.find_one({ "$or" : [ {USERNAME: self.username.data.rstrip()},
-                                                     {EMAIL: self.email.data.rstrip()} ] })
+        user = savvy_collection.find_one({EMAIL: self.email.data.rstrip()})
         if user:
-            flash('Email or Username has been taken', 'warning')
+            flash('Email has already been taken', 'warning')
             return False
         else:
             raw_token = self.email.data + self.username.data + 'verification code'
             token = md5(raw_token.encode('utf-8')).hexdigest()
             user = {
-                USERNAME      : self.username.data.rstrip(),
                 PASSWORD      : md5(self.password.data.rstrip().encode('utf-8')).hexdigest(),
                 EMAIL         : self.email.data.rstrip(),
                 CATEGORY      : self.category.data,
-                TOKEN         : token }
+                TOKEN         : token
+            }
 
             # insert into database
             employerId = savvy_collection.insert_one(user).inserted_id
@@ -66,7 +62,7 @@ class regoForm(Form):
             # p.communicate()
 
             # log in
-            userObj = User(user[USERNAME])
+            userObj = User(user[EMAIL])
             login_user(userObj)
 
             return True

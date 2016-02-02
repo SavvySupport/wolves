@@ -177,7 +177,7 @@
                                             Send {{ user.get('firstName', '') }} a message
                                         </p>
                                         <textarea id="connectMsg" name="connectMsg" placeholder="I have an opportunity for you, {{ user.get('firstName', '') }}!" rows="6"></textarea>
-                                        <input id="username" name="username" type="hidden" value="{{ user.get('username', '') }}">
+                                        <input id="user" name="user" type="hidden" value="{{ user.get('email', '') }}">
                                         <input id="modalId" name="modalId" type="hidden" value="{{ id }}">
                                     </div>
 								</form>
@@ -304,6 +304,7 @@
     </main>
 
     <script>
+		// Open modal
         function showmodal(id) {
             var element='.ui.fullscreen.modal.'.concat(id);
             $(element)
@@ -311,15 +312,15 @@
             ;
         }
 
+		// Close modal
         function close(id) {
-            // console.log('closing')
-            // console.log(id)
             var element='.ui.fullscreen.modal.'.concat(id);
             $(element)
                 .modal('toggle')
             ;
         }
 
+		// Ajax to send message
         function connect(id) {
             event.preventDefault();
             var form_data = new FormData($(id)[0]);

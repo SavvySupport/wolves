@@ -21,9 +21,9 @@ env = Environment(loader=FileSystemLoader(tpldir), trim_blocks=True)
 # Login Manager
 ###############################################################################
 @manager.user_loader
-def load_user(username):
-    if username != None:
-        user = savvy_collection.find_one({ USERNAME: username })
+def load_user(email):
+    if email != None:
+        user = savvy_collection.find_one({ EMAIL: email })
         if user:
             return User(user)
 

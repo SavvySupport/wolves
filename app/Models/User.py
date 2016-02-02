@@ -1,6 +1,7 @@
 from app import savvy_collection
 from hashlib import md5
 from flask import flash, url_for
+from app.Helpers.Constant import *
 
 class User():
     def __init__(self, userObj):
@@ -23,13 +24,13 @@ class User():
         return md5(password.encode('utf-8')).hexdigest() == password_hash
 
     @staticmethod
-    def validate_rego_token(username, token):
-        user = savvy_collection.find_one({ 'username': username })
+    def validate_rego_token(email, token):
+        user = savvy_collection.find_one({ EMAIL: email })
         if user:
-            token_db = user.get('token', None)
+            token_db = user.get(TOKEN, None)
             if token_db != None:
                 if token_db == token:
-                    update = savvy_collection.update_one( {'username': username}, {'$set': {'token': ''}} )
+                    update = savvy_collection.update_one( {EMAIL: email}, {'$set': {TOKEN: ''}} )
                     flash('Your account has been verified!', 'success')
                     return True
                 elif token_db == '':

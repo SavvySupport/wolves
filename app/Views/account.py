@@ -9,13 +9,12 @@ from app.Helpers.Constant import *
 @app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
-    username = current_user.get_id()[USERNAME]
-    user = savvy_collection.find_one({ USERNAME: username })
-    userJob = jobs_collection.find_one({'employerId':user.get('_id', '')})
+    user = savvy_collection.find_one({ EMAIL: current_user.get_id()[EMAIL] })
+    userJob = jobs_collection.find_one({'employerId': user.get('_id', '')})
     if user:
         form = None
         if user.get(CATEGORY, '') == EMPL:
-            form = employerForm(user, request.form) #need to pass user here, use in account.html.
+            form = employerForm(user, request.form) #need to pass user here, use in account.html. thang: what?
         elif user.get(CATEGORY, '') == CAND:
             form = candidateForm(username, request.form)
 
