@@ -103,10 +103,11 @@ class candidateForm(Form):
     def validate(self):
         rv = Form.validate(self)
         if not rv:
+            message = ''
             for fieldName, errorMessages in self.errors.items():
                 for err in errorMessages:
-                    print(fieldName, err)
-                    #print(self.availability.data)
+                    message = message + fieldName + ': ' + err + '\n'
+            flash(message, 'error')
             return False
         return True
 
@@ -128,7 +129,15 @@ class candidateForm(Form):
             if skill != '' and skill != ' ' and skill != None:
                 skills.append(skill.lstrip())
 
-        print(skills)
+        complete = True
+        if self.firstName.data.rstrip()     == '' or \
+           self.lastName.data.rstrip()      == '' or  \
+           self.phoneNumber.data.rstrip()   == '' or \
+           self.about.data.rstrip()         == '' or \
+           self.location.data.rstrip        == '' or \
+           len(skills)                      == 0:
+            complete = False
+
         user = {
             FNAME         : self.firstName.data.rstrip(),
             LNAME         : self.lastName.data.rstrip(),
@@ -136,11 +145,12 @@ class candidateForm(Form):
             GENDER        : self.gender.data,
             BIRTHDAY      : str(self.birthday.data),
             RESIDENCY     : self.residency.data,
-            ABOUT         : self.about.data,
+            ABOUT         : self.about.data.rstrip(),
             EDUCATION     : self.education.data,
             AVAILABILITY  : availability,
             SKILLS        : skills,
-            LOCATION      : self.location.data
+            LOCATION      : self.location.data.rstrip(),
+            COMPLETE      : complete
         }
 
         savvy_collection.update( { EMAIL: email }, { "$set": user })
