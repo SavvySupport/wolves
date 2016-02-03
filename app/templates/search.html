@@ -154,13 +154,13 @@
                                         <p class="ui large header">
                                             Availability
                                         </p>
-										{% for day in user.get('availability', []) %}
-											{% if user.get('availability')[day] != 'Unavailable' %}
-												<a class="ui teal tag label">
-													{{ day }} {{ user.get('availability')[day] }}
-												</a>
-											{% endif %}
-										{% endfor %}
+																				{% for day in user.get('availability', []) %}
+																					{% if user.get('availability')[day] != 'Unavailable' %}
+																						<a class="ui teal tag label">
+																							{{ day }} {{ user.get('availability')[day] }}
+																						</a>
+																					{% endif %}
+																				{% endfor %}
                                     </div>
 
                                     <div class="ui hidden divider"></div>
@@ -173,7 +173,7 @@
                                         <input id="user" name="user" type="hidden" value="{{ user.get('email', '') }}">
                                         <input id="modalId" name="modalId" type="hidden" value="{{ id }}">
                                     </div>
-								</form>
+																</form>
                             </div>
                         </div>
                         <div class="actions">
