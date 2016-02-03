@@ -16,9 +16,13 @@ class loginForm(Form):
     def validate(self):
         rv = Form.validate(self)
         if not rv:
-            flash('Form invalid', 'error')
+            message = ''
+            for fieldName, errorMessages in self.errors.items():
+                for err in errorMessages:
+                    message = message + fieldName + ': ' + err + '\n'
+            flash(message, 'error')
             return False
-
+        
         # Query data from database
         user = savvy_collection.find_one({ EMAIL: self.email.data.rstrip() })
 
@@ -29,13 +33,10 @@ class loginForm(Form):
             account_token = user.get(TOKEN, '')
 
             if User.validate_login(hash_password, user_password):
-                # if account_token == '':
                 userObj = User(email)
                 login_user(userObj)
+                print('logged')
                 return True
-                # else:
-                    #if username and password is correct but have not validated Email
-                    # flash('Please verify your email address', 'error')
         else:
             flash('Incorrect login credentials', 'error')
         return False

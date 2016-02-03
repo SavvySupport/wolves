@@ -23,7 +23,11 @@ class regoForm(Form):
     def validate(self):
         rv = Form.validate(self)
         if not rv:
-            flash('Form invalid', 'error')
+            message = ''
+            for fieldName, errorMessages in self.errors.items():
+                for err in errorMessages:
+                    message = message + fieldName + ': ' + err + '\n'
+            flash(message, 'error')
             return False
 
         user = savvy_collection.find_one({EMAIL: self.email.data.rstrip()})
@@ -31,7 +35,7 @@ class regoForm(Form):
             flash('Email has already been taken', 'warning')
             return False
         else:
-            raw_token = self.email.data + self.username.data + 'verification code'
+            raw_token = self.email.data + 'verification code'
             token = md5(raw_token.encode('utf-8')).hexdigest()
             user = {
                 PASSWORD      : md5(self.password.data.rstrip().encode('utf-8')).hexdigest(),

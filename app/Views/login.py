@@ -14,6 +14,7 @@ def login():
     # Case: user submits form
     form = loginForm(request.form)
     if request.method == 'POST' and form.validate():
+        print('validated')
         if request.form.get('next') != None and request.form.get('next') != 'None':
             return redirect(request.form.get('next'))
         else:

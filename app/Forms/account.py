@@ -34,9 +34,11 @@ class employerForm(Form):
     def validate(self):
         rv = Form.validate(self)
         if not rv:
+            message = ''
             for fieldName, errorMessages in self.errors.items():
                 for err in errorMessages:
-                    print(err)
+                    message = message + fieldName + ': ' + err + '\n'
+            flash(message, 'error')
             return False
         return True
 
@@ -49,8 +51,7 @@ class employerForm(Form):
             ADDRESS     : self.streetAddress.data
         }
 
-        savvy_collection.update({EMAIL: email},
-                                {"$set": user})
+        savvy_collection.update({EMAIL: email}, {"$set": user})
 
 class candidateForm(Form):
     firstName       = TextField(FNAME)
@@ -143,9 +144,7 @@ class candidateForm(Form):
             LOCATION      : self.location.data
         }
 
-        savvy_collection.update(
-            { EMAIL: email },
-            { "$set": user })
+        savvy_collection.update( { EMAIL: email }, { "$set": user })
 
         return True
 

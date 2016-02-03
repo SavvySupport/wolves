@@ -13,7 +13,11 @@ class recoverForm(Form):
     def validate(self):
         rv = Form.validate(self)
         if not rv:
-            flash('Form invalid', 'error')
+            message = ''
+            for fieldName, errorMessages in self.errors.items():
+                for err in errorMessages:
+                    message = message + fieldName + ': ' + err + '\n'
+            flash(message, 'error')
             return False
 
         user = savvy_collection.find_one({ EMAIL : self.email.data.rstrip() })
