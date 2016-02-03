@@ -1,11 +1,9 @@
-from wtforms import Form, BooleanField, TextField, TextAreaField, PasswordField,\
-                    validators, ValidationError, SelectField
+from wtforms import Form, TextField, PasswordField, validators, ValidationError, SelectField
 from app.Models.User import User
 from app import savvy_collection, jobs_collection
 from flask.ext.login import login_user
 from flask import flash
 from hashlib import md5
-import os, subprocess
 from app.Helpers.Constant import *
 
 class regoForm(Form):
