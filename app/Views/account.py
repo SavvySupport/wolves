@@ -14,7 +14,7 @@ def account():
     if user:
         form = None
         if user.get(CATEGORY, '') == EMPL:
-            form = employerForm(user, request.form) #need to pass user here, use in account.html. thang: what?
+            form = employerForm(user, request.form)
         elif user.get(CATEGORY, '') == CAND:
             form = candidateForm(user, request.form)
 

@@ -122,14 +122,13 @@ class candidateForm(Form):
             HOL[TEXT]       : self.holiday.data,
         }
 
-        print (self.tuesday.data, NA[CODE])
-
         tmp = (self.skills.data.rstrip()).split(',')
         skills = []
         for skill in tmp:
-            if skill != '':
-                skills.append(skill)
+            if skill != '' and skill != ' ' and skill != None:
+                skills.append(skill.lstrip())
 
+        print(skills)
         user = {
             FNAME         : self.firstName.data.rstrip(),
             LNAME         : self.lastName.data.rstrip(),
