@@ -78,10 +78,19 @@
                           </div>
                       {% endif %}
 
-                      <a href= {{ url_for('account') }} class="item">
+                      <div class="ui pointing dropdown link item">
                           <i class="child icon"></i>
-                          Welcome back {{ user.get('username', None) }}
-                      </a>
+                          Welcome back {{ user.get('email', None) }}
+                          <i class="dropdown icon"></i>
+                          <div class="menu">
+                              <div class="header">Account Setting</div>
+                              <a href= {{ url_for('account') }} class="item">My Profile</a>
+                              <div class="divider"></div>
+                              <div class="header">Jobs</div>
+                              <div class="item">My adverts</div>
+                              <div class="item">Contacts</div>
+                            </div>
+                      </div>
                   {% endif %}
               </div>
 
