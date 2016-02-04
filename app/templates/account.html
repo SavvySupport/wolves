@@ -148,11 +148,7 @@
                                 <div class="field">
                                     <label>Contact Number</label>
                                     {{ form.phoneNumber }}
-                                </div>
-                                <div class="field">
-                                    <label>Suburb</label>
-                                    {{ form.location }}
-                                </div>
+                                </div> 
 
                                 <div class="field">
                                     <label>Gender</label>
@@ -187,10 +183,6 @@
                         <h2 class="ui block header">Skills and Preferences</h2>
                         <div class="ui very relax stackable grid">
                             <div class="ten wide column">
-                                <div class="field">
-                                    <label>Current location</label>
-                                    {{ form.location }}
-                                </div>
                                 <div class="field">
                                     <label>Top 5 Skills</label>
                                     {{ form.skills(placeholder='separate with comma') }}

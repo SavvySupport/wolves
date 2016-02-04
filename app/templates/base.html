@@ -40,16 +40,18 @@
 
                 <div class="ui attached medium top menu">
                     <a href= {{ url_for('home') }} class="header item">
-                        Home
+                        <img class='avatar image' src= {{ url_for('static', filename='images/logo.png') }} />
                     </a>
 
                     {% if user_logged_in == false %}
-                        <a href= {{ url_for('login') }} class="header item">
-                            Sign In
-                        </a>
-                        <a href= {{ url_for('register') }} class="header item">
-                            Register
-                        </a>
+                        <div class="right menu">
+                            <a href= {{ url_for('login') }} class="header item">
+                                Sign In
+                            </a>
+                            <a href= {{ url_for('register') }} class="header item">
+                                Register
+                            </a>
+                        </div>
                     {% else %}
                         {% if user.get('category', '').lower() == 'employer' %}
                             <a href= {{ url_for('search') }}  class="header item">
