@@ -19,29 +19,8 @@
         {% endblock %}
     </head>
     <body>
-        <main id="body" class="clearfix">
-          <div class="ui left medium vertical inverted sidebar labeled icon menu">
-              <a class="item" href= {{ url_for('home') }} >
-                  <i class="home icon"></i>
-                  Home
-              </a>
-              {% if user_logged_in == false %}
-                  <a class="item" href= {{ url_for('login') }} >
-                      <i class="smile icon"></i>
-                      Log In
-                  </a>
-                  <a class="item" href= {{ url_for('register') }} >
-                      <i class="plus icon"></i>
-                      Sign Up
-                  </a>
-              {% else %}
-                  <a class="item" href= {{ url_for('logout') }} >
-                      <i class="sign out icon"></i>
-                      Log Out
-                  </a>
-              {% endif %}
-          </div>
-          <div class="pusher">
+      <div id="wrapper">
+        <main id="content" class="clearfix">
               <!-- Warning message. Activated by flash() in views.py -->
               {% with messages = get_flashed_messages(with_categories=true) %}
                   {% if messages %}
@@ -60,9 +39,6 @@
               {% endwith %}
 
               <div class="ui attached stackable inverted menu">
-                  <a id="sidebar" class="header item">
-                      <i class="sidebar icon"></i>
-                  </a>
                   <div class="header item">
                       <a href= {{ url_for('home') }} >Home</a>
                   </div>
@@ -72,6 +48,10 @@
                           <a href= {{ url_for('search') }} >Search</a>
                       </div>
                   {% else %}
+                      <a class="item" href= {{ url_for('logout') }} >
+                          <i class="sign out icon"></i>
+                          Log Out
+                      </a>
                       {% if user.get('category', '').lower() == 'employer' %}
                           <div class="header item">
                               <a href= {{ url_for('search') }} >Search</a>
@@ -91,10 +71,9 @@
 
               <!-- PrefixFree to deal with vendor prefixes -->
               <script src="http://thecodeplayer.com/uploads/js/prefixfree-1.0.7.js" type="text/javascript"></script>
-          </div>
         </main>
-        <footer>
-          <div class = "ui inverted vertical footer segment">
+        <footer id="footer">
+          <div class = "ui black vertical footer segment">
             <div id="copyright">
               <small>© Copyright 2016, <a href="https://www.savvysme.com.au/" target="_blank">SavvySME</a></small>
               <p>For any enquiries contact : <a href="mailto:mary@savvysme.com.au">
@@ -102,5 +81,6 @@
             </div>
           </div>
         </footer>
+      </div>
     </body>
 </html>
