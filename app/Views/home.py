@@ -3,4 +3,4 @@ from app.Views.views import render
 
 @app.route('/')
 def home():
-    return render('home.html')
+    return render('home.html',extra='')

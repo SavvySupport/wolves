@@ -65,3 +65,4 @@ from app.Views import jobs
 from app.Views import search
 from app.Views import terms
 from app.Views import changepassword
+from app.Views import homejobseekers
