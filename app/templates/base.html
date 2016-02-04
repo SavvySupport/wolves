@@ -38,24 +38,23 @@
                     {% endif %}
                 {% endwith %}
 
-                <div class="ui attached stackable inverted menu">
-                    <div class="header item">
-                        <a href= {{ url_for('home') }} >Home</a>
-                    </div>
+                <div class="ui attached medium top menu">
+                    <a href= {{ url_for('home') }} class="header item">
+                        Home
+                    </a>
 
                     {% if user_logged_in == false %}
-                        <div class="header item">
-                            <a href= {{ url_for('search') }} >Search</a>
-                        </div>
-                    {% else %}
-                        <a class="item" href= {{ url_for('logout') }} >
-                            <i class="sign out icon"></i>
-                            Log Out
+                        <a href= {{ url_for('login') }} class="header item">
+                            Sign In
                         </a>
+                        <a href= {{ url_for('register') }} class="header item">
+                            Register
+                        </a>
+                    {% else %}
                         {% if user.get('category', '').lower() == 'employer' %}
-                            <div class="header item">
-                                <a href= {{ url_for('search') }} >Search</a>
-                            </div>
+                            <a href= {{ url_for('search') }}  class="header item">
+                                Search
+                            </a>
                         {% endif %}
 
                         <div class="ui pointing dropdown link item">
@@ -75,6 +74,12 @@
                                     <div class="item">Contacts</div>
                                 {% endif %}
                             </div>
+                        </div>
+                        <div class="right menu">
+                            <a class="item" href= {{ url_for('logout') }} >
+                                <i class="sign out icon"></i>
+                                Log Out
+                            </a>
                         </div>
                     {% endif %}
                 </div>

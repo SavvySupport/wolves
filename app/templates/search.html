@@ -63,7 +63,7 @@
                                 <div class="extra content">
                                     <a>
                                         <i class="user icon"></i>
-                                        {{ user.get('skills', [])|length }} skills
+                                        {{ user.get('residency', []) }} 
                                     </a>
 
                                     <span class="right floated">
@@ -134,7 +134,7 @@
                                         <p class="ui large header">
                                             Residency Status
                                         </p>
-                                        <a class="ui teal tag label"> {{ user.get('residency', 'N/A') }} </a>
+                                        <a class="ui teal small tag label"> {{ user.get('residency', 'N/A') }} </a>
                                     </div>
 
                                     <div class="ui hidden divider"></div>
@@ -144,7 +144,7 @@
                                             Skills
                                         </p>
                                         {% for skill in user.get('skills', []) %}
-                                            <a class="ui teal tag label"> {{ skill.upper() }} </a>
+                                            <a class="ui teal small tag label"> {{ skill.upper() }} </a>
                                         {% endfor %}
                                     </div>
 
@@ -156,8 +156,8 @@
                                         </p>
 										{% for day in user.get('availability', []) %}
 											{% if user.get('availability')[day] != 'Unavailable' %}
-												<a class="ui teal tag label">
-													{{ day }} {{ user.get('availability')[day] }}
+												<a class="ui teal small tag label">
+													{{ day }}
 												</a>
 											{% endif %}
 										{% endfor %}

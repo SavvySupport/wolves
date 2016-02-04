@@ -127,7 +127,10 @@ class candidateForm(Form):
         skills = []
         for skill in tmp:
             if skill != '' and skill != ' ' and skill != None:
-                skills.append(skill.lstrip())
+                if len(skills) < 5:
+                    skills.append(skill.lstrip())
+                else:
+                    break
 
         complete = True
         if self.firstName.data.rstrip()     == '' or \
