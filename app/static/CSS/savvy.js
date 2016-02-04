@@ -168,6 +168,11 @@ $(function () {
         on: "blur"
     });
 
+    $('#changepasswordForm').form(validationObj, {
+        inline: true,
+        on: "blur"
+    });
+
     // Dismiss message
     $('.message .close')
         .on('click', function() {

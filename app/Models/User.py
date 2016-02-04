@@ -39,3 +39,7 @@ class User():
 
         flash('Unknown confirmation link', 'error')
         return False
+
+    def validate_password(email, password):
+        user = savvy_collection.find_one({ EMAIL: email })
+        return user[PASSWORD] == password
