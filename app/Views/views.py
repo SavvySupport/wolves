@@ -64,3 +64,4 @@ from app.Views import recover
 from app.Views import jobs
 from app.Views import search
 from app.Views import terms
+from app.Views import changepassword

@@ -22,6 +22,7 @@ BUSINESS     = 'businessName'
 DP           = 'dp'
 TOKEN        = 'token'
 COMPLETE     = 'complete'
+TERMSCOND    = 'termsConditions'
 
 # Category
 EMPL        = 'Employer'
