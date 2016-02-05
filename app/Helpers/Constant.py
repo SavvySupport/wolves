@@ -68,6 +68,11 @@ MORNING     = ('Morning', 'Morning')
 AFTERNOON   = ('Afternoon', 'Afternoon')
 ALL_DAY     = ('All Day', 'All Day')
 
+# Job
+TITLE       = 'title'
+DESCR       = 'description'
+TIMESTAMP   = 'timeStamp'
+
 # Decision
 NO  = 0
 YES = 1

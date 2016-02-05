@@ -44,11 +44,11 @@
                     </a>
 
                     {% if user_logged_in == false %}
-                        <a href= {{ url_for('login') }} class="header item">
+                        <a href= {{ url_for('login') }} class="item">
                             <i class="sign in icon"></i>
                             Sign In
                         </a>
-                        <a href= {{ url_for('register') }} class="header item">
+                        <a href= {{ url_for('register') }} class="item">
                             <i class="add user icon"></i>
                             Register
                         </a>
@@ -67,7 +67,7 @@
                         </div>
                     {% else %}
                         {% if user.get('category', '').lower() == 'employer' %}
-                            <a href= {{ url_for('search') }} class="header item">
+                            <a href= {{ url_for('search') }} class="item">
                                 Search
                             </a>
                         {% endif %}
@@ -81,7 +81,7 @@
                                 <div class="divider"></div>
                                 <div class="header">Jobs</div>
                                 {% if user.get('category', '').lower() == 'employer' %}
-                                    <div class="item">Post A Job</div>
+                                    <a id="postajob" class="item">Post A Job</a>
                                     <div class="item">Manage Jobs</div>
                                 {% else %}
                                     <div class="item">My applications</div>
@@ -101,6 +101,42 @@
                 <!-- Main Body -->
                 {% block content %}
                 {% endblock %}
+
+                <!-- Job post modal -->
+                {% if user_logged_in != false %}
+                    {% if user.get('category', '').lower() == 'employer' %}
+                        <div class="ui fullscreen modal job">
+                            <i id="closebtn" class="close icon"></i>
+                            <div class="content">
+                                <form id="jobForm"
+                                      class="ui form"
+                                      method="post"
+                                      role="form">
+                                    <!-- Detail Form -->
+                                    <div class="required field">
+                                        <label>Title</label>
+
+                                    </div>
+
+                                    <div class="field">
+                                        <label>Availability</label>
+
+                                        <p>hold cmd or ctrl and click available days</p>
+                                    </div>
+
+                                    <div class="required field">
+                                        <label>Description</label>
+
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="actions">
+                                <button form="jobForm" type="submit" class="ui green button">Post</button>
+                                <div id="cancelbtn" class="ui deny red button">Cancel</div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
 
                 <!-- PrefixFree to deal with vendor prefixes -->
                 <script src="http://thecodeplayer.com/uploads/js/prefixfree-1.0.7.js" type="text/javascript"></script>

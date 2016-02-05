@@ -145,8 +145,43 @@ $(function () {
                     prompt  : 'You must agree to the terms first'
                 }
             ]
+        },
+        title: {
+            identifier  : 'title',
+            rules: [
+                {
+                    type    : 'empty',
+                    prompt  : 'Job title is required'
+                },
+                {
+                    type    : 'minLength[10]',
+                    prompt  : 'minimum 10 characters required'
+                }
+            ]
+        },
+        description: {
+            identifier  : 'description',
+            rules: [
+                {
+                    type    : 'empty',
+                    prompt  : 'Job description is required'
+                },
+                {
+                    type    : 'minLength[50]',
+                    prompt  : 'minimum 50 characters required'
+                },
+                {
+                    type    : 'maxlength[150]',
+                    prompt  : 'maximum 150 characters required'
+                }
+            ]
         }
     };
+
+    $('#jobForm').form(validationObj, {
+        inline: true,
+        on: "blur"
+    });
 
     $('#loginForm').form(validationObj, {
         inline: true,
@@ -183,32 +218,13 @@ $(function () {
             })
         ;
 
-    // Video feature (on homepage)
-    // var vid = document.getElementById("bgvid");
-    // var pauseButton = document.querySelector("#polina button");
-    //
-    // function vidFade() {
-    //   vid.classList.add("stopfade");
-    // }
-    //
-    // vid.addEventListener('ended', function() {
-    //   // only functional if "loop" is removed
-    //   vid.pause();
-    //   // to capture IE10
-    //   vidFade();
-    // });
-    //
-    // pauseButton.addEventListener("click", function() {
-    //   vid.classList.toggle("stopfade");
-    //   if (vid.paused) {
-    //     vid.play();
-    //     pauseButton.innerHTML = "Pause";
-    //   } else {
-    //     vid.pause();
-    //     pauseButton.innerHTML = "Paused";
-    //   }
-    // })
-    // End video feature
+    // Open modal
+    $('#postajob').on('click', function() {
+        $('.ui.fullscreen.modal.job')
+            .modal('setting', 'transition', 'fade up')
+            .modal('show')
+        ;
+    });
 
     // Trigger file selector by clicking on the profile
     $('#upload').click(function(){
@@ -231,27 +247,6 @@ $(function () {
             dataType: 'json'
         }).done(function(data, textStatus, jqXHR){
             $("#photoajax").attr('src', data['path']);
-            console.log('Success!');
-        }).fail(function(data) {
-            alert('Failed!');
-        }).complete(function(data) {
-            console.log('completed');
-        });
-    });
-
-    $('#deleteJobButton').click(function() {
-        event.preventDefault();
-        //var form_data = new FormData($('#viewJobForm')[0]);
-        var jobId = $('#jobId').val();
-        $.ajax({
-            type: 'POST',
-            url: '/deleteJob',
-            data: jobId,
-            contentType: false,
-            processData: false,
-            dataType: 'json'
-        }).done(function(data, textStatus, jqXHR){
-            $("#jobajax").attr('src', data['path']);
             console.log('Success!');
         }).fail(function(data) {
             alert('Failed!');
