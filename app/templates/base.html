@@ -81,7 +81,7 @@
                                 <div class="divider"></div>
                                 <div class="header">Jobs</div>
                                 {% if user.get('category', '').lower() == 'employer' %}
-                                    <a id="postajob" class="item">Post A Job</a>
+                                    <a href= {{ url_for('postJob') }} class="item">Post A Job</a>
                                     <div class="item">Manage Jobs</div>
                                 {% else %}
                                     <div class="item">My applications</div>
@@ -101,7 +101,7 @@
                 <!-- Main Body -->
                 {% block content %}
                 {% endblock %}
- 
+
                 <!-- PrefixFree to deal with vendor prefixes -->
                 <script src="http://thecodeplayer.com/uploads/js/prefixfree-1.0.7.js" type="text/javascript"></script>
             </main>
