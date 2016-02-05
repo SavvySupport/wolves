@@ -4,10 +4,8 @@ from app import savvy_collection
 from flask import flash
 from hashlib import md5
 from app.Helpers.Constant import *
-import os
 
 class changepasswordForm(Form):
-
     password = PasswordField(PASSWORD, [validators.length(min=5),
                                         validators.required()])
     passwordconfirm = PasswordField(PWDCONFIRM, [validators.equal_to(PASSWORD)])
@@ -25,8 +23,7 @@ class changepasswordForm(Form):
                     message = message + fieldName + ': ' + err + '\n'
             flash(message, 'error')
             return False
-
         else:
-
-            savvy_collection.update({EMAIL:self.user[EMAIL]},{"$set":{PASSWORD:md5(self.password.data.rstrip().encode('utf-8')).hexdigest()}})
+            savvy_collection.update({EMAIL: self.user[EMAIL]},
+                                    {"$set": {PASSWORD: md5(self.password.data.rstrip().encode('utf-8')).hexdigest()}})
             return True
