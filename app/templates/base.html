@@ -167,13 +167,35 @@
               <script src="http://thecodeplayer.com/uploads/js/prefixfree-1.0.7.js" type="text/javascript"></script>
         </main>
         <footer id="footer">
-          <div class = "ui white vertical footer">
-            <div id="copyright">
-              <small>© Copyright 2016, <a href="https://www.savvysme.com.au/" target="_blank">SavvySME</a></small>
-              <p>For any enquiries contact : <a href="mailto:mary@savvysme.com.au">
-              mary@savvysme.com.au</a></p>
+            <div class = "ui white vertical footer segment" style="margin-top:0%;">
+                <div class="ui container">
+                    <div class="ui stackable inverted divided equal height stackable grid">
+                        <div class="three wide column">
+                            <h4 class="ui black header">About</h4>
+                            <div class="ui black link list">
+                                <a href= {{ url_for('about') }} class="item">About Us</a>
+                                {% if user_logged_in == false %}
+                                <a href= {{ url_for('home') }} class="item">for Employers</a>
+                                <a href= {{ url_for('homejobseekers') }} class="item">for Job Seekers</a>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="eight wide column">
+                            <h4 class="ui black header">Others</h4>
+                            <div class="ui black link list">
+                                <a href="http://www.savvysme.com.au" target="_blank" class="item">SavvySME</a>
+                                <a a href= {{ url_for('terms') }} target="_blank" class="item">Terms and Conditions</a>
+                            </div>
+                        </div>
+                        <div class="five wide column">
+                            <small>© Copyright 2016, <a href="https://www.savvysme.com.au/" target="_blank">SavvySME</a></small>
+                            <p>For any enquiries contact : <a href="mailto:mary@savvysme.com.au">
+                            mary@savvysme.com.au</a></p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </footer>
       </div>
     </body>
