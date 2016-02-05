@@ -217,15 +217,7 @@ $(function () {
                 ;
             })
         ;
-
-    // Open modal
-    $('#postajob').on('click', function() {
-        $('.ui.fullscreen.modal.job')
-            .modal('setting', 'transition', 'fade up')
-            .modal('show')
-        ;
-    });
-
+ 
     // Trigger file selector by clicking on the profile
     $('#upload').click(function(){
         $('#attachmentName').click();
