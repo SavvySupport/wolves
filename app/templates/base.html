@@ -146,23 +146,27 @@
                     </a>
 
                     {% if user_logged_in == false %}
+                        <a href= {{ url_for('login') }} class="header item">
+                            <i class="sign in icon"></i>
+                            Sign In
+                        </a>
+                        <a href= {{ url_for('register') }} class="header item">
+                            <i class="add user icon"></i>
+                            Register
+                        </a>
                         <div class="right menu">
-                            <a href= {{ url_for('login') }} class="header item">
-                                Sign In
-                            </a>
-                            <a href= {{ url_for('register') }} class="header item">
-                                Register
-                            </a>
+                            {% if extra == 'homejobseekers' %}
+                                <a href= {{ url_for('home') }} class="header item">
+                                    <i class="chevron right icon"></i>
+                                    for Employers
+                                </a>
+                            {% else %}
+                                <a href= {{ url_for('homejobseekers') }} class="header item">
+                                    <i class="chevron right icon"></i>
+                                    for Job Seekers
+                                </a>
+                            {% endif %}
                         </div>
-                        {% if extra == 'homejobseekers' %}
-                            <a href= {{ url_for('home') }} class="header item">
-                                for Employers
-                            </a>
-                        {% else %}
-                            <a href= {{ url_for('homejobseekers') }} class="header item">
-                                for Job Seekers
-                            </a>
-                        {% endif %}
                     {% else %}
                         {% if user.get('category', '').lower() == 'employer' %}
                             <a href= {{ url_for('search') }} class="header item">
