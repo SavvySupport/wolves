@@ -29,14 +29,16 @@
                                 <div class="description">Your skills matter</div>
                             </div>
                         </a>
+                    {% else %}
+                        <a onclick="changeClass('3')" id="3" class="link step step3">
+                            <i class="send outline icon"></i>
+                            <div class="content">
+                                <div class="title">My jobs</div>
+                                <div class="description">View your job ads</div>
+                            </div>
+                        </a>
                     {% endif %}
-                    <a onclick="changeClass('3')" id="3" class="link step step3">
-                        <i class="send outline icon"></i>
-                        <div class="content">
-                            <div class="title">My jobs</div>
-                            <div class="description">View your job ads</div>
-                        </div>
-                    </a>
+
                     <a onclick="changeClass('4')" id="4" class="link step step4">
                         <i class="setting outline icon"></i>
                         <div class="content">
@@ -147,10 +149,6 @@
                                     <label>Contact Number</label>
                                     {{ form.phoneNumber }}
                                 </div>
-                                <div class="field">
-                                    <label>Suburb</label>
-                                    {{ form.location }}
-                                </div>
 
                                 <div class="field">
                                     <label>Gender</label>
@@ -186,11 +184,7 @@
                         <div class="ui very relax stackable grid">
                             <div class="ten wide column">
                                 <div class="field">
-                                    <label>Current location</label>
-                                    {{ form.location }}
-                                </div>
-                                <div class="field">
-                                    <label>Skills</label>
+                                    <label>Top 5 Skills</label>
                                     {{ form.skills(placeholder='separate with comma') }}
                                 </div>
                                 <div class="field">
@@ -449,7 +443,7 @@
             duration: 1500
         });
 
-        // Elevator 3
+        // Elevator 4
         var start4 = document.querySelector('.step4');
         var target4 = document.querySelector('#step4');
         var elevator4 = new Elevator({

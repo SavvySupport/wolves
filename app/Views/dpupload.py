@@ -27,7 +27,7 @@ def dpupload():
 
             # Get filename
             filename = secure_filename(file.filename)
-            filename = md5((filename + current_user.get_id().get(USERNAME)).encode('utf-8')).hexdigest()
+            filename = md5((filename + current_user.get_id().get(EMAIL)).encode('utf-8')).hexdigest()
 
             # Check if user folder exists
             if not os.path.exists(updir):
