@@ -127,7 +127,7 @@ class candidateForm(Form):
         skills = []
         for skill in tmp:
             if skill != '' and skill != ' ' and skill != None:
-                if len(skills) < 5:
+                if len(skills) < 5: # top 5 skills # Ad havoc method. need to change
                     skills.append(skill.lstrip())
                 else:
                     break
@@ -158,6 +158,11 @@ class candidateForm(Form):
 
         savvy_collection.update( { EMAIL: email }, { "$set": user })
 
+        if complete:
+            flash('Successfully updated your profile', 'success')
+        else:
+            flash('Your profile is not visible until it\'s completed', 'warning')
+            
         return True
 
     def prepopulate(self, user):

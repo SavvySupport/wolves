@@ -23,12 +23,12 @@ def account():
 
         if request.method == 'POST':
             if form.validate():
-                flash('Successfully updated your profile', 'success')
                 form.update(user.get(EMAIL))
-            else:
-                flash('Failed to update your profile', 'error')
 
-        return render('account.html', form=form, error=None, jsonObject=None,extra=userJob)
+        return render('account.html', form=form,
+                                      error=None,
+                                      jsonObject=None,
+                                      extra=userJob)
     else:
         flash('Invalid access to account', 'error')
         return redirect(url_for('home'))
