@@ -29,8 +29,16 @@
                                 <div class="description">Your skills matter</div>
                             </div>
                         </a>
-                    {% else %}
+
                         <a onclick="changeClass('3')" id="3" class="link step step3">
+                            <i class="star icon"></i>
+                            <div class="content">
+                                <div class="title">Job experiences</div>
+                                <div class="description">Employment history</div>
+                            </div>
+                        </a>
+                    {% else %}
+                        <a onclick="changeClass('4')" id="4" class="link step step4">
                             <i class="send outline icon"></i>
                             <div class="content">
                                 <div class="title">My jobs</div>
@@ -39,7 +47,7 @@
                         </a>
                     {% endif %}
 
-                    <a onclick="changeClass('4')" id="4" class="link step step4">
+                    <a onclick="changeClass('5')" id="5" class="link step step5">
                         <i class="setting outline icon"></i>
                         <div class="content">
                             <div class="title">Setting</div>
@@ -346,33 +354,38 @@
                             </div>
                         </div>
                     </div>
+
+                    <div id="step3" class="ui raised segment">
+                        <h2 class="ui block header">Job Experiences</h2>
+                        <h3>Coming Soon</h3>
+                    </div>
                 {% else %}
-                <div id="step3" class="ui raised segment">
-                    <h2 class="ui block header">My Jobs</h2>
-                    <h3>Coming Soon</h3>
-                    {% for elements in form.user['jobs'] %}
-                        <form id="viewJobForm"
-                            enctype="multipart/form-data"
-                            method="post"
-                            role="form">
-                          <div id = 'jobajax' class="ui block header">
-                            <input type="hidden" name="jobId" value= {{ elements }}>
-                            {{ extra[elements] }}<p>
-                            {{ extra[elements]['title'] }}<p>
-                            {{ extra[elements]['description'] }}
-                          </div>
-                          <button
-                                  id="deleteJobButton"
-                                  class="ui green fluid submit button"
-                                  type="submit">
-                              delete
-                          </button>
-                        </form>
-                    {% endfor %}
-                </div>
+                    <div id="step4" class="ui raised segment">
+                        <h2 class="ui block header">My Jobs</h2>
+                        <h3>Coming Soon</h3>
+                        {% for elements in form.user['jobs'] %}
+                            <form id="viewJobForm"
+                                enctype="multipart/form-data"
+                                method="post"
+                                role="form">
+                              <div id = 'jobajax' class="ui block header">
+                                <input type="hidden" name="jobId" value= {{ elements }}>
+                                {{ extra[elements] }}<p>
+                                {{ extra[elements]['title'] }}<p>
+                                {{ extra[elements]['description'] }}
+                              </div>
+                              <button
+                                      id="deleteJobButton"
+                                      class="ui green fluid submit button"
+                                      type="submit">
+                                  delete
+                              </button>
+                            </form>
+                        {% endfor %}
+                    </div>
                 {% endif %}
 
-                <div id="step4" class="ui raised segment">
+                <div id="step5" class="ui raised segment">
                     <h2 class="ui block header">Account Setting</h2>
                     <h3>Coming Soon</h3>
                 </div>
@@ -396,7 +409,7 @@
                     if (!reg) {
                         document.getElementById(step).className += " active";
 
-                        for (i = 0; i <= 4; i++) {
+                        for (i = 0; i <= 5; i++) {
                             if (i == stepInt) { continue; }
                             if (document.getElementById(String(i))) {
                                 document.getElementById(String(i)).className = document.getElementById(String(i)).className.replace(/(?:^|\s)active(?!\S)/g , '');
@@ -449,6 +462,15 @@
         var elevator4 = new Elevator({
             element: start4,
             targetElement: target4,
+            duration: 1500
+        });
+
+        // Elevator 5
+        var start5 = document.querySelector('.step5');
+        var target5 = document.querySelector('#step5');
+        var elevator5 = new Elevator({
+            element: start5,
+            targetElement: target5,
             duration: 1500
         });
     </script>
