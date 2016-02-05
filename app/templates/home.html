@@ -4,57 +4,57 @@
 {% endblock %}
 
 {% block content %}
-  <div class = "ui white vertical masthead center aligned">
-      <div id="bgvid">
-        <video autoplay loop>
-            <source class="videobg" src= {{ url_for('static', filename='videos/343647377.mp4') }} type="video/mp4">
-        </video>
-        <div id="savvy">
-            <img id="logo" src= {{ url_for('static', filename='images/logo.png') }} />
-            <h2>The new way to hire is here!</h2>
-            <p>
-                Join for free today and get access to profiles of job seekers in Sydney. View their skills, experiences and qualifications.
-                Ratings are also used on Savvy Hire for character assessments
-            </p>
+    <div class = "ui white vertical masthead center aligned">
+        <div id="bgvid">
+            <video autoplay loop>
+                <source class="videobg" src= {{ url_for('static', filename='videos/343647377.mp4') }} type="video/mp4">
+            </video>
+            <div id="savvy">
+                <img id="logo" src= {{ url_for('static', filename='images/logo.png') }} />
+                <h2>The new way to hire is here!</h2>
+                <p>
+                    Join for free today and get access to profiles of job seekers in Sydney. View their skills, experiences and qualifications.
+                    Ratings are also used on Savvy Hire for character assessments
+                </p>
 
-            {% if user_logged_in == false %}
-                <a class="ui fluid massive green icon button" href= {{ url_for('register') }} >for Employers</a>
+                {% if user_logged_in == false %}
+                    <a class="ui fluid large blue icon button" href= {{ url_for('register') }} >for Employers</a>
 
-            {% endif %}
+                {% endif %}
+            </div>
         </div>
-      </div>
     </div>
     <div class="ui vertical stripe quote segment">
-      <h2 class="ui horizontal header divider" style="font-size:4em;margin-bottom: -7%;margin-top: 5%;">
-          <a href="#">Why use SavvyHire</a>
-      </h2>
-      <div class="ui equal width stackable internally grid">
-        <div class="center aligned row">
-          <div class="column" id="homeText">
-            <img src="//d9hhrg4mnvzow.cloudfront.net/unbouncepages.com/savvyhire/94f84f4e-map-icon.png" alt="">
-            <h3>Filter right</h3>
-            <p>Save time using our filters to search only the right candidates or jobs</p>
-          </div>
-          <div class="column" id="homeText">
-            <img src="//d9hhrg4mnvzow.cloudfront.net/unbouncepages.com/savvyhire/e43ad230-book-icon.png" alt="">
-            <h3>Testimonials</h3>
-            <p>Display your work experiences with testimonials from your previous employers. Giving your profile a credibility boost!</p>
-          </div>
-          <div class="column" id="homeText">
-            <img src="//d9hhrg4mnvzow.cloudfront.net/unbouncepages.com/savvyhire/7cb63ed8-luggage-icon.png" alt="">
-            <h3>Endorsements</h3>
-            <p id="home">Show off your skills and have them endorsed by verified employers only. Giving an extra boost to the profile!</p>
-          </div>
-        </div>
+        <h2 class="ui horizontal header divider" style="font-size:4em;margin-bottom: -7%;margin-top: 5%;">
+            <a href="#">Why use SavvyHire</a>
+        </h2>
+        <div class="ui equal width stackable internally grid">
+            <div class="center aligned row">
+                <div class="column" id="homeText">
+                    <img src="//d9hhrg4mnvzow.cloudfront.net/unbouncepages.com/savvyhire/94f84f4e-map-icon.png" alt="">
+                    <h3>Filter right</h3>
+                    <p>Save time using our filters to search only the right candidates or jobs</p>
+                </div>
+                <div class="column" id="homeText">
+                    <img src="//d9hhrg4mnvzow.cloudfront.net/unbouncepages.com/savvyhire/e43ad230-book-icon.png" alt="">
+                    <h3>Testimonials</h3>
+                    <p>Display your work experiences with testimonials from your previous employers. Giving your profile a credibility boost!</p>
+                </div>
+                <div class="column" id="homeText">
+                    <img src="//d9hhrg4mnvzow.cloudfront.net/unbouncepages.com/savvyhire/7cb63ed8-luggage-icon.png" alt="">
+                    <h3>Endorsements</h3>
+                    <p id="home">Show off your skills and have them endorsed by verified employers only. Giving an extra boost to the profile!</p>
+                </div>
+            </div>
       </div>
     </div>
 
     <div class="ui vertical stripe">
-      <div class="ui middle aligned stackable grid container">
-        <div class="center aligned column">
-            <h3>Find job seekers</h3>
-            <a class="ui massive green icon button" href= {{ url_for('register') }} >for Employers</a>
+        <div class="ui middle aligned stackable grid container">
+            <div class="center aligned column">
+                <h3>Find job seekers</h3>
+                <a class="ui large blue icon button" href= {{ url_for('register') }} >for Employers</a>
+            </div>
         </div>
-      </div>
     </div>
 {% endblock %}
