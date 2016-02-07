@@ -363,25 +363,6 @@
                     <div id="step4" class="ui raised segment">
                         <h2 class="ui block header">My Jobs</h2>
                         <h3>Coming Soon</h3>
-                        {% for elements in form.user['jobs'] %}
-                            <form id="viewJobForm"
-                                enctype="multipart/form-data"
-                                method="post"
-                                role="form">
-                              <div id = 'jobajax' class="ui block header">
-                                <input type="hidden" name="jobId" value= {{ elements }}>
-                                {{ extra[elements] }}<p>
-                                {{ extra[elements]['title'] }}<p>
-                                {{ extra[elements]['description'] }}
-                              </div>
-                              <button
-                                      id="deleteJobButton"
-                                      class="ui green fluid submit button"
-                                      type="submit">
-                                  delete
-                              </button>
-                            </form>
-                        {% endfor %}
                     </div>
                 {% endif %}
 
