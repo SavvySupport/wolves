@@ -22,7 +22,7 @@ class loginForm(Form):
                     message = message + fieldName + ': ' + err + '\n'
             flash(message, 'error')
             return False
-        
+
         # Query data from database
         user = savvy_collection.find_one({ EMAIL: self.email.data.rstrip() })
 
@@ -35,7 +35,6 @@ class loginForm(Form):
             if User.validate_login(hash_password, user_password):
                 userObj = User(email)
                 login_user(userObj)
-                print('logged')
                 return True
         else:
             flash('Incorrect login credentials', 'error')
