@@ -75,3 +75,13 @@ YES = 1
 # Code
 CODE = 0
 TEXT = 1
+
+# Job Experience
+JOBEXPERIENCE1 = 'jobExperience1'
+JPOS1 = 'jobPosition1'
+JCOMP1 = 'jobCompany1'
+JDES1  = 'jobDescription1'
+JPER1  = 'jobPeriod1'
+
+# For use in job_collection
+EMPLOYERID = 'employerId'

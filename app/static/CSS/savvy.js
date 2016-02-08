@@ -239,22 +239,35 @@ $(function () {
         });
     });
 
-    $('#deleteJobButton').click(function() {
+    $('.deleteJobButton').click(function() {
         event.preventDefault();
         //var form_data = new FormData($('#viewJobForm')[0]);
-        var jobId = $('#jobId').val();
+        var $div = $(this).closest('div')
+        var jobId = $div.find('input[name="jobId"]').val();
+        var listId = $div.find('input[name="listId"]').val();
+        //var jobId = $('#jobId').val();
+        //var listId = $('#listId').val();
+        data = {
+                'test'  : '1234',
+                'jobId' : jobId,
+                'listId': listId
+
+                }
         $.ajax({
             type: 'POST',
             url: '/deleteJob',
-            data: jobId,
-            contentType: false,
-            processData: false,
-            dataType: 'json'
+//            data: data,
+//            contentType: false,
+//            processData: false,
+//            dataType: 'json'
+            datatype : "json",
+            contentType: "application/json; charset=utf-8",
+            data : JSON.stringify(data),
         }).done(function(data, textStatus, jqXHR){
-            $("#jobajax").attr('src', data['path']);
+            $(data['returnString']).remove();
             console.log('Success!');
         }).fail(function(data) {
-            alert('Failed!');
+            alert('Failed!' + jobId + 'listId' + listId + 'whooo');
         }).complete(function(data) {
             console.log('completed');
         });

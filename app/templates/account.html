@@ -31,7 +31,7 @@
                         </a>
 
                         <a onclick="changeClass('3')" id="3" class="link step step3">
-                            <i class="star icon"></i>
+                            <i class="suitcase icon"></i>
                             <div class="content">
                                 <div class="title">Job experiences</div>
                                 <div class="description">Employment history</div>
@@ -355,32 +355,55 @@
                         </div>
                     </div>
 
+                    {% set jobId = 1 %}
                     <div id="step3" class="ui raised segment">
                         <h2 class="ui block header">Job Experiences</h2>
-                        <h3>Coming Soon</h3>
+                            <div class="jobSegment">
+                                <div class="ui segment" id="jobElement">
+                                    <div class="field">
+                                        {{ form.jpos1(placeholder="Job position") }}
+                                    </div>
+                                    <div class="field">
+                                        {{ form.jcomp1(placeholder="Business name") }}
+                                    </div>
+                                    <div class="field">
+                                        {{ form.jper1(placeholder="dd/mm/yy - dd/mm/yy") }}
+                                    </div>
+                                    <div class="field">
+                                        {{ form.jdes1(placeholder="Describe the role and duties performed") }}
+                                    </div>
+                                    <button class="ui button" id="jobRemove">Remove</button>
+                                </div>
+
+                                <button class="ui button" id="jobAdd">Add</button>
+                            </div>
                     </div>
+
+                    {% set jobId = jobId+1 %}
+
+
                 {% else %}
                     <div id="step4" class="ui raised segment">
                         <h2 class="ui block header">My Jobs</h2>
-                        <h3>Coming Soon</h3>
+                        {% set listId = 0 %}
                         {% for elements in form.user['jobs'] %}
-                            <form id="viewJobForm"
-                                enctype="multipart/form-data"
-                                method="post"
-                                role="form">
-                              <div id = 'jobajax' class="ui block header">
-                                <input type="hidden" name="jobId" value= {{ elements }}>
-                                {{ extra[elements] }}<p>
-                                {{ extra[elements]['title'] }}<p>
-                                {{ extra[elements]['description'] }}
-                              </div>
-                              <button
-                                      id="deleteJobButton"
-                                      class="ui green fluid submit button"
-                                      type="submit">
-                                  delete
-                              </button>
-                            </form>
+                        <div id = 'jobajax{{listId}}'>
+                            <!--<form id="viewJobForm" enctype="multipart/form-data" method="post">-->
+                              <div class="ui block header">
+                                    <input id = 'jobId' type="hidden" name="jobId" value= "{{ elements }}">
+                                    <input id="listId" type="hidden" name="listId" value= {{ listId }}>
+                                    {{ extra[elements] }}<p>
+                                    {{ extra[elements]['title'] }}<p>
+                                    {{ extra[elements]['description'] }}
+                                  <button class="deleteJobButton ui green fluid submit button"
+                                          type="submit">
+                                      delete
+                                  </button>
+                                </div>
+                            <!--</form>-->
+                        </div>
+
+                        {% set listId = listId + 1 %}
                         {% endfor %}
                     </div>
                 {% endif %}
@@ -472,6 +495,15 @@
             element: start5,
             targetElement: target5,
             duration: 1500
+        });
+
+        $("#jobAdd").click(function() {
+            $(".jobSegment >  #jobElement:first-child").clone(true).insertBefore(".jobSegment > #jobAdd:last-child");
+            return false;
+        });
+
+        $("#jobRemove").click(function() {
+            $(this).parent().remove();
         });
     </script>
 {% endblock %}

@@ -96,6 +96,11 @@ class candidateForm(Form):
     sunday      = SelectField(SUN[TEXT], choices=availability_choices, default=NA[CODE])
     holiday     = SelectField(HOL[TEXT], choices=availability_choices, default=NA[CODE])
 
+    jpos1    = TextField(JPOS1)
+    jcomp1    = TextField(JCOMP1)
+    jper1    = TextField(JPER1)
+    jdes1     = TextField(JDES1, widget=TextArea())
+
     def __init__(self, *args, **kwargs):
         self.type = CAND
         Form.__init__(self, args[1], **kwargs)
@@ -121,6 +126,13 @@ class candidateForm(Form):
             SAT[TEXT]       : self.saturday.data,
             SUN[TEXT]       : self.sunday.data,
             HOL[TEXT]       : self.holiday.data,
+        }
+
+        jobExperience1 = {
+            JPOS1         : self.jpos1.data,
+            JCOMP1        : self.jcomp1.data,
+            JPER1         : self.jper1.data,
+            JDES1         : self.jdes1.data
         }
 
         tmp = (self.skills.data.rstrip()).split(',')
@@ -153,7 +165,8 @@ class candidateForm(Form):
             AVAILABILITY  : availability,
             SKILLS        : skills,
             LOCATION      : self.location.data.rstrip(),
-            COMPLETE      : complete
+            COMPLETE      : complete,
+            JOBEXPERIENCE1: jobExperience1
         }
 
         savvy_collection.update( { EMAIL: email }, { "$set": user })
@@ -162,7 +175,7 @@ class candidateForm(Form):
             flash('Successfully updated your profile', 'success')
         else:
             flash('Your profile is not visible until it\'s completed', 'warning')
-            
+
         return True
 
     def prepopulate(self, user):
@@ -175,10 +188,12 @@ class candidateForm(Form):
         self.education.data     = user.get(EDUCATION, '')
         self.skills.data        = ','.join(user.get(SKILLS, ''))
         self.location.data      = user.get(LOCATION, '')
+
         if user.get(BIRTHDAY, None):
             self.birthday.data  = datetime.strptime(str(user.get(BIRTHDAY, None)), '%Y-%m-%d')
 
-        availability = user.get(AVAILABILITY, None)
+        availability    = user.get(AVAILABILITY, None)
+        jobExperience1  = user.get(JOBEXPERIENCE1, None)
 
         if availability:
             try:
@@ -190,5 +205,15 @@ class candidateForm(Form):
                 self.saturday.data  = availability.get(SAT[TEXT], NA[CODE])
                 self.sunday.data    = availability.get(SUN[TEXT], NA[CODE])
                 self.holiday.data   = availability.get(HOL[TEXT], NA[CODE])
+            except:
+                pass
+
+        if jobExperience1:
+            try:
+                self.jpos1.data         = jobExperience1.get(JPOS1, '')
+                self.jcomp1.data        = jobExperience1.get(JCOMP1, '')
+                self.jdes1.data         = jobExperience1.get(JDES1, '')
+                self.jper1.data         = jobExperience1.get(JPER1, '')
+
             except:
                 pass

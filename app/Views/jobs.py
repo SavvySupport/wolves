@@ -7,13 +7,13 @@ from app.Helpers.Constant import *
 
 @app.route('/jobs', methods=['GET', 'POST'])
 def jobs():
-    username = current_user.get_id()[USERNAME]
-    user = savvy_collection.find_one({ USERNAME: username })
+    email = current_user.get_id()[EMAIL]
+    user = savvy_collection.find_one({ EMAIL: email })
     if user:
         form = None
 
         if user.get(CATEGORY, None) == EMPL:
-            form = jobForm(request.form, user[USERNAME])
+            form = jobForm(request.form, user[EMAIL])
         else:
             return redirect(url_for('home'))
 

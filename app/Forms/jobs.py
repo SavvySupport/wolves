@@ -8,6 +8,7 @@ from hashlib import md5
 from datetime import datetime
 import os, subprocess
 from bson.objectid import ObjectId
+from app.Helpers.Constant import *
 
 class jobForm(Form):
     title    = TextField('title', [validators.Required()])
