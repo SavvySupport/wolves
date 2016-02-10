@@ -36,6 +36,8 @@ class loginForm(Form):
                 userObj = User(email)
                 login_user(userObj)
                 return True
+            else:
+                flash('Incorrect login credentials', 'error')
         else:
             flash('Incorrect login credentials', 'error')
         return False

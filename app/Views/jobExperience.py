@@ -1,6 +1,7 @@
 import os
 from app import app, savvy_collection, jobs_collection
 from app.Views.views import render
+from app.Forms.account import candidateForm
 from flask.ext.login import login_required, current_user
 from flask import jsonify, request, url_for, json
 from werkzeug import secure_filename
@@ -16,7 +17,9 @@ def jobExperience():
     user = savvy_collection.find_one({ EMAIL: current_user.get_id()[EMAIL] })
 
     if user:
+
         if request.method == 'POST':
+
             print (request.data)
             print (request.form)
             print (request.json)
@@ -49,6 +52,7 @@ def jobExperience():
                 oldDic = OrderedDict()
                 oldDic['1'] = entry
                 savvy_collection.update({EMAIL:user[EMAIL]},{"$set":{'jobExperience':oldDic}})
+
 
 
     #            # return information to frontend
