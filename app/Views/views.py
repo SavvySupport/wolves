@@ -41,7 +41,7 @@ def render(page, form=None, error=None, jsonObject=None, extra=None):
         return render_template(page,
                                user_logged_in = current_user.is_authenticated,
                                user = current_user.get_id()), error
-    else: 
+    else:
         return render_template(page,
                                user_logged_in = current_user.is_authenticated,
                                user = current_user.get_id(),
@@ -68,3 +68,5 @@ from app.Views import changepassword
 from app.Views import homejobseekers
 from app.Views import aboutus
 from app.Views import deleteJob
+from app.Views import jobExperience
+from app.Views import jobExperienceRemove

@@ -170,10 +170,7 @@ $(function () {
                     type    : 'minLength[50]',
                     prompt  : 'minimum 50 characters required'
                 },
-                {
-                    type    : 'maxlength[150]',
-                    prompt  : 'maximum 150 characters required'
-                }
+
             ]
         }
     };
@@ -281,6 +278,84 @@ $(function () {
         });
     });
 
+    $('.jobExperienceAddButton').click(function() {
+        event.preventDefault();
+
+        var $div = $(this).closest('.jobSegment')
+        var position = $div.find('input[name="jpos1"]').val();
+        var period = $div.find('input[name="jper1"]').val();
+        var company = $div.find('input[name="jcomp1"]').val();
+        var description = $div.find('textarea[name="jdes1"]').val();
+
+        //var jobId = $('#jobId').val();
+        //var listId = $('#listId').val();
+        data = {
+                'test'          : '1234',
+                'position'      : position,
+                'period'        : period,
+                'company'       : company,
+                'description'   : description
+                }
+
+        var form_data = new FormData($('#jobExperienceForm')[0]);
+
+        $.ajax({
+            type: 'POST',
+            url: '/jobExperience',
+            datatype : "json",
+            contentType: "application/json; charset=utf-8",
+            data : JSON.stringify(data),
+
+        }).done(function(data, textStatus, jqXHR){
+            //$( "div.jobExperience" ).load("/account.html .jobExperience");
+            location.reload()
+            console.log('Success!');
+        }).fail(function(data) {
+            alert('Failed!');
+        }).complete(function(data) {
+            console.log('completed');
+        });
+    });
+
+    $('.jobExperienceRemoveButton').click(function() {
+        event.preventDefault();
+
+        var $div = $(this).closest('.jobSegment')
+        var jobExperienceId = $div.find('input[name="jobExperienceId"]').val();
+
+        data = {
+                    'jobExperienceId':jobExperienceId
+                }
+
+        $.ajax({
+            type: 'POST',
+            url: '/jobExperienceRemove',
+            datatype : "json",
+            contentType: "application/json; charset=utf-8",
+            data : JSON.stringify(data),
+
+        }).done(function(data, textStatus, jqXHR){
+            $(data['returnString']).closest('.jobSegment').remove();
+            console.log('Success!');
+        }).fail(function(data) {
+            alert('Failed!');
+        }).complete(function(data) {
+            console.log('completed');
+        });
+    });
+
+
+
+/*
+    $("#jobAdd").click(function() {
+        $(".jobSegment >  #jobElement:first-child").clone(true).insertBefore(".jobSegment > #jobAdd:last-child");
+
+    });
+
+    $("#jobRemove").click(function() {
+        $(this).parent().remove();
+    });
+*/
     // Restyle and handle file uploads
     var fileExtentionRange = '.png .jpg .jpeg';
     var MAX_SIZE = 3; // MB

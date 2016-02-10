@@ -128,12 +128,6 @@ class candidateForm(Form):
             HOL[TEXT]       : self.holiday.data,
         }
 
-        jobExperience1 = {
-            JPOS1         : self.jpos1.data,
-            JCOMP1        : self.jcomp1.data,
-            JPER1         : self.jper1.data,
-            JDES1         : self.jdes1.data
-        }
 
         tmp = (self.skills.data.rstrip()).split(',')
         skills = []
@@ -165,8 +159,7 @@ class candidateForm(Form):
             AVAILABILITY  : availability,
             SKILLS        : skills,
             LOCATION      : self.location.data.rstrip(),
-            COMPLETE      : complete,
-            JOBEXPERIENCE1: jobExperience1
+            COMPLETE      : complete
         }
 
         savvy_collection.update( { EMAIL: email }, { "$set": user })
@@ -193,7 +186,6 @@ class candidateForm(Form):
             self.birthday.data  = datetime.strptime(str(user.get(BIRTHDAY, None)), '%Y-%m-%d')
 
         availability    = user.get(AVAILABILITY, None)
-        jobExperience1  = user.get(JOBEXPERIENCE1, None)
 
         if availability:
             try:
@@ -205,15 +197,5 @@ class candidateForm(Form):
                 self.saturday.data  = availability.get(SAT[TEXT], NA[CODE])
                 self.sunday.data    = availability.get(SUN[TEXT], NA[CODE])
                 self.holiday.data   = availability.get(HOL[TEXT], NA[CODE])
-            except:
-                pass
-
-        if jobExperience1:
-            try:
-                self.jpos1.data         = jobExperience1.get(JPOS1, '')
-                self.jcomp1.data        = jobExperience1.get(JCOMP1, '')
-                self.jdes1.data         = jobExperience1.get(JDES1, '')
-                self.jper1.data         = jobExperience1.get(JPER1, '')
-
             except:
                 pass

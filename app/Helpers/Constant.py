@@ -82,6 +82,7 @@ CODE = 0
 TEXT = 1
 
 # Job Experience
+JOBEXPERIENCE = 'jobExperience'
 JOBEXPERIENCE1 = 'jobExperience1'
 JPOS1 = 'jobPosition1'
 JCOMP1 = 'jobCompany1'

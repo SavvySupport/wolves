@@ -166,7 +166,7 @@
                                         <div class="default text">Select Gender</div>
                                         <div class="menu">
                                             {% for field in form.gender.choices %}
-                                                <div class="item" data-value= {{ field[0] }} >
+                                                <div class="item" data-value= "{{ field[0] }}" >
                                                     {{ field[1] }}
                                                 </div>
                                             {% endfor %}
@@ -203,7 +203,7 @@
                                         <div class="default text">Select Status</div>
                                         <div class="menu">
                                             {% for field in form.residency.choices %}
-                                                <div class="item" data-value= {{ field[0] }}>
+                                                <div class="item" data-value= "{{ field[0] }}">
                                                     {{ field[1] }}
                                                 </div>
                                             {% endfor %}
@@ -218,7 +218,7 @@
                                         <div class="default text">Select education</div>
                                         <div class="menu">
                                             {% for field in form.education.choices %}
-                                                <div class="item" data-value= {{ field[0] }}>
+                                                <div class="item" data-value= "{{ field[0] }}">
                                                     {{ field[1] }}
                                                 </div>
                                             {% endfor %}
@@ -234,7 +234,7 @@
                                             <div class="default text">Select availability</div>
                                             <div class="menu">
                                                 {% for field in form.monday.choices %}
-                                                    <div class="item" data-value= {{ field[0] }}>
+                                                    <div class="item" data-value= "{{ field[0] }}">
                                                         {{ field[1] }}
                                                     </div>
                                                 {% endfor %}
@@ -249,7 +249,7 @@
                                             <div class="default text">Select availability</div>
                                             <div class="menu">
                                                 {% for field in form.tuesday.choices %}
-                                                    <div class="item" data-value= {{ field[0] }}>
+                                                    <div class="item" data-value= "{{ field[0] }}">
                                                         {{ field[1] }}
                                                     </div>
                                                 {% endfor %}
@@ -264,7 +264,7 @@
                                             <div class="default text">Select availability</div>
                                             <div class="menu">
                                                 {% for field in form.wednesday.choices %}
-                                                    <div class="item" data-value= {{ field[0] }}>
+                                                    <div class="item" data-value= "{{ field[0] }}">
                                                         {{ field[1] }}
                                                     </div>
                                                 {% endfor %}
@@ -281,7 +281,7 @@
                                             <div class="default text">Select availability</div>
                                             <div class="menu">
                                                 {% for field in form.thursday.choices %}
-                                                    <div class="item" data-value= {{ field[0] }}>
+                                                    <div class="item" data-value= "{{ field[0] }}">
                                                         {{ field[1] }}
                                                     </div>
                                                 {% endfor %}
@@ -296,7 +296,7 @@
                                             <div class="default text">Select availability</div>
                                             <div class="menu">
                                                 {% for field in form.friday.choices %}
-                                                    <div class="item" data-value= {{ field[0] }}>
+                                                    <div class="item" data-value= "{{ field[0] }}">
                                                         {{ field[1] }}
                                                     </div>
                                                 {% endfor %}
@@ -311,7 +311,7 @@
                                             <div class="default text">Select availability</div>
                                             <div class="menu">
                                                 {% for field in form.saturday.choices %}
-                                                    <div class="item" data-value= {{ field[0] }}>
+                                                    <div class="item" data-value= "{{ field[0] }}">
                                                         {{ field[1] }}
                                                     </div>
                                                 {% endfor %}
@@ -328,7 +328,7 @@
                                             <div class="default text">Select availability</div>
                                             <div class="menu">
                                                 {% for field in form.sunday.choices %}
-                                                    <div class="item" data-value= {{ field[0] }}>
+                                                    <div class="item" data-value= "{{ field[0] }}">
                                                         {{ field[1] }}
                                                     </div>
                                                 {% endfor %}
@@ -343,7 +343,7 @@
                                             <div class="default text">Select availability</div>
                                             <div class="menu">
                                                 {% for field in form.holiday.choices %}
-                                                    <div class="item" data-value= {{ field[0] }}>
+                                                    <div class="item" data-value= "{{ field[0] }}">
                                                         {{ field[1] }}
                                                     </div>
                                                 {% endfor %}
@@ -355,32 +355,63 @@
                         </div>
                     </div>
 
-                    {% set jobId = 1 %}
-                    <div id="step3" class="ui raised segment">
-                        <h2 class="ui block header">Job Experiences</h2>
-                            <div class="jobSegment">
-                                <div class="ui segment" id="jobElement">
-                                    <div class="field">
-                                        {{ form.jpos1(placeholder="Job position") }}
-                                    </div>
-                                    <div class="field">
-                                        {{ form.jcomp1(placeholder="Business name") }}
-                                    </div>
-                                    <div class="field">
-                                        {{ form.jper1(placeholder="dd/mm/yy - dd/mm/yy") }}
-                                    </div>
-                                    <div class="field">
-                                        {{ form.jdes1(placeholder="Describe the role and duties performed") }}
-                                    </div>
-                                    <button class="ui button" id="jobRemove">Remove</button>
-                                </div>
 
-                                <button class="ui button" id="jobAdd">Add</button>
-                            </div>
+                    <div class = "jobExperience">
+                        {% set jobId = 1 %}
+                        <div id="step3" class="ui raised segment">
+                            <h2 class="ui block header">Job Experiences</h2>
+
+                            <!--add job experience here-->
+
+                            {% for elements in range(100) %}
+                                {% set elements = elements ~ ''%}
+                                {% if elements in user.get('jobExperience', '') %}
+                                    <div class="jobSegment">
+                                        <div class="ui segment" id="jobElement">
+                                            <input id="jobExperience{{ elements }}" type="hidden" name="jobExperienceId" value= {{ elements }}>
+                                            <div style = "font-weight:bold">
+                                                {{ user['jobExperience'][elements]['position'] }}
+                                            </div>
+                                            <div style="font-weight: bold;font-style: italic;color: #545454;">
+                                                {{ user['jobExperience'][elements]['company'] }}
+                                            </div>
+                                            <div class = "field" style="font-weight: bold;font-style: italic;color: #545454;">
+                                                {{ user['jobExperience'][elements]['period'] }}
+                                            </div>
+                                            <div class="field" style = "white-space:PRE"><!--
+                                            -->{{ user['jobExperience'][elements]['description']|safe }}<!--
+
+                                            --></div>
+                                            <button class="jobExperienceRemoveButton ui button">Remove</button>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+
+                            <!-- add job experience form here -->
+                                <form id="jobExperienceForm" enctype="multipart/form-data" method="post">
+                                    <div class="jobSegment">
+                                        <div class="ui segment" id="jobElement">
+                                            <div class="field">
+                                                {{ form.jpos1(placeholder="Job position") }}
+                                            </div>
+                                            <div class="field">
+                                                {{ form.jcomp1(placeholder="Business name") }}
+                                            </div>
+                                            <div class="field">
+                                                {{ form.jper1(placeholder="dd/mm/yy - dd/mm/yy") }}
+                                            </div>
+                                            <div class="field">
+                                                {{ form.jdes1(placeholder="Describe the role and duties performed") }}
+                                            </div>
+                                            <button class="jobExperienceAddButton ui button">Add</button>
+                                        </div>
+                                    </div>
+                                </form>
+                        </div>
+
+                        {% set jobId = jobId+1 %}
                     </div>
-
-                    {% set jobId = jobId+1 %}
-
 
                 {% else %}
                     <div id="step4" class="ui raised segment">
@@ -498,13 +529,6 @@
             duration: 1500
         });
 
-        $("#jobAdd").click(function() {
-            $(".jobSegment >  #jobElement:first-child").clone(true).insertBefore(".jobSegment > #jobAdd:last-child");
-            return false;
-        });
 
-        $("#jobRemove").click(function() {
-            $(this).parent().remove();
-        });
     </script>
 {% endblock %}

@@ -18,7 +18,6 @@ class jobForm(Form):
                                     choices = [CITIZEN, PR, TR, STUDENT, OTHER])
 
     def __init__(self, *args, **kwargs):
-        self.email = args[1]
         Form.__init__(self, args[0], **kwargs)
 
     def validate(self):
