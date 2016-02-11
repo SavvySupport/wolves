@@ -5,7 +5,7 @@ app/templates/profileTest.html
 app/templates/originalProfile.html
 app/templates/profileView.html
 NotesOnProject
-
+app/static/images/user
 Notes
 app/__init__Original.py
 app/__init__Temp.py

@@ -63,7 +63,7 @@
                                 <div class="extra content">
                                     <a>
                                         <i class="user icon"></i>
-                                        {{ user.get('residency', []) }} 
+                                        {{ user.get('residency', []) }}
                                     </a>
 
                                     <span class="right floated">
@@ -101,14 +101,7 @@
                                     </p>
                                     <div class="ui hidden divider"></div>
                                     <div class="ui divided selection list">
-                                        <a class="item">
-                                            <div class="ui blue horizontal label">Phone</div>
-                                            {{ user.get('phoneNumber', 'N/A') }}
-                                        </a>
-                                        <a class="item">
-                                            <div class="ui yellow horizontal label">Email</div>
-                                            {{ user.get('email', 'N/A') }}
-                                        </a>
+                                        
                                         <a class="item">
                                             <div class="ui green horizontal label">D.O.B</div>
                                             {{ user.get('birthday', 'N/A') }}
