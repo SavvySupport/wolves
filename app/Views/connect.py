@@ -32,7 +32,7 @@ def connect():
             To = user['email']
 
             text = """Dear {},\nAn employer is interested in your profile on SavvyHire and has a message for you!\nHere's the message:\n"{}"\nBest,\nTeam SavvyHire
-            """.format(user['firstName'], message)
+            """.format(user.get('firstName'), message)
 
             bodyStyle = """
                 background: #F3F4F5;
@@ -82,7 +82,7 @@ def connect():
                 <img src="https://fbcdn-sphotos-h-a.akamaihd.net/hphotos-ak-xap1/v/t1.0-9/12552797_946970445338090_4081041973572931633_n.png?oh=3657d0fd2ab010f7b752f825c16070ba&oe=572DAC6A&__gda__=1463629238_96cd9ea3062bfbbb1539e9cdfb18ad25" style="width:150px;">
               </body>
             </html>
-            """.format(bodyStyle, greetStyle, user['firstName'], contentStyle, messageStyle, message)
+            """.format(bodyStyle, greetStyle, user.get('firstName'), contentStyle, messageStyle, message)
 
             # Record the MIME types of both parts - text/plain and text/html.
             part1 = MIMEText(text, 'plain')

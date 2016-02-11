@@ -29,7 +29,7 @@ class recoverForm(Form):
         if user:
             # send email with new password to this address
 
-            link = "http://127.0.0.1:5000/changepassword"
+            link = "http://savvyhire.herokuapp.com/changepassword"
 
             img_data = open('app/static/images/logo.png', 'rb').read()
             msg = MIMEMultipart('alternative')
@@ -39,8 +39,8 @@ class recoverForm(Form):
             From = 'weiyew@savvysme.com.au'
             To = user['email']
 
-            text = """Dear {},\nYou have forgotten your password, but that's alright!\nClick this link to change your password:\n"{}/{}/{}"\nBest,\nTeam SavvyHire
-            """.format(user['firstName'], link, user['username'], user['password'])
+            text = """Hi {},\nYou have forgotten your password, but that's alright!\nClick this link to change your password:\n"{}/{}/{}"\nBest,\nTeam SavvyHire
+            """.format(user.get('firstName'), link, user.get('email'), user.get('password'))
 
             bodyStyle = """
                 background: #F3F4F5;
@@ -76,7 +76,7 @@ class recoverForm(Form):
             <html>
               <head></head>
               <body style="{}">
-                <p><span style="{}">Dear {},<br><br></span>
+                <p><span style="{}">Hi {},<br><br></span>
                    <span style="{}">
                    You have forgotten your password, but that's alright!<br><br>
                    Click this link to change your password:<br><br>
@@ -90,7 +90,7 @@ class recoverForm(Form):
                 <img src="https://fbcdn-sphotos-h-a.akamaihd.net/hphotos-ak-xap1/v/t1.0-9/12552797_946970445338090_4081041973572931633_n.png?oh=3657d0fd2ab010f7b752f825c16070ba&oe=572DAC6A&__gda__=1463629238_96cd9ea3062bfbbb1539e9cdfb18ad25" style="width:150px;">
               </body>
             </html>
-            """.format(bodyStyle, greetStyle, user['firstName'], contentStyle, messageStyle, link, user[EMAIL], user[PASSWORD])
+            """.format(bodyStyle, greetStyle, user.get('firstName',''), contentStyle, messageStyle, link, user[EMAIL], user[PASSWORD])
 
             # Record the MIME types of both parts - text/plain and text/html.
             part1 = MIMEText(text, 'plain')
