@@ -427,6 +427,9 @@
                 {% else %}
                     <div id="step4" class="ui raised segment">
                         <h2 class="ui block header">My Jobs</h2>
+                        {% if form.user['jobs'] is not defined %}
+                            <h3 style="color:#545454">Start posting a job!</h3>
+                        {% endif %}
                         {% set listId = 0 %}
                         {% for elements in form.user['jobs'] %}
                         <div id = 'jobajax{{listId}}' class="jobPostSegment">
