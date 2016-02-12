@@ -1,7 +1,7 @@
 from app import app, savvy_collection
 from app.Views.views import render
 from app.Forms.job import jobForm
-from flask import request, redirect, url_for
+from flask import request, redirect, url_for, flash
 from flask.ext.login import login_user, current_user, login_required
 from app.Helpers.Constant import *
 

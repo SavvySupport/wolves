@@ -53,7 +53,7 @@ $(function () {
     $('.ui.sticky')
         .sticky({
             context: '#stuck',
-            pushing: true,
+            //pushing: true,
             offset       : 20,
             bottomOffset : 20
         })

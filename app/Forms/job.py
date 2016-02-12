@@ -36,8 +36,6 @@ class jobForm(Form):
             TITLE         : self.title.data,
             AVAILABILITY  : self.availability.data,
             DESCR         : self.description.data.rstrip(),
-            TIMESTAMP     : self.timeStamp,
-            COMPLETE      : complete
         }
 
         timeStamp = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
@@ -46,5 +44,5 @@ class jobForm(Form):
         jobs_collection.update({'employerId': id},
                                {"$set": {timeStamp: job}})
 
-        savvy_collection.update({EMAIL: self.email},
+        savvy_collection.update({EMAIL: user[EMAIL]},
                                 {"$addToSet": {"jobs": timeStamp}})

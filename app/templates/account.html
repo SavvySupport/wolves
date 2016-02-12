@@ -426,18 +426,39 @@
                         {% for elements in form.user['jobs'] %}
                         <div id = 'jobajax{{listId}}'>
                             <!--<form id="viewJobForm" enctype="multipart/form-data" method="post">-->
-                              <div class="ui block header">
+                              <div class="ui segment">
                                     <input id = 'jobId' type="hidden" name="jobId" value= "{{ elements }}">
                                     <input id="listId" type="hidden" name="listId" value= {{ listId }}>
-                                    {{ extra[elements] }}<p>
-                                    {{ extra[elements]['title'] }}<p>
-                                    {{ extra[elements]['description'] }}
+
+                                    <div class="ui divided selection list">
+                                        <a class="item">
+                                            <div class="ui horizontal label">Position</div>
+                                            {{ extra[elements]['title'] }}
+                                        </a>
+                                        <a class="item">
+                                            <div class="ui shorizontal label">
+                                                Availability
+                                            </div>
+                                            {% for days in extra[elements]['availability'] %}
+                                                    {{days}}
+                                            {% endfor %}
+                                        </a>
+                                        <a class="item">
+                                            <div class="ui horizontal label">Description</div>
+                                            <div style="white-space:PRE"><!--
+                                            -->{{ extra[elements]['description'] }}
+                                            </div>
+                                        </a>
+                                        <a class="item">
+                                            <div class="ui horizontal label">Posted on</div>
+                                            {{elements}}
+                                        </a>
+                                    </div>
                                   <button class="deleteJobButton ui green fluid submit button"
                                           type="submit">
                                       delete
                                   </button>
                                 </div>
-                            <!--</form>-->
                         </div>
 
                         {% set listId = listId + 1 %}

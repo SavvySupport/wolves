@@ -141,7 +141,6 @@ class candidateForm(Form):
         complete = True
         if self.firstName.data.rstrip()     == '' or \
            self.lastName.data.rstrip()      == '' or  \
-           self.phoneNumber.data.rstrip()   == '' or \
            self.about.data.rstrip()         == '' or \
            self.location.data.rstrip        == '' or \
            len(skills)                      == 0:
