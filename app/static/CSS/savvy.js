@@ -405,6 +405,74 @@ $(function () {
         });
     });
 
+    $('.editJobPostButton').click(function(){
+        event.preventDefault();
+
+        var $div = $(this).closest('.jobPostSegment');
+        var position = $div.find('input[name="position"]').val();
+        var availability = $div.find('input[name="availability"]').val();
+        var description = $div.find('input[name="description"]').val();
+        var jobId = $div.find('input[name="jobId"]').val();
+        var listId = $div.find('input[name="listId"]').val();
+        var jobPostDiv = "#jobajax"+listId
+
+        var availabilityString = ''
+
+        for (i = 0; i < availability.length; i++){
+                availabilityString += "<option value="+availability[i]+">"+availability[i]+"</option>"
+        }
+
+        var div_data = "<div class='ui segment'> <span style='font-weight:bold'>Position:</span><br><input type='text' name='position' value='"+position+"'><br><span style='font-weight:bold'>Availability:</span><br><select name='availability' multiple><option value='Monday'>Monday</option><option value='Tuesday'>Tuesday</option><option value='Wednesday'>Wednesday</option><option value='Thursday'>Thursday</option><option value='Friday'>Friday</option><option value='Saturday'>Saturday</option><option value='Sunday'>Sunday</option></select><br><span style='font-weight:bold'>Description:</span><br><textarea name='description'>"+description+"</textarea><br><input type='hidden' name='jobId' value='"+jobId+"'><input type='hidden' name='listId' value="+listId+"><br><button type='button' class='editJobPostSubmitButton ui button'>Done</button></div>";
+
+        //alert (div_data)
+
+
+        $(jobPostDiv).html(div_data);
+
+        return false;
+    });
+
+
+    $('.jobPostSegment').on("click", ".editJobPostSubmitButton", function() {
+        console.log('here')
+
+        event.preventDefault();
+        console.log('here')
+        var $div = $(this).closest('.jobPostSegment');
+        var position = $div.find('input[name="position"]').val();
+        var availability = $div.find('select[name="availability"]').val();
+        var description = $div.find('textarea[name="description"]').val();
+        var jobId = $div.find('input[name="jobId"]').val();
+        var listId = $div.find('input[name="listId"]').val();
+        var jobPostDiv = "#jobajax"+listId
+
+        data = {
+                'test'          : '1234',
+                'position'      : position,
+                'availability'  : availability,
+                'description'   : description,
+                'jobId'         : jobId,
+                'listId'        : listId
+            };
+
+        $.ajax({
+            type: 'POST',
+            url: '/editJob',
+            datatype : "json",
+            contentType: "application/json; charset=utf-8",
+            data : JSON.stringify(data),
+
+        }).done(function(data, textStatus, jqXHR){
+            //$(data['returnString']).closest('.jobSegment').remove();
+            location.reload()
+            console.log('Success!');
+        }).fail(function(data) {
+            alert('Failed!');
+        }).complete(function(data) {
+            console.log('completed');
+        });
+    });
+
 
 
 /*

@@ -67,7 +67,8 @@ from app.Views import terms
 from app.Views import changepassword
 from app.Views import homejobseekers
 from app.Views import aboutus
-from app.Views import deleteJob
+from app.Views import deleteJobPost
 from app.Views import jobExperience
 from app.Views import jobExperienceRemove
 from app.Views import jobExperienceEdit
+from app.Views import editJobPost

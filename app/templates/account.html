@@ -429,11 +429,14 @@
                         <h2 class="ui block header">My Jobs</h2>
                         {% set listId = 0 %}
                         {% for elements in form.user['jobs'] %}
-                        <div id = 'jobajax{{listId}}'>
+                        <div id = 'jobajax{{listId}}' class="jobPostSegment">
                             <!--<form id="viewJobForm" enctype="multipart/form-data" method="post">-->
                               <div class="ui segment">
                                     <input id = 'jobId' type="hidden" name="jobId" value= "{{ elements }}">
-                                    <input id="listId" type="hidden" name="listId" value= {{ listId }}>
+                                    <input id="listId" type="hidden" name="listId" value= "{{ listId }}">
+                                    <input type="hidden" name="position" value= "{{ extra[elements]['title'] }}">
+                                    <input type="hidden" name="availability" value= "{{ extra[elements]['availability'] }}">
+                                    <input type="hidden" name="description" value= "{{ extra[elements]['description'] }}">
 
                                     <div class="ui divided selection list">
                                         <a class="item">
@@ -444,9 +447,11 @@
                                             <div class="ui shorizontal label">
                                                 Availability
                                             </div>
-                                            {% for days in extra[elements]['availability'] %}
-                                                    {{days}}
-                                            {% endfor %}
+                                            {% if extra[elements]['availability'] %}
+                                                {% for days in extra[elements]['availability'] %}
+                                                        {{days}}
+                                                {% endfor %}
+                                            {% endif %}
                                         </a>
                                         <a class="item">
                                             <div class="ui horizontal label">Description</div>
@@ -459,7 +464,10 @@
                                             {{elements}}
                                         </a>
                                     </div>
-                                  <button class="deleteJobButton ui green fluid submit button"
+                                    <button class="editJobPostButton ui green submit button">
+                                        Edit
+                                    </button>
+                                  <button class="deleteJobButton ui green submit button"
                                           type="submit">
                                       delete
                                   </button>

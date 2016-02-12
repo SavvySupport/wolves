@@ -91,3 +91,4 @@ JPER1  = 'jobPeriod1'
 
 # For use in job_collection
 EMPLOYERID = 'employerId'
+DESCRIPTION= 'description'
