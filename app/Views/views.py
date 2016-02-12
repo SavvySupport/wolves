@@ -70,3 +70,4 @@ from app.Views import aboutus
 from app.Views import deleteJob
 from app.Views import jobExperience
 from app.Views import jobExperienceRemove
+from app.Views import jobExperienceEdit

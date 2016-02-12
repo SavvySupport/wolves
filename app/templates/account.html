@@ -388,6 +388,11 @@
                                             -->{{ user['jobExperience'][elements]['description']|safe }}<!--
 
                                             --></div>
+                                            <input type="hidden" name ="jobPosition" value="{{ user['jobExperience'][elements]['position'] }}">
+                                            <input type="hidden" name ="jobCompany" value="{{ user['jobExperience'][elements]['company'] }}">
+                                            <input type="hidden" name ="jobPeriod" value="{{ user['jobExperience'][elements]['period'] }}">
+                                            <input type="hidden" name ="jobDescription" value="{{ user['jobExperience'][elements]['description'] }}">
+                                            <button class="jobExperienceEditButton ui button">Edit</button>
                                             <button class="jobExperienceRemoveButton ui button">Remove</button>
                                         </div>
                                     </div>

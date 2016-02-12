@@ -344,6 +344,67 @@ $(function () {
         });
     });
 
+    $('.jobExperienceEditButton').click(function(){
+        event.preventDefault();
+
+        var $div = $(this).closest('.jobSegment');
+        var jobExperienceId = $div.find('input[name="jobExperienceId"]').val();
+        var jobPosition = $div.find('input[name="jobPosition"]').val();
+        var jobCompany = $div.find('input[name="jobCompany"]').val();
+        var jobPeriod = $div.find('input[name="jobPeriod"]').val();
+        var jobDescription = $div.find('input[name="jobDescription"]').val();
+        var jobExperienceString = "#jobExperience".concat(jobExperienceId);
+
+        var div_data = "<div class='ui segment'> <span style='font-weight:bold'>Position:</span><br><input type='text' name='jobPosition' value='"+jobPosition+"'><br><span style='font-weight:bold'>Company:</span><br><input type='text' name='jobCompany' value = '"+jobCompany+"'><br><span style='font-weight:bold'>Period:</span><br><input type='text' name='jobPeriod' value='"+jobPeriod+"'><br><span style='font-weight:bold'>Description:</span><br><textarea name='jobDescription'>"+jobDescription+"</textarea><br><input id='jobExperience"+jobExperienceId+"' type='hidden' name='jobExperienceId' value="+jobExperienceId+"><br><button type='button' class='jobExperienceEditSubmitButton ui button'>Done</button></div>";
+
+        //alert (div_data)
+
+
+        $(jobExperienceString).closest('.jobSegment').html(div_data);
+
+        return false;
+    });
+
+
+    $('.jobSegment').on("click", ".jobExperienceEditSubmitButton", function() {
+        console.log('here')
+
+        event.preventDefault();
+        console.log('here')
+        var $div = $(this).closest('.jobSegment');
+        var jobExperienceId = $div.find('input[name="jobExperienceId"]').val();
+        var position = $div.find('input[name="jobPosition"]').val();
+        var company = $div.find('input[name="jobCompany"]').val();
+        var period = $div.find('input[name="jobPeriod"]').val();
+        var description = $div.find('textarea[name="jobDescription"]').val();
+
+        data = {
+                'test'          : '1234',
+                'position'      : position,
+                'period'        : period,
+                'company'       : company,
+                'description'   : description,
+                'jobExperienceId':jobExperienceId
+            };
+
+        $.ajax({
+            type: 'POST',
+            url: '/jobExperienceEdit',
+            datatype : "json",
+            contentType: "application/json; charset=utf-8",
+            data : JSON.stringify(data),
+
+        }).done(function(data, textStatus, jqXHR){
+            //$(data['returnString']).closest('.jobSegment').remove();
+            location.reload()
+            console.log('Success!');
+        }).fail(function(data) {
+            alert('Failed!');
+        }).complete(function(data) {
+            console.log('completed');
+        });
+    });
+
 
 
 /*
