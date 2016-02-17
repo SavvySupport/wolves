@@ -41,7 +41,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <img src= {{ user.get('dp', url_for('static', filename='images/user1.jpg')) }} >
+									{% if user.get('gender', None) == 'Female' %}
+
+                                    	<img src= {{ user.get('dp', url_for('static', filename='images/user1.jpg'))}} alt="Image not found" onError="this.src='/static/images/user.png';" >
+
+									{% else %}
+										<img src= {{ user.get('dp', url_for('static', filename='images/user1.jpg'))}} alt="Image not found" onError="this.src='/static/images/user1.jpg';" >
+									{% endif %}	
                                 </div>
                                 <div class="content">
                                     <a class="header">{{ user.get('firstName', 'fname')}} {{ user.get('lastName', 'lname') }}</a>
@@ -101,7 +107,7 @@
                                     </p>
                                     <div class="ui hidden divider"></div>
                                     <div class="ui divided selection list">
-                                        
+
                                         <a class="item">
                                             <div class="ui green horizontal label">D.O.B</div>
                                             {{ user.get('birthday', 'N/A') }}
