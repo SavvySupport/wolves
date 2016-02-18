@@ -429,10 +429,10 @@
                 {% else %}
                     <div id="step4" class="ui raised segment">
                         <h2 class="ui block header">My Jobs</h2>
-                        {% if form.user['jobs'] is not defined %}
+                        {% if form.user['jobs'] is not defined or form.user['jobs']|length == 0 %}
                             <h3 style="color:#545454">
                                 <a href= {{ url_for('postJob') }}>
-                                    Start posting a job!
+                                    Click here to post your first job ad
                                 </a>
                             </h3>
                         {% endif %}
