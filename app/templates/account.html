@@ -55,14 +55,6 @@
                         </div>
                     </a>
                 </div>
-
-                <!-- Submit button for account form -->
-                <button form="profileForm"
-                        id="updatebtn"
-                        class="ui green fluid submit button"
-                        type="submit">
-                    Update
-                </button>
             </div>
         </div>
 
@@ -144,6 +136,12 @@
                                     <label>About</label>
                                     {{ form.about }}
                                 </div>
+                                <button form="profileForm"
+                                        id="updatebtn"
+                                        class="ui green fluid submit button"
+                                        type="submit">
+                                    Update
+                                </button>
                             {% else %}
                                 <div class="field">
                                     <label>First Name</label>
@@ -356,6 +354,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                <button form="profileForm"
+                                        id="updatebtn"
+                                        class="ui green fluid submit button"
+                                        type="submit">
+                                    Update
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -391,10 +395,11 @@
                                             <input type="hidden" name ="jobCompany" value="{{ user['jobExperience'][elements]['company'] }}">
                                             <input type="hidden" name ="jobPeriod" value="{{ user['jobExperience'][elements]['period'] }}">
                                             <input type="hidden" name ="jobDescription" value="{{ user['jobExperience'][elements]['description'] }}">
-                                            <button class="jobExperienceEditButton ui button">Edit</button>
+                                            <button class="jobExperienceEditButton ui green button">Edit</button>
                                             <button class="jobExperienceRemoveButton ui button">Remove</button>
                                         </div>
                                     </div>
+                                    <br>
                                 {% endif %}
                             {% endfor %}
 
@@ -414,7 +419,7 @@
                                             <div class="field">
                                                 {{ form.jdes1(placeholder="Describe the role and duties performed") }}
                                             </div>
-                                            <button class="jobExperienceAddButton ui button">Add</button>
+                                            <button class="jobExperienceAddButton ui green button">Add</button>
                                         </div>
                                     </div>
                                 </form>
@@ -471,8 +476,8 @@
                                         </a>
                                         <a class="item">
                                             <div class="ui horizontal label">Description</div>
-                                            <div style="white-space:PRE">
-                                                {{ extra[elements]['description'] }}
+                                            <div style="white-space:PRE"><!--
+                                            -->{{ extra[elements]['description'] }}
                                             </div>
                                         </a>
                                         <a class="item">
@@ -490,6 +495,7 @@
                                     </button>
                                 </div>
                             </div>
+                            <br>
                             {% set listId = listId + 1 %}
                         {% endfor %}
                     </div>
