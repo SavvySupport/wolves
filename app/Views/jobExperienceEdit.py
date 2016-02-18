@@ -19,17 +19,17 @@ def jobExperienceEdit():
             returnString = '#jobExperience'+jobExperienceId
 
             entry = {
-                        'position'      : request.json['position'],
-                        'company'       : request.json['company'],
-                        'period'        : request.json['period'],
-                        'description'   : request.json['description']
-                    }
+                'position'      : request.json['position'],
+                'company'       : request.json['company'],
+                'period'        : request.json['period'],
+                'description'   : request.json['description']
+            }
 
             old = user['jobExperience']
             print (old)
             old[str(jobExperienceId)] = entry
             print (old)
             savvy_collection.update({EMAIL:user[EMAIL]}, {"$set": {JOBEXPERIENCE: old}})
-            
+
             # return information to frontend
             return jsonify(returnString = returnString)

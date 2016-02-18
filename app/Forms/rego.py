@@ -1,5 +1,5 @@
-from wtforms import Form, BooleanField, TextField, TextAreaField, PasswordField,\
-                    validators, ValidationError, SelectField, BooleanField
+from wtforms import Form, BooleanField, TextField, PasswordField,\
+                    validators, ValidationError, SelectField
 from app.Models.User import User
 from app import savvy_collection, jobs_collection
 from flask.ext.login import login_user

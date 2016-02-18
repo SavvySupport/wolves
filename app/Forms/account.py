@@ -1,6 +1,5 @@
-from wtforms import Form, BooleanField, TextField, TextAreaField, PasswordField,\
-                    validators, ValidationError, RadioField, \
-                    DateTimeField, SelectMultipleField, SelectField, widgets
+from wtforms import Form, TextField, PasswordField, \
+                    validators, ValidationError, SelectField, widgets
 from wtforms.fields.html5 import DateField
 from wtforms.widgets import TextArea
 from app import savvy_collection

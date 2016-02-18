@@ -15,7 +15,7 @@ def jobExperience():
             print(request.form)
             print(request.json)
             print("Deleted")
-            
+
             returnString = request.json
             company = request.json['company']
             period = request.json['period']
@@ -23,11 +23,11 @@ def jobExperience():
             description = request.json['description']
 
             entry = {
-                        'position'      : position,
-                        'company'       : company,
-                        'period'        : period,
-                        'description'   : description
-                    }
+                'position'      : position,
+                'company'       : company,
+                'period'        : period,
+                'description'   : description
+            }
 
             oldDic = user.get('jobExperience')
             if oldDic:
@@ -35,12 +35,12 @@ def jobExperience():
                 newDic = OrderedDict()
                 newDic = oldDic
                 newDic[str(newIndex + 1)] = entry
-                savvy_collection.update({EMAIL:user[EMAIL]},{"$set":{'jobExperience':newDic}})
+                savvy_collection.update({EMAIL:user[EMAIL]}, {"$set": {'jobExperience': newDic}})
 
             else:
                 oldDic = OrderedDict()
                 oldDic['1'] = entry
-                savvy_collection.update({EMAIL:user[EMAIL]},{"$set":{'jobExperience':oldDic}})
+                savvy_collection.update({EMAIL: user[EMAIL]}, {"$set": {'jobExperience': oldDic}})
 
             # return information to frontend
             return jsonify(returnString = returnString)

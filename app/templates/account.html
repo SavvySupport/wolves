@@ -364,14 +364,12 @@
                         </div>
                     </div>
 
-
                     <div class = "jobExperience">
                         {% set jobId = 1 %}
                         <div id="step3" class="ui raised segment">
                             <h2 class="ui block header">Job Experiences</h2>
 
                             <!--add job experience here-->
-
                             {% for elements in range(100) %}
                                 {% set elements = elements ~ ''%}
                                 {% if elements in user.get('jobExperience', '') %}
@@ -387,10 +385,10 @@
                                             <div class = "field" style="font-weight: bold;font-style: italic;color: #545454;">
                                                 {{ user['jobExperience'][elements]['period'] }}
                                             </div>
-                                            <div class="field" style = "white-space:PRE"><!--
-                                            -->{{ user['jobExperience'][elements]['description']|safe }}<!--
+                                            <div class="field" style = "white-space:PRE">
+                                                {{ user['jobExperience'][elements]['description']|safe }}
+                                            </div>
 
-                                            --></div>
                                             <input type="hidden" name ="jobPosition" value="{{ user['jobExperience'][elements]['position'] }}">
                                             <input type="hidden" name ="jobCompany" value="{{ user['jobExperience'][elements]['company'] }}">
                                             <input type="hidden" name ="jobPeriod" value="{{ user['jobExperience'][elements]['period'] }}">
@@ -462,7 +460,7 @@
                                             </div>
                                             {% if extra[elements]['availability'] %}
                                                 {% for days in extra[elements]['availability'] %}
-                                                        {{days}}
+                                                    {{days}}
                                                 {% endfor %}
                                             {% endif %}
                                         </a>
@@ -476,8 +474,8 @@
                                         </a>
                                         <a class="item">
                                             <div class="ui horizontal label">Description</div>
-                                            <div style="white-space:PRE"><!--
-                                            -->{{ extra[elements]['description'] }}
+                                            <div style="white-space:PRE">
+                                                {{ extra[elements]['description'] }}
                                             </div>
                                         </a>
                                         <a class="item">

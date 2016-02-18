@@ -1,18 +1,14 @@
-from wtforms import Form, BooleanField, TextField, TextAreaField, PasswordField,\
-                    validators, ValidationError, RadioField, \
-                    DateTimeField, SelectMultipleField, SelectField
+from wtforms import Form, TextField, validators, ValidationError, \
+                    SelectMultipleField, SelectField
 from wtforms.widgets import TextArea
-from app import savvy_collection,jobs_collection
+from app import savvy_collection, jobs_collection
 from flask import flash
-from hashlib import md5
 from datetime import datetime
-import os, subprocess
 from bson.objectid import ObjectId
 from app.Helpers.Constant import *
 
 class jobForm(Form):
-    title    = TextField('title', [validators.Required()])
-
+    title   = TextField('title', [validators.Required()])
     jobType = SelectField('jobType',
                            [validators.Required()],
                            coerce=int,
@@ -23,7 +19,7 @@ class jobForm(Form):
                                       (4,'Full-time'),
                                       (5,'Volunteer')])
 
-    description     = TextField('description', [validators.Required()], widget=TextArea())
+    description = TextField('description', [validators.Required()], widget=TextArea())
 
     availability = SelectMultipleField('availability',
                                        [validators.Optional()],
@@ -41,7 +37,6 @@ class jobForm(Form):
         Form.__init__(self, args[0], **kwargs)
         self.timeStamp = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
 
-
     def validate(self,user):
         # insert into database
         job = {
@@ -53,8 +48,8 @@ class jobForm(Form):
         }
 
         employerId = user['_id']
-        jobs_collection.update({'employerId':employerId},{"$set":{self.timeStamp:job}})
-
+        jobs_collection.update({'employerId': employerId},
+                               {"$set": {self.timeStamp: job}})
         savvy_collection.update({EMAIL: self.email},
                                 {"$addToSet": {"jobs":self.timeStamp}})
 

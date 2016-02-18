@@ -1,5 +1,4 @@
-from wtforms import Form, BooleanField, TextField, TextAreaField, \
-                    validators, ValidationError, SelectMultipleField, SelectField
+from wtforms import Form, TextField, validators, ValidationError, SelectMultipleField, SelectField
 from wtforms.widgets import TextArea
 from app import savvy_collection, jobs_collection
 from flask import flash

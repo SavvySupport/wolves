@@ -28,7 +28,6 @@ class recoverForm(Form):
         user = savvy_collection.find_one({ EMAIL : self.email.data.rstrip() })
         if user:
             # send email with new password to this address
-
             link = "http://savvyhire.herokuapp.com/changepassword"
 
             img_data = open('app/static/images/logo.png', 'rb').read()

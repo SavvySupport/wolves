@@ -1,10 +1,6 @@
-import os
 from app import app, savvy_collection
-from app.Views.views import render
-from flask.ext.login import login_required, current_user
-from flask import jsonify, request, url_for, flash
-from werkzeug import secure_filename
-from hashlib import md5
+from flask.ext.login import login_required
+from flask import jsonify, request, url_for
 from app.Helpers.Constant import *
 import smtplib
 from email.mime.text import MIMEText
@@ -23,7 +19,6 @@ def applyJobs():
         jobSeekerId = request.form['jobSeeker']
         jobSeekerId = ObjectId(jobSeekerId)
         title = request.form['title']
-
 
         #print(modal)
         jobSeeker = savvy_collection.find_one({'_id':jobSeekerId})

@@ -9,17 +9,12 @@ from app.Helpers.Constant import *
 @app.route('/jobs')
 @login_required
 def jobSearch():
-    # display all jobssss
-    #candidates = savvy_collection.find({ CATEGORY: CAND })
-    #return render('jobSearch.html', jsonObject=candidates)
+    # display all jobs 
     jobs = jobs_collection.find()
     jobsDict = {}
     for elements in jobs:
         elements.pop('employerId', None)
         elements.pop('_id', None)
         jobsDict.update(elements)
-
-
-
 
     return render('jobSearch.html', extra=jobsDict)
