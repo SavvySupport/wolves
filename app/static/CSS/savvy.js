@@ -250,28 +250,21 @@ $(function () {
 
     $('.deleteJobButton').click(function() {
         event.preventDefault();
-        //var form_data = new FormData($('#viewJobForm')[0]);
         var $div = $(this).closest('div')
         var jobId = $div.find('input[name="jobId"]').val();
         var listId = $div.find('input[name="listId"]').val();
-        //var jobId = $('#jobId').val();
-        //var listId = $('#listId').val();
         data = {
-                'test'  : '1234',
-                'jobId' : jobId,
-                'listId': listId
+            'test'  : '1234',
+            'jobId' : jobId,
+            'listId': listId
+        }
 
-                }
         $.ajax({
             type: 'POST',
             url: '/deleteJob',
-//            data: data,
-//            contentType: false,
-//            processData: false,
-//            dataType: 'json'
             datatype : "json",
             contentType: "application/json; charset=utf-8",
-            data : JSON.stringify(data),
+            data : JSON.stringify(data)
         }).done(function(data, textStatus, jqXHR){
             $(data['returnString']).remove();
             console.log('Success!');
@@ -291,25 +284,21 @@ $(function () {
         var company = $div.find('input[name="jcomp1"]').val();
         var description = $div.find('textarea[name="jdes1"]').val();
 
-        //var jobId = $('#jobId').val();
-        //var listId = $('#listId').val();
         data = {
-                'test'          : '1234',
-                'position'      : position,
-                'period'        : period,
-                'company'       : company,
-                'description'   : description
-                }
+            'test'          : '1234',
+            'position'      : position,
+            'period'        : period,
+            'company'       : company,
+            'description'   : description
+        }
 
         var form_data = new FormData($('#jobExperienceForm')[0]);
-
         $.ajax({
             type: 'POST',
             url: '/jobExperience',
             datatype : "json",
             contentType: "application/json; charset=utf-8",
-            data : JSON.stringify(data),
-
+            data : JSON.stringify(data)
         }).done(function(data, textStatus, jqXHR){
             //$( "div.jobExperience" ).load("/account.html .jobExperience");
             location.reload()
@@ -328,16 +317,15 @@ $(function () {
         var jobExperienceId = $div.find('input[name="jobExperienceId"]').val();
 
         data = {
-                    'jobExperienceId':jobExperienceId
-                }
+            'jobExperienceId':jobExperienceId
+        }
 
         $.ajax({
             type: 'POST',
             url: '/jobExperienceRemove',
             datatype : "json",
             contentType: "application/json; charset=utf-8",
-            data : JSON.stringify(data),
-
+            data : JSON.stringify(data)
         }).done(function(data, textStatus, jqXHR){
             $(data['returnString']).closest('.jobSegment').remove();
             console.log('Success!');
@@ -358,23 +346,15 @@ $(function () {
         var jobPeriod = $div.find('input[name="jobPeriod"]').val();
         var jobDescription = $div.find('input[name="jobDescription"]').val();
         var jobExperienceString = "#jobExperience".concat(jobExperienceId);
-
         var div_data = "<div class='ui segment'> <span style='font-weight:bold'>Position:</span><br><input type='text' name='jobPosition' value='"+jobPosition+"'><br><span style='font-weight:bold'>Company:</span><br><input type='text' name='jobCompany' value = '"+jobCompany+"'><br><span style='font-weight:bold'>Period:</span><br><input type='text' name='jobPeriod' value='"+jobPeriod+"'><br><span style='font-weight:bold'>Description:</span><br><textarea name='jobDescription'>"+jobDescription+"</textarea><br><input id='jobExperience"+jobExperienceId+"' type='hidden' name='jobExperienceId' value="+jobExperienceId+"><br><button type='button' class='jobExperienceEditSubmitButton ui button'>Done</button></div>";
-
-        //alert (div_data)
-
-
         $(jobExperienceString).closest('.jobSegment').html(div_data);
 
         return false;
     });
 
-
     $('.jobSegment').on("click", ".jobExperienceEditSubmitButton", function() {
-        console.log('here')
-
         event.preventDefault();
-        console.log('here')
+
         var $div = $(this).closest('.jobSegment');
         var jobExperienceId = $div.find('input[name="jobExperienceId"]').val();
         var position = $div.find('input[name="jobPosition"]').val();
@@ -383,23 +363,21 @@ $(function () {
         var description = $div.find('textarea[name="jobDescription"]').val();
 
         data = {
-                'test'          : '1234',
-                'position'      : position,
-                'period'        : period,
-                'company'       : company,
-                'description'   : description,
-                'jobExperienceId':jobExperienceId
-            };
+            'test'          : '1234',
+            'position'      : position,
+            'period'        : period,
+            'company'       : company,
+            'description'   : description,
+            'jobExperienceId':jobExperienceId
+        };
 
         $.ajax({
             type: 'POST',
             url: '/jobExperienceEdit',
             datatype : "json",
             contentType: "application/json; charset=utf-8",
-            data : JSON.stringify(data),
-
+            data : JSON.stringify(data)
         }).done(function(data, textStatus, jqXHR){
-            //$(data['returnString']).closest('.jobSegment').remove();
             location.reload()
             console.log('Success!');
         }).fail(function(data) {
@@ -424,16 +402,11 @@ $(function () {
 
         var availabilityString = ''
 
-        for (i = 0; i < availability.length; i++){
-                availabilityString += "<option value="+availability[i]+">"+availability[i]+"</option>"
+        for (i = 0; i < availability.length; i++) {
+            availabilityString += "<option value="+availability[i]+">"+availability[i]+"</option>"
         }
 
-
         var div_data = "<div class='ui segment'> <span style='font-weight:bold'>Position:</span><br><input type='text' name='position' value='"+position+"'><br><span style='font-weight:bold'>Availability:</span><br><select name='availability' multiple><option value='Monday'>Monday</option><option value='Tuesday'>Tuesday</option><option value='Wednesday'>Wednesday</option><option value='Thursday'>Thursday</option><option value='Friday'>Friday</option><option value='Saturday'>Saturday</option><option value='Sunday'>Sunday</option></select><span style='font-weight:bold'>Location:</span><input type='text' name='location' value='"+location+"'><br><span style='font-weight:bold'>Visa Requirement:</span><br><select name='residency'><option value='No Preference'>No Preference</option><option value='Permenant Resident'>Permenant Resident</option><option value='Temporary Resident'>Temporary Resident</option><option value='Student Visa'>Student Visa</option></select><span style='font-weight:bold'>Description:</span><br><textarea name='description'>"+description+"</textarea><br><input type='hidden' name='jobId' value='"+jobId+"'><input type='hidden' name='listId' value="+listId+"><br><button type='button' class='editJobPostSubmitButton ui button'>Done</button></div>";
-
-        //alert (div_data)
-
-
         $(jobPostDiv).html(div_data);
 
         return false;
@@ -441,10 +414,8 @@ $(function () {
 
 
     $('.jobPostSegment').on("click", ".editJobPostSubmitButton", function() {
-        console.log('here')
-
         event.preventDefault();
-        console.log('here')
+
         var $div = $(this).closest('.jobPostSegment');
         var position = $div.find('input[name="position"]').val();
         var availability = $div.find('select[name="availability"]').val();
@@ -456,27 +427,24 @@ $(function () {
         var jobPostDiv = "#jobajax"+listId
 
         data = {
-                'test'          : '1234',
-                'position'      : position,
-                'availability'  : availability,
-                'description'   : description,
-                'residency'     : residency,
-                'location'      : location,
-                'jobId'         : jobId,
-                'listId'        : listId
-            };
+            'test'          : '1234',
+            'position'      : position,
+            'availability'  : availability,
+            'description'   : description,
+            'residency'     : residency,
+            'location'      : location,
+            'jobId'         : jobId,
+            'listId'        : listId
+        };
 
         $.ajax({
             type: 'POST',
             url: '/editJob',
             datatype : "json",
             contentType: "application/json; charset=utf-8",
-            data : JSON.stringify(data),
-
+            data : JSON.stringify(data)
         }).done(function(data, textStatus, jqXHR){
-            //$(data['returnString']).closest('.jobSegment').remove();
             window.location.reload(true);
-            //window.location.href = window.location;
             console.log('Success!');
         }).fail(function(data) {
             alert('Failed!');
@@ -485,18 +453,6 @@ $(function () {
         });
     });
 
-
-
-/*
-    $("#jobAdd").click(function() {
-        $(".jobSegment >  #jobElement:first-child").clone(true).insertBefore(".jobSegment > #jobAdd:last-child");
-
-    });
-
-    $("#jobRemove").click(function() {
-        $(this).parent().remove();
-    });
-*/
     // Restyle and handle file uploads
     var fileExtentionRange = '.png .jpg .jpeg';
     var MAX_SIZE = 3; // MB

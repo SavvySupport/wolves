@@ -9,20 +9,18 @@ def deleteJobPost():
     user = savvy_collection.find_one({ EMAIL: current_user.get_id()[EMAIL] })
     if user:
         if request.method == 'POST':
-            print (request.data)
-            print (request.form)
-            print (request.json)
             jobId = request.json['jobId']
             listId = request.json['listId']
-            print ('jobId = ' + jobId + ' listId = ' + listId)
             returnString = "#jobajax" + str(listId)
-
             employerId = user['_id']
 
-            savvy_collection.update({EMAIL: user[EMAIL]}, {"$pull": {'jobs': jobId}})
-            jobs_collection.update({EMPLOYERID: employerId},{"$unset": {jobId: ''}})
+            # Update savvy collection
+            savvy_collection.update({EMAIL: user[EMAIL]},
+                                    {"$pull": {'jobs': jobId}})
 
-            print("Deleted")
+            # Delete job from job collection
+            jobs_collection.update({EMPLOYERID: employerId},
+                                   {"$unset": {jobId: ''}})
 
             # return information to frontend
             return jsonify(returnString = returnString)
