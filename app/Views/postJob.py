@@ -15,8 +15,8 @@ def postJob():
 
         if request.method == 'POST' and form.validate():
             form.update(user)
-            flash('successfully updated your job post')
-            return redirect(url_for('account'))
+            flash('successfully updated your job post', 'success')
+            return redirect(url_for('account') + '#step4')
 
         return render('job.html', form = form)
     else:

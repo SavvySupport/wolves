@@ -18,7 +18,7 @@ def login():
         if request.form.get('next') != None and request.form.get('next') != 'None':
             return redirect(request.form.get('next'))
         else:
-            return redirect(url_for('home'))
+            return redirect(url_for('account'))
 
     # Case: user needs to log in
     return render('login.html', form)

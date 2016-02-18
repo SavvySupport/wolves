@@ -82,7 +82,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <img id='photoajax' src= {{ user.get('dp', url_for('static', filename='images/user.png')) }} alt="looking good">
+                                <img id='photoajax' src= {{ user.get('dp', url_for('static', filename='images/user.png')) }} alt="looking good" onError="this.src= {{url_for('static', filename='images/user.png')}} ;">
                             </div>
                         </div>
                     </div>
@@ -385,8 +385,8 @@
                                             <div class = "field" style="font-weight: bold;font-style: italic;color: #545454;">
                                                 {{ user['jobExperience'][elements]['period'] }}
                                             </div>
-                                            <div class="field" style = "white-space:PRE">
-                                                {{ user['jobExperience'][elements]['description']|safe }}
+                                            <div class="field" style = "white-space:PRE"><!--
+                                            --> {{ user['jobExperience'][elements]['description']|safe }}
                                             </div>
 
                                             <input type="hidden" name ="jobPosition" value="{{ user['jobExperience'][elements]['position'] }}">
@@ -474,8 +474,8 @@
                                         </a>
                                         <a class="item">
                                             <div class="ui horizontal label">Description</div>
-                                            <div style="white-space:PRE">
-                                                {{ extra[elements]['description'] }}
+                                            <div style="white-space:PRE"><!--
+                                            -->{{ extra[elements]['description'] }}
                                             </div>
                                         </a>
                                         <a class="item">
@@ -488,7 +488,7 @@
                                         Edit
                                     </button>
 
-                                    <button class="deleteJobButton ui green submit button" type="submit">
+                                    <button class="deleteJobButton ui submit button" type="submit">
                                         delete
                                     </button>
                                 </div>
