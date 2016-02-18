@@ -1,17 +1,11 @@
-import os
 from app import app, savvy_collection, jobs_collection
-from app.Views.views import render
 from flask.ext.login import login_required, current_user
 from flask import jsonify, request, url_for, json
-from werkzeug import secure_filename
-from hashlib import md5
 from app.Helpers.Constant import *
-
 
 @app.route('/jobExperienceEdit', methods=['POST'])
 @login_required
 def jobExperienceEdit():
-
     user = savvy_collection.find_one({ EMAIL: current_user.get_id()[EMAIL] })
 
     if user:
@@ -20,6 +14,7 @@ def jobExperienceEdit():
             print (request.form)
             print (request.json)
             print("Edited")
+
             jobExperienceId = request.json['jobExperienceId']
             returnString = '#jobExperience'+jobExperienceId
 
@@ -34,9 +29,7 @@ def jobExperienceEdit():
             print (old)
             old[str(jobExperienceId)] = entry
             print (old)
-            savvy_collection.update({EMAIL:user['email']},{"$set":{JOBEXPERIENCE:old}})
-
-
-
-    #            # return information to frontend
+            savvy_collection.update({EMAIL:user[EMAIL]}, {"$set": {JOBEXPERIENCE: old}})
+            
+            # return information to frontend
             return jsonify(returnString = returnString)

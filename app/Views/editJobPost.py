@@ -1,19 +1,12 @@
-import os
 from app import app, savvy_collection, jobs_collection
-from app.Views.views import render
 from flask.ext.login import login_required, current_user
-from flask import jsonify, request, url_for, json
-from werkzeug import secure_filename
-from hashlib import md5
+from flask import jsonify, request, json
 from app.Helpers.Constant import *
-
 
 @app.route('/editJob', methods=['POST'])
 @login_required
 def editJobPost():
-
     user = savvy_collection.find_one({ EMAIL: current_user.get_id()[EMAIL] })
-
     if user:
         if request.method == 'POST':
             print (request.data)
@@ -35,9 +28,9 @@ def editJobPost():
                         DESCRIPTION : description,
                         }
 
-            jobs_collection.update({EMPLOYERID:employerId},{"$set":{jobId:jobEntry}})
+            jobs_collection.update({EMPLOYERID: employerId}, {"$set": {jobId: jobEntry}})
 
             print("Edited")
 
-    #            # return information to frontend
+            # return information to frontend
             return jsonify(returnString = returnString)

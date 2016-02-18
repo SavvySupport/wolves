@@ -1,30 +1,21 @@
-import os
-from app import app, savvy_collection, jobs_collection
+from app import app, savvy_collection
 from app.Views.views import render
-from app.Forms.account import candidateForm
 from flask.ext.login import login_required, current_user
 from flask import jsonify, request, url_for, json
-from werkzeug import secure_filename
-from hashlib import md5
 from app.Helpers.Constant import *
 from collections import OrderedDict
-
 
 @app.route('/jobExperience', methods=['POST'])
 @login_required
 def jobExperience():
-
     user = savvy_collection.find_one({ EMAIL: current_user.get_id()[EMAIL] })
-
     if user:
-
         if request.method == 'POST':
-
-            print (request.data)
-            print (request.form)
-            print (request.json)
-
+            print(request.data)
+            print(request.form)
+            print(request.json)
             print("Deleted")
+            
             returnString = request.json
             company = request.json['company']
             period = request.json['period']
@@ -40,8 +31,6 @@ def jobExperience():
 
             oldDic = user.get('jobExperience')
             if oldDic:
-
-
                 newIndex = int(max(oldDic.keys()))
                 newDic = OrderedDict()
                 newDic = oldDic
@@ -53,7 +42,5 @@ def jobExperience():
                 oldDic['1'] = entry
                 savvy_collection.update({EMAIL:user[EMAIL]},{"$set":{'jobExperience':oldDic}})
 
-
-
-    #            # return information to frontend
+            # return information to frontend
             return jsonify(returnString = returnString)
