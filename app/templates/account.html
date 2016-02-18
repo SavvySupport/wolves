@@ -440,6 +440,8 @@
                                     <input type="hidden" name="position" value= "{{ extra[elements]['title'] }}">
                                     <input type="hidden" name="availability" value= "{{ extra[elements]['availability'] }}">
                                     <input type="hidden" name="description" value= "{{ extra[elements]['description'] }}">
+                                    <input type="hidden" name="location" value= "{{ extra[elements]['location'] }}">
+                                    <input type="hidden" name="residency" value= "{{ extra[elements]['residency'] }}">
 
                                     <div class="ui divided selection list">
                                         <a class="item">
@@ -455,6 +457,14 @@
                                                         {{days}}
                                                 {% endfor %}
                                             {% endif %}
+                                        </a>
+                                        <a class="item">
+                                            <div class="ui horizontal label">Location</div>
+                                            {{ extra[elements]['location'] }}
+                                        </a>
+                                        <a class="item">
+                                            <div class="ui horizontal label">Visa Requirement</div>
+                                            {{ extra[elements]['residency'] }}
                                         </a>
                                         <a class="item">
                                             <div class="ui horizontal label">Description</div>

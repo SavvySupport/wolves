@@ -1,27 +1,25 @@
-from app import app, savvy_collection
+from app import app, savvy_collection, jobs_collection
 from app.Views.views import render
-from app.Forms.jobs import jobForm
-from flask import request, redirect, url_for
+from app.Forms.account import candidateForm, employerForm
+from flask.ext.login import login_user, login_required
+from flask import request, redirect, url_for, flash, jsonify
 from flask.ext.login import login_user, current_user
 from app.Helpers.Constant import *
 
-@app.route('/jobs', methods=['GET', 'POST'])
-def jobs():
-    email = current_user.get_id()[EMAIL]
-    user = savvy_collection.find_one({ EMAIL: email })
-    if user:
-        form = None
+@app.route('/jobs')
+@login_required
+def jobSearch():
+    # display all jobssss
+    #candidates = savvy_collection.find({ CATEGORY: CAND })
+    #return render('jobSearch.html', jsonObject=candidates)
+    jobs = jobs_collection.find()
+    jobsDict = {}
+    for elements in jobs:
+        elements.pop('employerId', None)
+        elements.pop('_id', None)
+        jobsDict.update(elements)
 
-        if user.get(CATEGORY, None) == EMPL:
-            form = jobForm(request.form, user[EMAIL])
-        else:
-            return redirect(url_for('home'))
 
-        if request.method == 'POST' and form.validate(user):
-            return redirect(url_for('account'))
 
-        return render('jobs.html', form = form)
 
-    else:
-        flash('Invalid access to account', 'error')
-        return redirect(url_for('home'))
+    return render('jobSearch.html', extra=jobsDict)

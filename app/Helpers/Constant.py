@@ -42,6 +42,7 @@ PR      = ('Permanent Resident', 'Permanent Resident')
 TR      = ('Temporary Resident', 'Temporary Resident')
 STUDENT = ('Student Visa', 'Student Visa')
 OTHER   = ('Other', 'Other')
+NOPREF  = ('No Preference', 'No Preference')
 
 # Education
 HS              = ('Finishing High School', 'Finishing High School')
@@ -92,3 +93,5 @@ JPER1  = 'jobPeriod1'
 # For use in job_collection
 EMPLOYERID = 'employerId'
 DESCRIPTION= 'description'
+TYPE = 'type'
+JOB = 'jobPost'

@@ -72,3 +72,5 @@ from app.Views import jobExperience
 from app.Views import jobExperienceRemove
 from app.Views import jobExperienceEdit
 from app.Views import editJobPost
+from app.Views import jobs
+from app.Views import applyJobs
