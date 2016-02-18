@@ -104,7 +104,7 @@
                                             <p class="ui large header">
                                                 Visa Requirement
                                             </p>
-                                            <a class="ui teal small tag label"> {{ extra[jobs].get('residency', 'N/A') }} </a>
+                                            <a class="ui teal small tag label"> {{ extra[jobs].get('residency', 'No Preference') }} </a>
                                         </div>
 
                                         <div class="ui hidden divider"></div>
@@ -133,7 +133,7 @@
                                             <p class="ui large header">
                                                 Send a message
                                             </p>
-                                            <textarea id="applyJobMsg" name="applyJobMsg" placeholder="My name is ___ and I wish to apply for this job!" rows="6"></textarea>
+                                            <textarea id="applyJobMsg" name="applyJobMsg" placeholder="Write a nice cover letter!" rows="6"></textarea>
                                             <input id="employerId" name="employerId" type="hidden" value="{{ extra[jobs].get('employerId', '') }}">
                                             <input id="title" name="title" type="hidden" value="{{ extra[jobs].get('title', '') }}">
                                             <input id="jobSeeker" name="jobSeeker" type="hidden" value="{{ user.get('_id', '') }}">
@@ -235,7 +235,7 @@
 								<label class="radio-label" for="Student">Student Visa</label>
 							</li>
 							<li>
-								
+
 							</li>
 						</div>
 					</div>
