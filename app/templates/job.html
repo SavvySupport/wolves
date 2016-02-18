@@ -46,8 +46,6 @@
                     {{ form.description(placeholer="Describe the role, duties and position") }}
                 </div>
 
-
-
                 <button id="updatebtn"
                         class="ui blue fluid submit button"
                         type="submit">
@@ -64,7 +62,7 @@
             </div>
             <br>
             <br>
-            <a href= {{ url_for('account') }} >
+            <a href= {{ url_for('account') + '#step4' }} >
                 <div class="ui big green labeled icon button">
                     <i class="setting icon"></i>
                     Manage existing jobs
