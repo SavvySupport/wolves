@@ -1,19 +1,12 @@
-import os
 from app import app, savvy_collection, jobs_collection
-from app.Views.views import render
 from flask.ext.login import login_required, current_user
-from flask import jsonify, request, url_for, json
-from werkzeug import secure_filename
-from hashlib import md5
+from flask import jsonify, request, json
 from app.Helpers.Constant import *
-
 
 @app.route('/deleteJob', methods=['POST'])
 @login_required
 def deleteJobPost():
-
     user = savvy_collection.find_one({ EMAIL: current_user.get_id()[EMAIL] })
-
     if user:
         if request.method == 'POST':
             print (request.data)
@@ -26,10 +19,10 @@ def deleteJobPost():
 
             employerId = user['_id']
 
-            savvy_collection.update({EMAIL:user['email']},{"$pull":{'jobs': jobId}})
-            jobs_collection.update({EMPLOYERID:employerId},{"$unset":{jobId:''}})
+            savvy_collection.update({EMAIL: user[EMAIL]}, {"$pull": {'jobs': jobId}})
+            jobs_collection.update({EMPLOYERID: employerId},{"$unset": {jobId: ''}})
 
             print("Deleted")
 
-    #            # return information to frontend
+            # return information to frontend
             return jsonify(returnString = returnString)

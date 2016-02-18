@@ -41,7 +41,7 @@ class jobForm(Form):
         timeStamp = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
 
         id = user['_id']
-        jobs_collection.update({'employerId': id},
+        jobs_collection.update({EMPLOYERID: id},
                                {"$set": {timeStamp: job}})
 
         savvy_collection.update({EMAIL: user[EMAIL]},

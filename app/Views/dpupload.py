@@ -47,7 +47,6 @@ def dpupload():
             savvy_collection.update( {EMAIL: current_user.get_id().get(EMAIL)},
                                      {"$set": user} )
 
-
             # return information to frontend
             return jsonify(path=relative_path)
 

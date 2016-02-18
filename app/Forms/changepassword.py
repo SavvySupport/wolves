@@ -1,4 +1,4 @@
-from wtforms import Form, BooleanField, TextField, TextAreaField, PasswordField, validators, ValidationError
+from wtforms import Form, PasswordField, validators, ValidationError
 from app.Models.User import User
 from app import savvy_collection
 from flask import flash
