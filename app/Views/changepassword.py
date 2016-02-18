@@ -8,7 +8,6 @@ from app.Helpers.Constant import *
 
 @app.route('/changepassword/<email>/<password>', methods=['GET', 'POST'])
 def changepassword(email, password):
-
     user = savvy_collection.find_one({ EMAIL: email })
     form = changepasswordForm(request.form,user)
 
@@ -17,14 +16,13 @@ def changepassword(email, password):
             print (user)
             print('validated')
             print(current_user.get_id())
-            return render('change.html', form=form, extra=email)
+            return render('changepassword.html', form=form, extra=email)
 
     return redirect(url_for('home'))
 
 @app.route('/change', methods=['GET','POST'])
 def change():
-
-    email = request.form['email']
+    email = request.form[EMAIL]
     user = savvy_collection.find_one({ EMAIL: email })
     form=None
     if email:
@@ -32,12 +30,12 @@ def change():
             form = changepasswordForm(request.form,user)
 
             if request.method == 'GET':
-                return render('change.html', form=form)
+                return render('changepassword.html', form=form)
 
             if request.method == 'POST' and form.validate():
                 print('validated')
                 return redirect(url_for('home'))
 
-        return render('change.html', form=form, extra=email)
+        return render('changepassword.html', form=form, extra=email)
     else:
         return redirect(url_for('home'))
