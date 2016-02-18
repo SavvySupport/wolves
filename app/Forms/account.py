@@ -184,8 +184,7 @@ class candidateForm(Form):
         if user.get(BIRTHDAY, None):
             self.birthday.data  = datetime.strptime(str(user.get(BIRTHDAY, None)), '%Y-%m-%d')
 
-        availability    = user.get(AVAILABILITY, None)
-
+        availability = user.get(AVAILABILITY, None)
         if availability:
             try:
                 self.monday.data    = availability.get(MON[TEXT], NA[CODE])

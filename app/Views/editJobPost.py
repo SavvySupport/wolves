@@ -23,10 +23,10 @@ def editJobPost():
             employerId = user['_id']
 
             jobEntry = {
-                        TITLE       : position,
-                        AVAILABILITY: availability,
-                        DESCRIPTION : description,
-                        }
+                TITLE           : position,
+                AVAILABILITY    : availability,
+                DESCRIPTION     : description
+            }
 
             jobs_collection.update({EMPLOYERID: employerId}, {"$set": {jobId: jobEntry}})
 
