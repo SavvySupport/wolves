@@ -90,7 +90,7 @@ class recoverForm(Form):
                 <img src="https://fbcdn-sphotos-h-a.akamaihd.net/hphotos-ak-xap1/v/t1.0-9/12552797_946970445338090_4081041973572931633_n.png?oh=3657d0fd2ab010f7b752f825c16070ba&oe=572DAC6A&__gda__=1463629238_96cd9ea3062bfbbb1539e9cdfb18ad25" style="width:150px;">
               </body>
             </html>
-            """.format(bodyStyle, greetStyle, user.get('firstName',''), contentStyle, messageStyle, link, user[EMAIL], user[PASSWORD])
+            """.format(bodyStyle, greetStyle, user.get('firstName',''), contentStyle, messageStyle, link, user.get('email'), user.get('password'))
 
             # Record the MIME types of both parts - text/plain and text/html.
             part1 = MIMEText(text, 'plain')

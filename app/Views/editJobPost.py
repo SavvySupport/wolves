@@ -16,6 +16,8 @@ def editJobPost():
             listId = request.json['listId']
             position = request.json['position']
             availability = request.json['availability']
+            residency = request.json['residency']
+            location = request.json['location']
             description = request.json['description']
             print ('jobId = ' + jobId + ' listId = ' + listId)
             returnString = "#jobajax" + str(listId)
@@ -23,10 +25,14 @@ def editJobPost():
             employerId = user['_id']
 
             jobEntry = {
-                TITLE           : position,
-                AVAILABILITY    : availability,
-                DESCRIPTION     : description
-            }
+                TITLE       : position,
+                AVAILABILITY: availability,
+                DESCRIPTION : description,
+                RESIDENCY   : residency,
+                LOCATION    : location,
+                EMPLOYERID  : employerId,
+                TYPE        : JOB
+            } 
 
             jobs_collection.update({EMPLOYERID: employerId}, {"$set": {jobId: jobEntry}})
 

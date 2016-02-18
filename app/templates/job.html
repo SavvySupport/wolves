@@ -20,10 +20,33 @@
                     <p>hold cmd or ctrl and click available days</p>
                 </div>
 
+                <div class="field">
+                    <label>Location</label>
+                    {{ form.location(placeholder="eg. Chatswood, NSW") }}
+                </div>
+
+                <div class="field">
+                    <label>Visa Requirement</label>
+                    <div class="ui fluid selection dropdown field ">
+                        {{ form.residency }}
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Select type of visa</div>
+                        <div class="menu">
+                            {% for field in form.residency.choices %}
+                                <div class="item" data-value= {{ field[0] }} >
+                                    {{ field[1] }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
                 <div class="required field">
                     <label>Description</label>
                     {{ form.description(placeholer="Describe the role, duties and position") }}
                 </div>
+
+
 
                 <button id="updatebtn"
                         class="ui blue fluid submit button"

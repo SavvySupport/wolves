@@ -1,0 +1,291 @@
+{% extends 'base.html' %}
+
+{% block script %}
+    <!-- <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> -->
+	<link rel="stylesheet" href= {{ url_for('static', filename="CSS/style.css") }} >
+	<script src= {{ url_for('static', filename="CSS/modernizr.js") }} ></script>
+    <script src= {{ url_for('static', filename="CSS/jquery-2.1.1.js") }} ></script>
+    <script src= {{ url_for('static', filename="CSS/jquery.mixitup.min.js") }} ></script>
+    <script src= {{ url_for('static', filename="CSS/search.js") }} ></script>
+    <script src= {{ url_for('static', filename='CSS/semantic.js') }}></script>
+{% endblock %}
+
+{% block content %}
+    <main class="cd-main-content">
+        <section class="cd-gallery">
+            <ul>
+                {% set id = 0 %}
+                {% for jobs in extra %}
+					{% set class = extra[jobs].get('title', '') %}
+					{% set class = class + ' ' + extra[jobs].get('employerId', '')|string %}
+					{% set class = class + ' ' + extra[jobs].get('description', '') %}
+                    {% set class = class + ' ' + extra[jobs].get('location', '') %}
+                    {% set class = class + ' ' + extra[jobs].get('residency', 'No Preference') %}
+
+                    <li class="mix {{class}} {% for day in extra[jobs].get('availability', []) %}{% if extra[jobs].get('availability', None)[day] != 'Unavailable' %}{{day}} {% endif %}{% endfor %}">
+                        <div class="ui special cards">
+                            <div class="card">
+
+                                <div class="content" style="min-height: 5rem;">
+                                    <a class="header" onclick="showmodal({{id}})">{{ extra[jobs].get('title', 'Title')}}</a>
+                                </div>
+                                <div class="content" style="min-height: 7.3rem;">
+                                    <h4 class="ui sub header">Description</h4>
+                                        {% set summary = ( extra[jobs].get('description', 'Description').split()) %}
+                                        {% for each in range(summary|length) if each < 15 %}
+                                            {% print (summary[each]) %}
+                                        {% endfor %}
+                                        {% print '...' %}
+
+                                </div>
+                                <div class="extra content">
+                                    <div class="ui small feed">
+                                      <div class="event">
+                                        <div class="content">
+                                          <div class="summary">
+                                             <a>Visa Requirement</a> {{ extra[jobs].get('residency', 'No Preference') }}
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="event">
+                                        <div class="content">
+                                          <div class="summary">
+                                             <a>Location</a> {{ extra[jobs].get('location', 'Unknown location') }}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+<!--                                    <a>
+                                        <i class="user icon"></i>
+                                        {{ extra[jobs].get('residency', 'No Preference') }}
+                                    </a>
+                                </div>
+                                <div class="extra content">
+                                        {{ extra[jobs].get('location', 'Unknown location') }}
+                                --></div>
+
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Modal to show full detail -->
+                    <div class="ui fullscreen modal {{id}}">
+                        <i id="closebtn" class="close icon"></i>
+                        <div class="header">
+                            {{ extra[jobs].get('title', '') }}
+                        </div>
+                        <div class="image content">
+                            <div class="ui grid" style="width:inherit;">
+                                <div class="eight wide column visible content">
+                                    <label class="ui large header">
+                                        Job Description
+                                    </label>
+                                    <div class="ui hidden divider"></div>
+                                    <p class="ui fluid large label" style="white-space:PRE; line-height:1.5rem;word-wrap: break-word;"><!--
+                                    -->{{ extra[jobs].get('description', '') }}
+                                    </p>
+                                    <div class="ui hidden divider"></div>
+                                    <div class="ui divided selection list">
+
+                                        <a class="item">
+                                            <div class="ui teal horizontal label">Location</div>
+                                            {{ extra[jobs].get('location', 'N/A') }}
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="eight wide column description" style="padding-left: 5%">
+                                    <form id="connectForm{{id}}"
+                                          method="POST"
+                                          role="form"
+                                          class="ui form">
+                                        <div class="field">
+                                            <p class="ui large header">
+                                                Visa Requirement
+                                            </p>
+                                            <a class="ui teal small tag label"> {{ extra[jobs].get('residency', 'N/A') }} </a>
+                                        </div>
+
+                                        <div class="ui hidden divider"></div>
+
+                                        <div class="field">
+                                        </div>
+
+                                        <div class="ui hidden divider"></div>
+
+                                        <div class="field">
+                                            <p class="ui large header">
+                                                Availability
+                                            </p>
+    										{% for day in extra[jobs].get('availability', ['availability']) %}
+    											{% if extra[jobs].get('availability')[day] != 'Unavailable' %}
+    												<a class="ui teal small tag label image_content-connectForm-availability" >
+    													{{ day }}
+    												</a>
+    											{% endif %}
+    										{% endfor %}
+                                        </div>
+
+                                        <div class="ui hidden divider"></div>
+
+                                        <div class="field">
+                                            <p class="ui large header">
+                                                Send a message
+                                            </p>
+                                            <textarea id="applyJobMsg" name="applyJobMsg" placeholder="My name is ___ and I wish to apply for this job!" rows="6"></textarea>
+                                            <input id="employerId" name="employerId" type="hidden" value="{{ extra[jobs].get('employerId', '') }}">
+                                            <input id="title" name="title" type="hidden" value="{{ extra[jobs].get('title', '') }}">
+                                            <input id="jobSeeker" name="jobSeeker" type="hidden" value="{{ user.get('_id', '') }}">
+                                            <input id="modalId" name="modalId" type="hidden" value="{{ id }}">
+                                        </div>
+    								</form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <button onClick="applyJob(connectForm{{id}})" form="connectForm" value="Contact" type="button" id="applyjobbtn" class="ui green button">Apply</button>
+                            <div onClick="close({{id}})" id="cancelbtn" class="ui deny red button">Cancel</div>
+                        </div>
+                    </div>
+                    {% set id = id+1 %}
+                {% endfor %}
+
+                <!-- 3 gaps to even the spaces -->
+                <li class="gap"></li>
+                <li class="gap"></li>
+                <li class="gap"></li>
+            </ul>
+            <h2 class="cd-fail-message">¯\_(ツ)_/¯</h2>
+            <h3 class="cd-fail-message">No Result Found</h3>
+        </section>
+
+        <div class="cd-filter cd-filter-block">
+            <form class="ui form">
+                <div class="grouped fields">
+                    <!-- SEARCH BOX -->
+                    <div class="fluid field">
+                        <div class="cd-filter-content ui icon input">
+                            <input type="search" placeholder="Search by text">
+                            <i class="search icon"></i>
+                        </div>
+                    </div>
+
+                    <!-- AVAILABILITY -->
+                    <div class="cd-filter-block">
+                        <h4>Availability</h4>
+                        <div class="cd-filter-content cd-filters list">
+                            <li>
+                                <input class="filter" data-filter=".Monday" type="checkbox" id="Monday">
+                                <label class="checkbox-label" for="Monday">Monday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Tuesday" type="checkbox" id="Tuesday">
+                                <label class="checkbox-label" for="Tuesday">Tuesday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Wednesday" type="checkbox" id="Wednesday">
+                                <label class="checkbox-label" for="Wednesday">Wednesday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Thursday" type="checkbox" id="Thursday">
+                                <label class="checkbox-label" for="Thursday">Thursday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Friday" type="checkbox" id="Friday">
+                                <label class="checkbox-label" for="Friday">Friday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Saturday" type="checkbox" id="Saturday">
+                                <label class="checkbox-label" for="Saturday">Saturday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Sunday" type="checkbox" id="Sunday">
+                                <label class="checkbox-label" for="Sunday">Sunday</label>
+                            </li>
+							<li>
+                                <input class="filter" data-filter=".Holiday" type="checkbox" id="Holiday">
+                                <label class="checkbox-label" for="Holiday">Holiday</label>
+                            </li>
+                        </div>
+                    </div>
+
+					<!-- VISA STATUS -->
+					<div class="cd-filter-block">
+						<h4>Residency Status</h4>
+						<div class="cd-filter-content cd-filters list">
+							<li>
+                                <input class="filter" data-filter="" type="radio" name="radioButton" id="radio1" checked>
+                                <label class="radio-label" for="radio1">All</label>
+                            </li>
+							<li>
+								<input class="filter" data-filter=".Citizen" type="radio" name="radioButton" id="Citizen">
+								<label class="radio-label" for="Citizen">Citizen</label>
+							</li>
+							<li>
+								<input class="filter" data-filter=".Permanent" type="radio" name="radioButton" id="Permanent">
+								<label class="radio-label" for="Permanent">PR</label>
+							</li>
+							<li>
+								<input class="filter" data-filter=".Temporary" type="radio" name="radioButton" id="Temporary">
+								<label class="radio-label" for="Temporary">TR</label>
+							</li>
+							<li>
+								<input class="filter" data-filter=".Student" type="radio" name="radioButton" id="Student">
+								<label class="radio-label" for="Student">Student Visa</label>
+							</li>
+							<li>
+								
+							</li>
+						</div>
+					</div>
+                </div>
+            </form>
+
+            <a href="#0" class="cd-close">Close</a>
+        </div>
+
+        <a href="#0" class="cd-filter-trigger">Filters</a>
+    </main>
+
+    <script>
+		// Open modal
+        function showmodal(id) {
+            var element='.ui.fullscreen.modal.'.concat(id);
+            $(element)
+				.modal('setting', 'transition', 'fade up')
+                .modal('show')
+            ;
+        }
+
+		// Close modal
+        function close(id) {
+            var element='.ui.fullscreen.modal.'.concat(id);
+            $(element)
+                .modal('toggle')
+            ;
+        }
+
+		// Ajax to send message
+        function applyJob(id) {
+            event.preventDefault();
+            var form_data = new FormData($(id)[0]);
+            $.ajax({
+                type: 'POST',
+                url: '/apply',
+                data: form_data,
+                contentType: false,
+                processData: false,
+                dataType: 'json'
+            }).done(function(data, textStatus, jqXHR){
+                // console.log(data['result'])
+                close(data['result'])
+                console.log('Success!');
+            }).fail(function(data) {
+                alert('Failed!');
+            }).complete(function(data) {
+                console.log('completed');
+            });
+        };
+    </script
+{% endblock %}
