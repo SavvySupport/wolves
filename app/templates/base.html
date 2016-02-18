@@ -86,7 +86,7 @@
                                 <div class="header">Jobs</div>
                                 {% if user.get('category', '').lower() == 'employer' %}
                                     <a href= {{ url_for('postJob') }} class="item">Post A Job</a>
-                                    <div class="item">Manage Jobs</div>
+                                    <div class="item">Manage Jobs <small style="color:#21BA45">Coming soon!</small></div>
                                 {% else %}
                                     <div class="item">My applications <small style="color:#21BA45">Coming soon!</small></div>
                                     <div class="item">Contacts <small style="color:#21BA45">Coming soon!</small></div>
