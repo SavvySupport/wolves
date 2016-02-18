@@ -432,48 +432,48 @@
                         {% set listId = 0 %}
                         {% for elements in form.user['jobs'] %}
                         <div id = 'jobajax{{listId}}' class="jobPostSegment">
-                            <!--<form id="viewJobForm" enctype="multipart/form-data" method="post">-->
-                              <div class="ui segment">
-                                    <input id = 'jobId' type="hidden" name="jobId" value= "{{ elements }}">
-                                    <input id="listId" type="hidden" name="listId" value= "{{ listId }}">
-                                    <input type="hidden" name="position" value= "{{ extra[elements]['title'] }}">
-                                    <input type="hidden" name="availability" value= "{{ extra[elements]['availability'] }}">
-                                    <input type="hidden" name="description" value= "{{ extra[elements]['description'] }}">
+                            <div class="ui segment">
+                                <input id = 'jobId' type="hidden" name="jobId" value= "{{ elements }}">
+                                <input id="listId" type="hidden" name="listId" value= "{{ listId }}">
+                                <input type="hidden" name="position" value= "{{ extra[elements]['title'] }}">
+                                <input type="hidden" name="availability" value= "{{ extra[elements]['availability'] }}">
+                                <input type="hidden" name="description" value= "{{ extra[elements]['description'] }}">
 
-                                    <div class="ui divided selection list">
-                                        <a class="item">
-                                            <div class="ui horizontal label">Position</div>
-                                            {{ extra[elements]['title'] }}
-                                        </a>
-                                        <a class="item">
-                                            <div class="ui shorizontal label">
-                                                Availability
-                                            </div>
-                                            {% if extra[elements]['availability'] %}
-                                                {% for days in extra[elements]['availability'] %}
-                                                        {{days}}
-                                                {% endfor %}
-                                            {% endif %}
-                                        </a>
-                                        <a class="item">
-                                            <div class="ui horizontal label">Description</div>
-                                            <div style="white-space:PRE"><!--
-                                            -->{{ extra[elements]['description'] }}
-                                            </div>
-                                        </a>
-                                        <a class="item">
-                                            <div class="ui horizontal label">Posted on</div>
-                                            {{elements}}
-                                        </a>
-                                    </div>
-                                    <button class="editJobPostButton ui green submit button">
-                                        Edit
-                                    </button>
-                                  <button class="deleteJobButton ui green submit button"
-                                          type="submit">
-                                      delete
-                                  </button>
+                                <div class="ui divided selection list">
+                                    <a class="item">
+                                        <div class="ui horizontal label">Position</div>
+                                        {{ extra[elements]['title'] }}
+                                    </a>
+                                    <a class="item">
+                                        <div class="ui shorizontal label">
+                                            Availability
+                                        </div>
+                                        {% if extra[elements]['availability'] %}
+                                            {% for days in extra[elements]['availability'] %}
+                                                    {{days}}
+                                            {% endfor %}
+                                        {% endif %}
+                                    </a>
+                                    <a class="item">
+                                        <div class="ui horizontal label">Description</div>
+                                        <div style="white-space:PRE">
+                                            {{ extra[elements]['description'] }}
+                                        </div>
+                                    </a>
+                                    <a class="item">
+                                        <div class="ui horizontal label">Posted on</div>
+                                        {{elements}}
+                                    </a>
                                 </div>
+                                
+                                <button class="editJobPostButton ui green submit button">
+                                    Edit
+                                </button>
+
+                                <button class="deleteJobButton ui green submit button" type="submit">
+                                    delete
+                                </button>
+                            </div>
                         </div>
 
                         {% set listId = listId + 1 %}
