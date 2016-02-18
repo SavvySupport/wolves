@@ -15,7 +15,6 @@
     <main class="cd-main-content">
         <section class="cd-gallery">
             <ul>
-                {% set id = 0 %}
                 {% for user in jsonObject if user.get('complete', False) == True %}
 					{% set class = user.get('firstName', '') %}
 					{% set class = class + ' ' + user.get('lastName', '') %}
@@ -42,12 +41,10 @@
                                         </div>
                                     </div>
 									{% if user.get('gender', None) == 'Female' %}
-
-                                    	<img src= {{ user.get('dp', url_for('static', filename='images/user1.jpg'))}} alt="Image not found" onError="this.src='/static/images/user.png';" >
-
+                                    	<img src= {{ user.get('dp', url_for('static', filename='images/user1.jpg'))}} alt="Image not found" onError="this.src= {{url_for('static', filename='images/user.png')}} ;" >
 									{% else %}
-										<img src= {{ user.get('dp', url_for('static', filename='images/user1.jpg'))}} alt="Image not found" onError="this.src='/static/images/user1.jpg';" >
-									{% endif %}	
+										<img src= {{ user.get('dp', url_for('static', filename='images/user1.jpg'))}} alt="Image not found" onError="this.src= {{url_for('static', filename='images/user.png')}} ;" >
+									{% endif %}
                                 </div>
                                 <div class="content">
                                     <a class="header">{{ user.get('firstName', 'fname')}} {{ user.get('lastName', 'lname') }}</a>
@@ -63,7 +60,7 @@
                                         </span>
                                     </div>
                                     <div class="description">
-                                    	<!--	{{ user.get('about', 'Introduction') }} -->
+                                    		{{ user.get('about', 'Introduction') }}
                                     </div>
                                 </div>
                                 <div class="extra content">
@@ -79,109 +76,7 @@
                             </div>
                         </div>
                     </li>
-
-                    <!-- Modal to show full detail -->
-                    <div class="ui fullscreen modal {{id}}">
-                        <i id="closebtn" class="close icon"></i>
-                        <div class="header">
-                            {{ user.get('firstName', '') }}
-                            {{ user.get('lastName', '') }}
-                        </div>
-                        <div class="image content">
-                            <div class="ui move up reveal">
-                                <div class="visible content">
-                                    <div class="ui large image">
-                                        <div class="ui black ribbon label">
-                                            <i class="expand icon"></i> More info
-                                        </div>
-                                        <img src= {{ user.get('dp', url_for('static', filename='images/user1.jpg')) }} >
-                                    </div>
-                                </div>
-                                <div class="hidden content">
-                                    <label class="ui large header">
-                                        About Me
-                                    </label>
-                                    <div class="ui hidden divider"></div>
-                                    <p class="ui large label">
-                                        {{ user.get('about', '') }}
-                                    </p>
-                                    <div class="ui hidden divider"></div>
-                                    <div class="ui divided selection list">
-
-                                        <a class="item">
-                                            <div class="ui green horizontal label">D.O.B</div>
-                                            {{ user.get('birthday', 'N/A') }}
-                                        </a>
-                                        <a class="item">
-                                            <div class="ui teal horizontal label">Location</div>
-                                            {{ user.get('location', 'N/A') }}
-                                        </a>
-                                        <a class="item">
-                                            <div class="ui purple horizontal label">Gender</div>
-                                            {{ user.get('gender', 'N/A') }}
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="description" style="padding-left: 5%">
-                                <form id="connectForm{{id}}"
-                                      method="POST"
-                                      role="form"
-                                      class="ui form">
-                                    <div class="field">
-                                        <p class="ui large header">
-                                            Residency Status
-                                        </p>
-                                        <a class="ui teal small tag label"> {{ user.get('residency', 'N/A') }} </a>
-                                    </div>
-
-                                    <div class="ui hidden divider"></div>
-
-                                    <div class="field">
-                                        <p class="ui large header">
-                                            Skills
-                                        </p>
-                                        {% for skill in user.get('skills', []) %}
-                                            <a class="ui teal small tag label"> {{ skill.upper() }} </a>
-                                        {% endfor %}
-                                    </div>
-
-                                    <div class="ui hidden divider"></div>
-
-                                    <div class="field">
-                                        <p class="ui large header">
-                                            Availability
-                                        </p>
-										{% for day in user.get('availability', []) %}
-											{% if user.get('availability')[day] != 'Unavailable' %}
-												<a class="ui teal small tag label">
-													{{ day }}
-												</a>
-											{% endif %}
-										{% endfor %}
-                                    </div>
-
-                                    <div class="ui hidden divider"></div>
-
-                                    <div class="field">
-                                        <p class="ui large header">
-                                            Send {{ user.get('firstName', '') }} a message
-                                        </p>
-                                        <textarea id="connectMsg" name="connectMsg" placeholder="I have an opportunity for you, {{ user.get('firstName', '') }}!" rows="6"></textarea>
-                                        <input id="user" name="user" type="hidden" value="{{ user.get('email', '') }}">
-                                        <input id="modalId" name="modalId" type="hidden" value="{{ id }}">
-                                    </div>
-								</form>
-                            </div>
-                        </div>
-                        <div class="actions">
-                            <button onClick="connect(connectForm{{id}})" form="connectForm" value="Contact" type="button" id="connectbtn" class="ui green button">Contact</button>
-                            <div onClick="close({{id}})" id="cancelbtn" class="ui deny red button">Cancel</div>
-                        </div>
-                    </div>
-                    {% set id = id+1 %}
-                {% endfor %}
+				{% endfor %}
 
                 <!-- 3 gaps to even the spaces -->
                 <li class="gap"></li>
@@ -280,45 +175,4 @@
 
         <a href="#0" class="cd-filter-trigger">Filters</a>
     </main>
-
-    <script>
-		// Open modal
-        function showmodal(id) {
-            var element='.ui.fullscreen.modal.'.concat(id);
-            $(element)
-				.modal('setting', 'transition', 'fade up')
-                .modal('show')
-            ;
-        }
-
-		// Close modal
-        function close(id) {
-            var element='.ui.fullscreen.modal.'.concat(id);
-            $(element)
-                .modal('toggle')
-            ;
-        }
-
-		// Ajax to send message
-        function connect(id) {
-            event.preventDefault();
-            var form_data = new FormData($(id)[0]);
-            $.ajax({
-                type: 'POST',
-                url: '/connect',
-                data: form_data,
-                contentType: false,
-                processData: false,
-                dataType: 'json'
-            }).done(function(data, textStatus, jqXHR){
-                // console.log(data['result'])
-                close(data['result'])
-                console.log('Success!');
-            }).fail(function(data) {
-                alert('Failed!');
-            }).complete(function(data) {
-                console.log('completed');
-            });
-        };
-    </script
 {% endblock %}
