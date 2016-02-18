@@ -12,8 +12,6 @@ class regoForm(Form):
     password = PasswordField(PASSWORD, [validators.length(min=5),
                                         validators.required()])
     confirm = PasswordField(PWDCONFIRM, [validators.equal_to(PASSWORD)])
-    #category = SelectField(CATEGORY, choices = [EMPLOYER, CANDIDATE],
-    #                                 default = CANDIDATE[TEXT])
     category = SelectField(CATEGORY, choices = [CANDIDATE],
                                      default = CANDIDATE[TEXT])
     termsConditions = BooleanField(TERMSCOND, [validators.required()])
@@ -51,7 +49,7 @@ class regoForm(Form):
             if self.category.data == EMPL:
                 jobs_collection.insert({EMPLID: employerId})
 
-            #url = os.getenv('SCRIPT_URI') <----------------get this to work when server is up
+            # url = os.getenv('SCRIPT_URI') <----------------get this to work when server is up
             # url = '127.0.0.1:5000'
             # message = """
             # Hi {},
