@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="ui internal celled grid segment">
+        <!-- Navigation column -->
+        <div class="five wide column">
+            <!-- Keep this section sticky to viewport -->
+            <div class="ui sticky">
+                <div class="ui vertical fluid steps">
+                    <a onclick="changeClass('1')" id="1" class="active link step step1">
+                        <i class="info icon"></i>
+                        <div class="content">
+                            <div class="title">Basic information</div>
+                            <div class="description">Tell us about yourself</div>
+                        </div>
+                    </a>
+                    <a onclick="changeClass('2')" id="2" class="link step step2">
+                        <i class="star icon"></i>
+                        <div class="content">
+                            <div class="title">Skills and preferences</div>
+                            <div class="description">Your skills matter</div>
+                        </div>
+                    </a>
+                    <a onclick="changeClass('3')" id="3" class="link step step3">
+                        <i class="suitcase icon"></i>
+                        <div class="content">
+                            <div class="title">Job experiences</div>
+                            <div class="description">Employment history</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="ui card">
+                    <div class="fluid image">
+                        <img src= {{ user.get('dp', url_for('static', filename='images/user.png')) }} alt="looking good" onError="this.src= {{url_for('static', filename='images/user.png')}} ;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="stuck" class="eleven wide column">
+            <div id="step1" class="ui raised segment">
+                <h2 class="ui block header">Basic Information</h2>
+            </div>
+
+            <div id="step2" class="ui raised segment">
+                <h2 class="ui block header">Skills and Preferences</h2>
+            </div>
+
+            <div class = "jobExperience">
+                <div id="step3" class="ui raised segment">
+                    <h2 class="ui block header">Job Experiences</h2>
+                    {% for elements in extra.get('jobExperience', '') %}
+                        {% set elements = elements ~ '' %}
+                        {% if elements in extra.get('jobExperience', '') %}
+                            <div class="jobSegment">
+                                <div class="ui segment" id="jobElement">
+                                    <input id="jobExperience{{ elements }}" type="hidden" name="jobExperienceId" value= {{ elements }}>
+                                    <div style = "font-weight:bold">{{ extra['jobExperience'][elements]['position'] }}</div>
+                                    <div style="font-weight: bold;font-style: italic;color: #545454;">{{ extra['jobExperience'][elements]['company'] }}</div>
+                                    <div class = "field" style="font-weight: bold;font-style: italic;color: #545454;"> {{ extra['jobExperience'][elements]['period'] }}</div>
+                                    <div class="field" style = "white-space:PRE">{{ extra['jobExperience'][elements]['description']|safe }}</div>
+                                </div>
+                            </div>
+                            <br>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--
+    This is what I call hackathon coding style.
+    Awful looking code.
+    Clean up later.
+    it works though
+    -->
+    <script>
+        function changeClass(step) {
+            if (step != undefined) {
+                stepInt = parseInt(step);
+                if (stepInt != 'NaN') {
+                    var pattrn = new RegExp("active");
+                    var reg = pattrn.test(document.getElementById(step).className)
+                    if (!reg) {
+                        document.getElementById(step).className += " active";
+
+                        for (i = 1; i <= 3; i++) {
+                            if (i == stepInt) { continue; }
+                            if (document.getElementById(String(i))) {
+                                document.getElementById(String(i)).className = document.getElementById(String(i)).className.replace(/(?:^|\s)active(?!\S)/g , '');
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Elevator 1
+        var start1 = document.querySelector('.step1');
+        var target1 = document.querySelector('#step1');
+        var elevator1 = new Elevator({
+            element: start1,
+            targetElement: target1,
+            duration: 1500
+        });
+
+        // Elevator 2
+        var start2 = document.querySelector('.step2');
+        var target2 = document.querySelector('#step2');
+        var elevator2 = new Elevator({
+            element: start2,
+            targetElement: target2,
+            duration: 1500
+        });
+
+        // Elevator 3
+        var start3 = document.querySelector('.step3');
+        var target3 = document.querySelector('#step3');
+        var elevator3 = new Elevator({
+            element: start3,
+            targetElement: target3,
+            duration: 1500
+        });
+    </script>
+{% endblock %}
