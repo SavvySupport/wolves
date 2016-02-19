@@ -109,12 +109,12 @@
                 <div id="step1" class="ui raised segment">
                     <h2 class="ui block header">Basic Information</h2>
                     <div class="ui very relax stackable grid">
-                        <div class="ten wide column">
+                        <div class="sixteen wide column">
                             <!-- Detail Form -->
                             {% if form.type == 'Employer' %}
                                 <div class="field">
                                     <label>Business Name</label>
-                                    {{ form.businessName }}
+                                    {{ form.businessName(placeholder="eg. SavvyHire") }}
                                 </div>
                                 <div class="field">
                                     <label>Contact Name</label>
@@ -126,15 +126,15 @@
                                 </div>
                                 <div class="field">
                                     <label>Website</label>
-                                    {{ form.website }}
+                                    {{ form.website(placeholder="eg. www.savvyhire.herokuapp.com") }}
                                 </div>
                                 <div class="field">
                                     <label>Address</label>
-                                    {{ form.streetAddress }}
+                                    {{ form.streetAddress(placeholder="Chatswood, NSW") }}
                                 </div>
                                 <div class="field">
                                     <label>About</label>
-                                    {{ form.about }}
+                                    {{ form.about(placeholder="Tell the world a bit about your business!") }}
                                 </div>
                                 <button form="profileForm"
                                         id="updatebtn"
@@ -145,19 +145,19 @@
                             {% else %}
                                 <div class="field">
                                     <label>First Name</label>
-                                    {{ form.firstName }}
+                                    {{ form.firstName(placeholder="eg. John") }}
                                 </div>
                                 <div class="field">
                                     <label>Last Name</label>
-                                    {{ form.lastName }}
+                                    {{ form.lastName(placeholder="eg. Doe") }}
                                 </div>
                                 <div class="field">
                                     <label>Suburb</label>
-                                    {{ form.location }}
+                                    {{ form.location(placeholder="Sydney, NSW") }}
                                 </div>
                                 <div class="field">
                                     <label>Contact Number</label>
-                                    {{ form.phoneNumber }}
+                                    {{ form.phoneNumber(placeholder="04xxxxxxxx") }}
                                 </div>
 
                                 <div class="field">
@@ -181,7 +181,7 @@
                                 </div>
                                 <div class="field">
                                     <label>About you</label>
-                                    {{ form.about(placeholder='Let us know a little more about you') }}
+                                    {{ form.about(placeholder='Let your potential employers know a little more about you!') }}
                                 </div>
                             {% endif %}
                         </div>
@@ -192,10 +192,12 @@
                     <div id="step2" class="ui raised segment">
                         <h2 class="ui block header">Skills and Preferences</h2>
                         <div class="ui very relax stackable grid">
-                            <div class="ten wide column">
+                            <div class="sixteen wide column">
                                 <div class="field">
                                     <label>Top 5 Skills</label>
-                                    {{ form.skills(placeholder='separate with comma') }}
+                                    {{ form.skills(placeholder='eg. waiter, cashier, barista') }}
+                                    <br>
+                                    <small>Seperate with comma</small>
                                 </div>
                                 <div class="field">
                                     <label>Residency status</label>
@@ -386,7 +388,7 @@
                                                 {{ user['jobExperience'][elements]['period'] }}
                                             </div>
                                             <div class="field" style = "white-space:PRE"><!--
-                                            --> {{ user['jobExperience'][elements]['description']|safe }}
+                                            -->{{ user['jobExperience'][elements]['description']|safe }}
                                             </div>
 
                                             <input type="hidden" name ="jobPosition" value="{{ user['jobExperience'][elements]['position'] }}">

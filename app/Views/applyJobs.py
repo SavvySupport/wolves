@@ -7,6 +7,7 @@ from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from bson.objectid import ObjectId
+import os
 
 @app.route('/apply', methods=['POST'])
 @login_required
