@@ -176,6 +176,20 @@ $(function () {
                 },
 
             ]
+        },
+        chatWithUs: {
+            identifier  : 'chatWithUs',
+            rules: [
+                {
+                    type    : 'empty',
+                    prompt  : "That's not a message!"
+                },
+                {
+                    type    : 'minLength[5]',
+                    prompt  : 'minimum 5 characters required'
+                },
+
+            ]
         }
     };
 
@@ -205,6 +219,11 @@ $(function () {
     });
 
     $('#changepasswordForm').form(validationObj, {
+        inline: true,
+        on: "blur"
+    });
+
+    $('#chatWithUsForm').form(validationObj, {
         inline: true,
         on: "blur"
     });
@@ -469,6 +488,38 @@ $(function () {
         $.ajax({
             type: 'POST',
             url: '/editJob',
+            datatype : "json",
+            contentType: "application/json; charset=utf-8",
+            data : JSON.stringify(data),
+
+        }).done(function(data, textStatus, jqXHR){
+            //$(data['returnString']).closest('.jobSegment').remove();
+            window.location.reload(true);
+            //window.location.href = window.location;
+            console.log('Success!');
+        }).fail(function(data) {
+            alert('Failed!');
+        }).complete(function(data) {
+            console.log('completed');
+        });
+    });
+
+    $('.chatWithUsButton').click(function() {
+        console.log('here')
+
+        event.preventDefault();
+        console.log('here')
+        var $div = $(this).closest('.segment');
+        var message = $div.find('textarea[name="chatWithUs"]').val();
+
+        data = {
+                'test'          : '1234',
+                'message'       : message,
+            };
+
+        $.ajax({
+            type: 'POST',
+            url: '/chatWithUs',
             datatype : "json",
             contentType: "application/json; charset=utf-8",
             data : JSON.stringify(data),

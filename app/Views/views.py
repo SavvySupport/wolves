@@ -74,3 +74,4 @@ from app.Views import jobExperienceEdit
 from app.Views import editJobPost
 from app.Views import jobs
 from app.Views import applyJobs
+from app.Views import chatWithUs

@@ -28,6 +28,16 @@
         {% endblock %}
     </head>
     <body>
+        <!--Facebook social plugin-->
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+
         <div id="wrapper">
             <main id="content" class="clearfix">
                 <!-- Warning message. Activated by flash() in views.py -->
@@ -133,17 +143,22 @@
                                 </div>
                             </div>
 
-                            <div class="eight wide column">
+                            <div class="five wide column">
                                 <h4 class="ui black header">Others</h4>
                                 <div class="ui black link list">
                                     <a href="http://www.savvysme.com.au" target="_blank" class="item">SavvySME</a>
                                     <a a href= {{ url_for('terms') }} target="_blank" class="item">Terms and Conditions</a>
                                 </div>
                             </div>
+
+                            <div class="three wide column three-wide-column-facebook-icon">
+                                <a href="https://www.facebook.com/savvyhiring/?fref=ts" target="_blank"><i class="facebook icon facebook-icon"></i></a>
+                            </div>
+
                             <div class="five wide column">
                                 <small>© Copyright 2016, <a href="https://www.savvysme.com.au/" target="_blank">SavvySME</a></small>
-                                <p>For any enquiries contact : <a href="mailto:mary@savvysme.com.au">
-                                mary@savvysme.com.au</a></p>
+                                <p>For any enquiries contact : <a href="mailto:weiyew@savvysme.com.au">
+                                weiyew@savvysme.com.au</a></p>
                             </div>
                         </div>
                     </div>

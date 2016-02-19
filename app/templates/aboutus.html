@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+    <!--Facebook social plugin-->
+    <div class="fb-like facebook-social-plugin" data-href="https://www.facebook.com/savvyhiring/?fref=ts" data-layout="box_count" data-action="like" data-show-faces="true" data-share="true"></div>
+
     <div class="ui inverted vertical masthead center aligned segment">
         <div class="ui text container">
             <h1 class="ui inverted header">
@@ -19,8 +23,8 @@
                     <h3 class="ui header">It all comes at no charge</h3>
                     <p>Yes that's right, businesses are also given the option of posting work opportunities free of charge and allow for job seekers to show them their interest.</p>
                 </div>
-                <div class="six wide right floated column">
-                    <img src="assets/images/wireframe/white-image.png" class="ui large bordered rounded image">
+                <div class="eight wide right floated column">
+                    <img src= {{ url_for('static', filename='images/workbench.jpeg') }} class="ui large bordered rounded image">
                 </div>
             </div>
             <div class="row">
@@ -59,9 +63,22 @@
         <div class="ui text container">
             <h3 class="ui header">Attitude</h3>
             <p>We love learning new things and connecting with people</p>
-            <h3 class="ui header">We are still learning!</h3>
+            <h3 class="ui header">We are still improving!</h3>
             <p>If you have anything you'd like to share with us, just shoot us a message! We are open to suggestions and inputs!</p>
-            <a href="mailto:mary@savvysme.com.au" class="ui large button">Chat with us!</a>
+            <!--<form id="chatWithUsForm" method="POST">
+                <input type="text" class="chatWithUs" id="chatWithUs" rows="5" cols="80" name="chatWithUs" placeholder="Tell us what you think! Feel free to leave your email too!">
+
+
+
+                <br>
+                <button class="ui large button chatWithUsButton">Chat with us!</button>
+            </form>-->
+            <form id="chatWithUsForm" method="post">
+                <div class="required field">
+                    <textarea id="chatWithUs" class="chatWithUs" rows="5" cols="80" name="chatWithUs" placeholder="Tell us what you think! Feel free to leave your email too!"></textarea>
+                </div>
+                <button  class="ui large button chatWithUsButton" >Chat with us!</button>
+            </form>
         </div>
     </div>
 {% endblock %}

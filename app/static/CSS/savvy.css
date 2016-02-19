@@ -252,3 +252,24 @@ h1 {
 .image_content-connectForm-availability {
     margin-bottom: 1rem !important;
 }
+
+.facebook-social-plugin{
+    position: fixed !important;
+    margin: 12rem 0 0 0rem
+}
+
+.facebook-icon{
+    color: #3a5795;
+}
+
+.three-wide-column-facebook-icon{
+    padding-left: 0;
+    margin-left: -1rem;
+    margin-right: 1rem;
+
+}
+
+.chatWithUs{
+    resize: none;
+    border: none;
+}
