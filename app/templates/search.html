@@ -29,13 +29,15 @@
                                     <div class="ui inverted dimmer">
                                         <div class="content">
                                             <div class="center">
-                                                <button onclick="showmodal({{id}})" class="ui primary button show-modal">
-                                                    Contact
-                                                    {% if user.get('gender', None) == 'Male' %}
-                                                        Him
-                                                    {% elif user.get('gender', None) == 'Female' %}
-                                                        Her
-                                                    {% endif %}
+                                                <button class="ui primary button show-modal">
+													<a href= {{ url_for('candidate', uid=user.get('_id')) }} >
+	                                                    Contact
+	                                                    {% if user.get('gender', None) == 'Male' %}
+	                                                        Him
+	                                                    {% elif user.get('gender', None) == 'Female' %}
+	                                                        Her
+	                                                    {% endif %}
+													</a>
                                                 </button>
                                             </div>
                                         </div>
