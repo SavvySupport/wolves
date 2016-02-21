@@ -40,10 +40,31 @@
         <div id="stuck" class="eleven wide column">
             <div id="step1" class="ui raised segment">
                 <h2 class="ui block header">Basic Information</h2>
+                <h3 class="field">Full name: <span class="ui header">{{ extra.get('firstName')}} {{ extra.get('lastName')}}</span><h3>
+                <h3 class="field">Surburb: <span class="ui header">{{ extra.get('surburb', 'N/A')}}</span><h3>
+                <h3 class="field">Contact Number: <span class="ui header">{{ extra.get('phoneNumber') }}</span><h3>
+                <h3 class="field">Gender: <span class="ui header">{{ extra.get('gender') }}</span><h3>
+                <h3 class="field">D.O.B: <span class="ui header">{{ extra.get('birthday') }}</span><h3>
+                <h3 class="field">About: <span class="ui header">{{ extra.get('about') }}</span><h3>
             </div>
 
             <div id="step2" class="ui raised segment">
                 <h2 class="ui block header">Skills and Preferences</h2>
+                <h3 class="field">Residency: <span class="ui header">{{ extra.get('residency') }}</span><h3>
+                <h3 class="field">Education: <span class="ui header">{{ extra.get('education') }}</span><h3>
+                <h3 class="field">Availability:<h3>
+                <p>&#8194;&#8194;- Monday: {{extra.get('availability')['Monday']}}</p>
+                <p>&#8194;&#8194;- Tuesday: {{extra.get('availability')['Tuesday']}}</p>
+                <p>&#8194;&#8194;- Wednesday: {{extra.get('availability')['Wednesday']}}</p>
+                <p>&#8194;&#8194;- Thursday: {{extra.get('availability')['Thursday']}}</p>
+                <p>&#8194;&#8194;- Friday: {{extra.get('availability')['Friday']}}</p>
+                <p>&#8194;&#8194;- Saturday: {{extra.get('availability')['Saturday']}}</p>
+                <p>&#8194;&#8194;- Sunday: {{extra.get('availability')['Sunday']}}</p>
+                <p>&#8194;&#8194;- Holiday: {{extra.get('availability')['Holiday']}}</p>
+                <h3 class="field">Skills:<h3>
+                {% for skill in extra.get('skills', None) %}
+                    <p>&#8194;&#8194;- {{skill}}</p>
+                {% endfor %}
             </div>
 
             <div class = "jobExperience">
@@ -54,11 +75,13 @@
                         {% if elements in extra.get('jobExperience', '') %}
                             <div class="jobSegment">
                                 <div class="ui segment" id="jobElement">
-                                    <input id="jobExperience{{ elements }}" type="hidden" name="jobExperienceId" value= {{ elements }}>
-                                    <div style = "font-weight:bold">{{ extra['jobExperience'][elements]['position'] }}</div>
-                                    <div style="font-weight: bold;font-style: italic;color: #545454;">{{ extra['jobExperience'][elements]['company'] }}</div>
-                                    <div class = "field" style="font-weight: bold;font-style: italic;color: #545454;"> {{ extra['jobExperience'][elements]['period'] }}</div>
-                                    <div class="field" style = "white-space:PRE">{{ extra['jobExperience'][elements]['description']|safe }}</div>
+                                    <h2>{{ extra['jobExperience'][elements]['position'] }} @ {{ extra['jobExperience'][elements]['company'] }}</h2>
+                                    <div class="field" style="font-weight: bold;font-style: italic;color: #545454;">
+                                        {{ extra['jobExperience'][elements]['period'] }}
+                                    </div>
+                                    <div class="field" style="white-space:PRE"><!--
+                                     -->{{ extra['jobExperience'][elements]['description']|safe }}
+                                    </div>
                                 </div>
                             </div>
                             <br>
