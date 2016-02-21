@@ -41,9 +41,9 @@
                                         </div>
                                     </div>
 									{% if user.get('gender', None) == 'Female' %}
-                                    	<img src= {{ user.get('dp', url_for('static', filename='images/user1.jpg'))}} alt="Image not found" onError="this.src= {{url_for('static', filename='images/user.png')}} ;" >
+                                    	<img src= {{ user.get('dp', url_for('static', filename='images/user1.jpg'))}} alt="Image not found" onError="this.src= '{{url_for('static', filename='images/user.png')}}' ;" >
 									{% else %}
-										<img src= {{ user.get('dp', url_for('static', filename='images/user1.jpg'))}} alt="Image not found" onError="this.src= {{url_for('static', filename='images/user.png')}} ;" >
+										<img src= {{ user.get('dp', url_for('static', filename='images/user1.jpg'))}} alt="Image not found" onError="this.src= '{{url_for('static', filename='images/user1.jpg')}}' ;" >
 									{% endif %}
                                 </div>
                                 <div class="content">

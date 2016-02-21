@@ -14,6 +14,7 @@
         <script src= {{ url_for('static', filename='CSS/savvy.js') }}></script>
         <script src= {{ url_for('static', filename='CSS/elevator.js') }}></script>
 
+        <!-- Google Analyics -->
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -22,6 +23,25 @@
                 ga('create', 'UA-73956731-1', 'auto');
                 ga('send', 'pageview');
         </script>
+
+        <!-- Inspectlet Script -->
+        <!-- Begin Inspectlet Embed Code -->
+        <script type="text/javascript" id="inspectletjs">
+            window.__insp = window.__insp || [];
+            __insp.push(['wid', 1983644521]);
+            (function() {
+                function ldinsp(){
+                    if(typeof window.__inspld != "undefined") return; window.__inspld = 1; var insp = document.createElement('script'); insp.type = 'text/javascript'; insp.async = true; insp.id = "inspsync"; insp.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cdn.inspectlet.com/inspectlet.js'; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(insp, x); };
+                setTimeout(ldinsp, 500); document.readyState != "complete" ? (window.attachEvent ? window.attachEvent('onload', ldinsp) : window.addEventListener('load', ldinsp, false)) : ldinsp();
+            })();
+        </script>
+
+        <!-- SumoMe script -->
+        <script src="//load.sumome.com/"
+            data-sumo-site-id="17c99f2f78cc42fc7f56f742134b13f569c98af76402a6e0d358dc2a6d2bc328" async="async">
+        </script>
+
+        <!-- End Inspectlet Embed Code -->
 
         <!-- Additional Script -->
         {% block script %}

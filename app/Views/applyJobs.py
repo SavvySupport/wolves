@@ -66,9 +66,10 @@ def applyJobs():
                 display: block;
                 background: #FFF;
                 border: 1px solid rgba(133, 183, 217,.5);
-                padding-top: 3%;
-                padding-left: 7%;
+                padding: 1%;
                 border-radius: 0.285714rem;
+                white-space: PRE;
+                word-wrap: break-word;
             """
 
             html = """\
@@ -79,11 +80,12 @@ def applyJobs():
                    <span style="{}">
                    Here's their cover letter:<br><br>
                    <span style="{}"
-                   <i>{}</i><br><br>
-                   Here's the link to their profile:
-
-                   <br><br>
+                   <i>{}</i>
                    </span>
+                   Here's the link to their digital cv:
+                   <br><br>
+                   Here's the email for you to contact directly: <a href="mailto:{}">{}</a>  <small style="color:rgb(17, 166, 86);">click it!</small>
+                   <br><br>
                    Best,<br>
                    Team SavvyHire<br>
                    </span>
@@ -91,7 +93,7 @@ def applyJobs():
                 <img src="https://fbcdn-sphotos-h-a.akamaihd.net/hphotos-ak-xap1/v/t1.0-9/12552797_946970445338090_4081041973572931633_n.png?oh=3657d0fd2ab010f7b752f825c16070ba&oe=572DAC6A&__gda__=1463629238_96cd9ea3062bfbbb1539e9cdfb18ad25" style="width:150px;">
               </body>
             </html>
-            """.format(bodyStyle, greetStyle, jobSeeker.get('firstName',''), jobSeeker.get('lastName','Someone'), title, contentStyle, messageStyle, message)
+            """.format(bodyStyle, greetStyle, jobSeeker.get('firstName',''), jobSeeker.get('lastName','Someone'), title, contentStyle, messageStyle, message, jobSeeker.get('email',''), jobSeeker.get('email',''))
             #=============================================insert link of job seekers profile=========================
             # Record the MIME types of both parts - text/plain and text/html.
             part1 = MIMEText(text, 'plain')

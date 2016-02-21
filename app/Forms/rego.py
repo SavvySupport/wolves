@@ -12,7 +12,7 @@ class regoForm(Form):
     password = PasswordField(PASSWORD, [validators.length(min=5),
                                         validators.required()])
     confirm = PasswordField(PWDCONFIRM, [validators.equal_to(PASSWORD)])
-    category = SelectField(CATEGORY, choices = [CANDIDATE],
+    category = SelectField(CATEGORY, choices = [CANDIDATE, EMPLOYER],
                                      default = CANDIDATE[TEXT])
     termsConditions = BooleanField(TERMSCOND, [validators.required()])
 
