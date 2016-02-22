@@ -82,7 +82,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <img id='photoajax' src= {{ user.get('dp', url_for('static', filename='images/user.png')) }} alt="looking good" onError="this.src= {{url_for('static', filename='images/user.png')}} ;">
+                                <img id='photoajax' src= {{ user.get('dp', url_for('static', filename='images/user.png')) }} alt="looking good" onError="this.src= '{{url_for('static', filename='images/user.png')}}' ;">
                             </div>
                         </div>
                     </div>
