@@ -62,7 +62,11 @@
                                         </span>
                                     </div>
                                     <div class="description">
-                                    		{{ user.get('about', 'Introduction') }}
+										{% set summary = ( user.get('about', 'Introduction').split()) %}
+										{% for each in range(summary|length) if each < 15 %}
+											{% print (summary[each]) %}
+										{% endfor %}
+										{% print '...' %}
                                     </div>
                                 </div>
                                 <div class="extra content">
