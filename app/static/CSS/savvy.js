@@ -228,6 +228,11 @@ $(function () {
         on: "blur"
     });
 
+    $('#jobExperienceForm').form(validationObj, {
+        inline: true,
+        on: "blur"
+    });
+
     // Dismiss message
     $('.message .close')
         .on('click', function() {
@@ -365,7 +370,7 @@ $(function () {
         var jobPeriod = $div.find('input[name="jobPeriod"]').val();
         var jobDescription = $div.find('input[name="jobDescription"]').val();
         var jobExperienceString = "#jobExperience".concat(jobExperienceId);
-        var div_data = "<div class='ui segment'> <span style='font-weight:bold'>Position:</span><br><input type='text' name='jobPosition' value='"+jobPosition+"'><br><span style='font-weight:bold'>Company:</span><br><input type='text' name='jobCompany' value = '"+jobCompany+"'><br><span style='font-weight:bold'>Period:</span><br><input type='text' name='jobPeriod' value='"+jobPeriod+"'><br><span style='font-weight:bold'>Description:</span><br><textarea name='jobDescription'>"+jobDescription+"</textarea><br><input id='jobExperience"+jobExperienceId+"' type='hidden' name='jobExperienceId' value="+jobExperienceId+"><br><button type='button' class='jobExperienceEditSubmitButton ui button'>Done</button></div>";
+        var div_data = "<div class='ui segment'><span style='font-weight:bold'>Position:</span><br><input type='text' name='jobPosition' id='jobPosition' value='"+jobPosition+"'><br><span style='font-weight:bold'>Company:</span><br><input type='text' name='jobCompany' value = '"+jobCompany+"'><br><span style='font-weight:bold'>Period:</span><br><input type='text' name='jobPeriod' value='"+jobPeriod+"'><br><span style='font-weight:bold'>Description:</span><br><textarea name='jobDescription'>"+jobDescription+"</textarea><br><input id='jobExperience"+jobExperienceId+"' type='hidden' name='jobExperienceId' value="+jobExperienceId+"><br><button type='button' class='jobExperienceEditSubmitButton ui button'>Done</button></div>";
         $(jobExperienceString).closest('.jobSegment').html(div_data);
 
         return false;
@@ -425,7 +430,7 @@ $(function () {
             availabilityString += "<option value="+availability[i]+">"+availability[i]+"</option>"
         }
 
-        var div_data = "<div class='ui segment'> <span style='font-weight:bold'>Position:</span><br><input type='text' name='position' value='"+position+"'><br><span style='font-weight:bold'>Availability:</span><br><select name='availability' multiple><option value='Monday'>Monday</option><option value='Tuesday'>Tuesday</option><option value='Wednesday'>Wednesday</option><option value='Thursday'>Thursday</option><option value='Friday'>Friday</option><option value='Saturday'>Saturday</option><option value='Sunday'>Sunday</option></select><span style='font-weight:bold'>Location:</span><input type='text' name='location' value='"+location+"'><br><span style='font-weight:bold'>Visa Requirement:</span><br><select name='residency'><option value='No Preference'>No Preference</option><option value='Permenant Resident'>Permenant Resident</option><option value='Temporary Resident'>Temporary Resident</option><option value='Student Visa'>Student Visa</option></select><span style='font-weight:bold'>Description:</span><br><textarea name='description'>"+description+"</textarea><br><input type='hidden' name='jobId' value='"+jobId+"'><input type='hidden' name='listId' value="+listId+"><br><button type='button' class='editJobPostSubmitButton ui button'>Done</button></div>";
+        var div_data = "<div class='ui segment'> <span style='font-weight:bold'>Position:</span><br><input type='text' name='position' value='"+position+"'><br><span style='font-weight:bold'>Availability:</span><br><select name='availability' multiple><option value='Monday'>Monday</option><option value='Tuesday'>Tuesday</option><option value='Wednesday'>Wednesday</option><option value='Thursday'>Thursday</option><option value='Friday'>Friday</option><option value='Saturday'>Saturday</option><option value='Sunday'>Sunday</option></select><span style='font-weight:bold'>Location:</span><input type='text' name='location' value='"+location+"'><br><span style='font-weight:bold'>Visa Requirement:</span><br><select name='residency'><option value='No Preference'>No Preference</option><option value='Permanent Resident'>Permanent Resident</option><option value='Temporary Resident'>Temporary Resident</option><option value='Student Visa'>Student Visa</option></select><span style='font-weight:bold'>Description:</span><br><textarea name='description'>"+description+"</textarea><br><input type='hidden' name='jobId' value='"+jobId+"'><input type='hidden' name='listId' value="+listId+"><br><button type='button' class='editJobPostSubmitButton ui button'>Done</button></div>";
         $(jobPostDiv).html(div_data);
 
         return false;

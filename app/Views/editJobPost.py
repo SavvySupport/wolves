@@ -31,8 +31,11 @@ def editJobPost():
                 RESIDENCY   : residency,
                 LOCATION    : location,
                 EMPLOYERID  : employerId,
-                TYPE        : JOB
-            } 
+                TYPE        : JOB,
+                BUSINESS    : user.get(BUSINESS,''),
+                WEBSITE     : user.get(WEBSITE,''),
+                ABOUT       : user.get(ABOUT,'')
+            }
 
             jobs_collection.update({EMPLOYERID: employerId}, {"$set": {jobId: jobEntry}})
 

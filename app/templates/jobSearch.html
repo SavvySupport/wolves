@@ -19,11 +19,10 @@
                 {% for jobs in extra %}
 					{% set class = extra[jobs].get('title', '') %}
 					{% set class = class + ' ' + extra[jobs].get('employerId', '')|string %}
-					{% set class = class + ' ' + extra[jobs].get('description', '') %}
                     {% set class = class + ' ' + extra[jobs].get('location', '') %}
                     {% set class = class + ' ' + extra[jobs].get('residency', 'No Preference') %}
 
-                    <li class="mix {{class}} {% for day in extra[jobs].get('availability', []) %}{% if extra[jobs].get('availability', None)[day] != 'Unavailable' %}{{day}} {% endif %}{% endfor %}">
+                    <li class="mix {{class}} {% if extra[jobs].get('availability', []) %}{% for day in extra[jobs].get('availability', []) %}{% if extra[jobs].get('availability', None)[day] != 'Unavailable' %}{{day}} {% endif %}{% endfor %}{% endif %}">
                         <div class="ui special cards">
                             <div class="card">
 
@@ -96,6 +95,23 @@
                                 </div>
 
                                 <div class="eight wide column description" style="padding-left: 5%">
+									{% if extra[jobs].get('businessName', '') %}
+										<div class="ui segment" style="margin-top:12%;">
+											<div class="ui large header">
+		                                        About {{extra[jobs].get('businessName', 'No Preference')}}
+											</div>
+											{% if extra[jobs].get('website', '') %}
+												<a href="{{extra[jobs].get('website', '')}}" class="links" target="_blank">
+													 {{extra[jobs].get('website', '')}}
+												</a >
+											{% endif %}
+											{% if extra[jobs].get('about', '') %}
+												<div style="white-space:PRE; line-height:1.5rem;word-wrap: break-word;"><!--
+												-->{{extra[jobs].get('about', '')}}
+											</div>
+											{% endif %}
+										</div>
+									{% endif %}
                                     <form id="connectForm{{id}}"
                                           method="POST"
                                           role="form"
@@ -118,13 +134,19 @@
                                             <p class="ui large header">
                                                 Availability
                                             </p>
-    										{% for day in extra[jobs].get('availability', ['availability']) %}
-    											{% if extra[jobs].get('availability')[day] != 'Unavailable' %}
-    												<a class="ui teal small tag label image_content-connectForm-availability" >
-    													{{ day }}
-    												</a>
-    											{% endif %}
-    										{% endfor %}
+											{% if extra[jobs].get('availability', []) %}
+	    										{% for day in extra[jobs].get('availability', ['availability']) %}
+	    											{% if extra[jobs].get('availability')[day] != 'Unavailable' %}
+	    												<a class="ui teal small tag label image_content-connectForm-availability" >
+	    													{{ day }}
+	    												</a>
+	    											{% endif %}
+	    										{% endfor %}
+											{% else %}
+												<a class="ui teal small tag label image_content-connectForm-availability" >
+													No Preference
+												</a>
+											{% endif %}
                                         </div>
 
                                         <div class="ui hidden divider"></div>
@@ -235,7 +257,8 @@
 								<label class="radio-label" for="Student">Student Visa</label>
 							</li>
 							<li>
-
+								<input class="filter" data-filter=".Preference" type="radio" name="radioButton" id="Preference">
+								<label class="radio-label" for="No Preference">No Preference</label>
 							</li>
 						</div>
 					</div>

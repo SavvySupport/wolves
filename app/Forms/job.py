@@ -44,7 +44,11 @@ class jobForm(Form):
             EMPLOYERID    : id,
             TYPE          : JOB,
             RESIDENCY     : self.residency.data,
-            LOCATION      : self.location.data
+            LOCATION      : self.location.data,
+            BUSINESS      : user.get(BUSINESS,''),
+            WEBSITE       : user.get(WEBSITE,''),
+            ABOUT         : user.get(ABOUT,'')
+
         }
 
         timeStamp = datetime.now().strftime('%Y/%m/%d %H:%M:%S')

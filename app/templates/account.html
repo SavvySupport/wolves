@@ -126,7 +126,7 @@
                                 </div>
                                 <div class="field">
                                     <label>Website</label>
-                                    {{ form.website(placeholder="eg. www.savvyhire.herokuapp.com") }}
+                                    {{ form.website(placeholder="eg. www.your_website.com") }}
                                 </div>
                                 <div class="field">
                                     <label>Address</label>
@@ -376,6 +376,7 @@
                                 {% set elements = elements ~ ''%}
                                 {% if elements in user.get('jobExperience', '') %}
                                     <div class="jobSegment">
+                                        <form id="jobExperienceForm" method="post" >
                                         <div class="ui segment" id="jobElement">
                                             <input id="jobExperience{{ elements }}" type="hidden" name="jobExperienceId" value= {{ elements }}>
                                             <div style = "font-weight:bold">
@@ -398,6 +399,7 @@
                                             <button class="jobExperienceEditButton ui green button">Edit</button>
                                             <button class="jobExperienceRemoveButton ui button">Remove</button>
                                         </div>
+                                    </form>
                                     </div>
                                     <br>
                                 {% endif %}

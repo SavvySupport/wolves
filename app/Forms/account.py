@@ -29,6 +29,7 @@ class employerForm(Form):
         self.phoneNumber.data   = user.get(PHONE, '')
         self.website.data       = user.get(WEBSITE, '')
         self.streetAddress.data = user.get(ADDRESS, '')
+        self.about.data         = user.get(ABOUT, '')
 
     def validate(self):
         rv = Form.validate(self)
@@ -47,7 +48,9 @@ class employerForm(Form):
             CONTACT     : self.contactName.data,
             PHONE       : self.phoneNumber.data,
             WEBSITE     : self.website.data.rstrip(),
-            ADDRESS     : self.streetAddress.data
+            ADDRESS     : self.streetAddress.data,
+            ABOUT       : self.about.data
+            
         }
 
         savvy_collection.update({EMAIL: email}, {"$set": user})
